@@ -106,7 +106,7 @@ Time_Updatepaddy is time paddy grow default is 5000ms(5s)
 #define DIALOG_FJGETPADDYSACK       (2323)
 #define DIALOG_FJUNHIREVEHICLE      (2324)
 
-#define TIME_UPDATEPADDY            (5000)
+#define TIME_UPDATEPADDY            (4000)
 
 //=======Farmer Job======//
 //=========Drugs=========//
