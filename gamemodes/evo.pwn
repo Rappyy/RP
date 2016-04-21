@@ -266,7 +266,7 @@ new Menu:FoodStallMenu;
 #define GameModeVersion "10"
 #define GameModeText "EVO:RP "GameModeVersion""
 #if defined localhost_mysql
-    #define ServerName "Evolution Role Play - TEST SERVER"
+    #define ServerName "Evolution Role Play - Server de teste"
 #else
     #define ServerName "Evolution Role Play [www.evolution-roleplay.ro]"
 #endif
