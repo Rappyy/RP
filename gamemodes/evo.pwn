@@ -510,6 +510,10 @@ new RepairOffer[MAX_PLAYERS],
     TaxiMade[MAX_PLAYERS];
 //Taxi variables
 
+//Trailer Variables
+	new InTrailer[MAX_PLAYERS];
+//Trailer Variables
+
 new
     bool:gOOC[MAX_PLAYERS char],
     DoorEntered[MAX_PLAYERS],
@@ -36943,7 +36947,6 @@ CMD:trailer(playerid, params[])
 CMD:entertrailer(playerid, params[])
 {
 	new trailerid;
-//	vehid = GetPlayerVehicleID(playerid);
 	trailerid = FindNearbyTrailer(playerid, 1);
 	if(trailerid != -1 && InTrailer[playerid]==-1)
 	{
