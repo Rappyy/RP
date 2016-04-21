@@ -36902,3 +36902,73 @@ CMD:spraytag(playerid, params[])
 //SPRAYTAG SYSTEM - END
 
 //TRAILER SYSTEM CMD
+stock FindNearbyTrailer(id, idtype)
+{
+	new Float:x1, Float:y1, Float:z1;
+	new Float:x2, Float:y2, Float:z2;
+	if(idtype==1) GetPlayerPos(id,x1,y1,z1);
+    else GetVehiclePos(id,x1,y1,z1);	
+	for(new i=1; i<=GetVehiclePoolSize(); i++)
+	{
+		GetVehiclePos(i,x2,y2,z2);
+		if(floatround( floatsqroot( ( ( x1 - x2 ) * ( x1 - x2 ) ) + ( ( y1 - y2 ) * ( y1 - y2 ) ) + ( ( z1 - z2 ) * ( z1 - z2 ) ) ) ) < 6)
+			return i;
+	}
+	return -1;
+}
+
+CMD:trailer(playerid, params[])
+{
+	new vehid, trailerid;
+	vehid = GetPlayerVehicleID(playerid);
+	if(IsTrailerAttachedToVehicle(vehid))
+	{
+		DetachTrailerFromVehicle(vehid);
+		SCM(playerid, COLOR_GREY, "Trailer-ul a fost decuplat.");
+	}
+	else
+	{
+		trailerid = FindNearbyTrailer(vehid, 2);
+		if(trailerid != -1)
+		{
+			AttachTrailerToVehicle(trailerid, vehid);
+			SCM(playerid, COLOR_GREY, "Trailer-ul a fost atasat.");
+		}
+		else
+			SCM(playerid, COLOR_GREY, "Nu ai nici-un trailer in jur!");
+	}
+	
+}
+
+CMD:entertrailer(playerid, params[])
+{
+	new trailerid;
+//	vehid = GetPlayerVehicleID(playerid);
+	trailerid = FindNearbyTrailer(playerid, 1);
+	if(trailerid != -1 && InTrailer[playerid]==-1)
+	{
+		SetPlayerVirtualWorld(playerid, playerid);
+		SetPlayerInterior(playerid, 1);
+		SetPlayerPos(playerid, 1.808619, 32.384357, 1199.593750);
+		InTrailer[playerid]=trailerid;
+	}
+	else
+		SCM(playerid, COLOR_GREY, "Nu esti langa o rulota!");
+}
+
+CMD:exittrailer(playerid, params[])
+{
+	new Float:x, Float:y, Float:z;
+	if(InTrailer[playerid])
+	{
+		GetVehiclePos(InTrailer[playerid], x, y, z);
+		SetPlayerVirtualWorld(playerid, 0);
+		SetPlayerInterior(playerid, 0);
+		SetPlayerPos(playerid, x+2, y+2, z);
+		InTrailer[playerid]=-1;
+	}
+	else
+	{
+		SCM(playerid, COLOR_GREY, "Nu esti intr-o rulota!");
+	}
+}
