@@ -263,7 +263,7 @@ new Menu:FoodStallMenu;
 #define StopPlayerHoldingObject(%1) RemovePlayerAttachedObject(%1,MAX_PLAYER_ATTACHED_OBJECTS-1)
 #define IsPlayerHoldingObject(%1) IsPlayerAttachedObjectSlotUsed(%1,MAX_PLAYER_ATTACHED_OBJECTS-1)
 
-#define GameModeVersion "10"
+#define GameModeVersion "10.1"
 #define GameModeText "EVO:RP "GameModeVersion""
 #if defined localhost_mysql
     #define ServerName "Evolution Role Play - Server de teste"
@@ -509,6 +509,10 @@ new RepairOffer[MAX_PLAYERS],
     TaxiMoney[MAX_PLAYERS],
     TaxiMade[MAX_PLAYERS];
 //Taxi variables
+
+//Trailer Variables
+	new InTrailer[MAX_PLAYERS];
+//Trailer Variables
 
 new
     bool:gOOC[MAX_PLAYERS char],
@@ -36943,7 +36947,6 @@ CMD:trailer(playerid, params[])
 CMD:entertrailer(playerid, params[])
 {
 	new trailerid;
-//	vehid = GetPlayerVehicleID(playerid);
 	trailerid = FindNearbyTrailer(playerid, 1);
 	if(trailerid != -1 && InTrailer[playerid]==-1)
 	{
