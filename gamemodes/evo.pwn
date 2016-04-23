@@ -156,6 +156,7 @@ Time_Updatepaddy is time paddy grow default is 5000ms(5s)
 #define LIBER2 8
 #define LIBER 9
 #define WEAPONDEALER 10
+#define LUMBER 11
 //=========Jobs=========//
 //=========Truck Defines=========//
 #define TRUCKER_RANK1 1
@@ -286,7 +287,7 @@ new Menu:FoodStallMenu;
 
 //====Defines====
 #define MAX_LABELS 50
-#define MAX_JOBS 10
+#define MAX_JOBS 12
 #define MAX_DOORS 30
 #define MAX_INFOS 30
 #define MAX_INTERIORS 50
@@ -329,6 +330,17 @@ new Menu:FoodStallMenu;
 // Farmer job
 new FJArea;
 // Farmer job
+
+//Lumberjack Job
+#define MAX_1_TREE 25
+#define MAX_2_TREE 22
+#define MAX_3_TREE 4
+
+new Level_one_tree[MAX_1_TREE];
+new Level_two_tree[MAX_2_TREE];
+new Level_three_tree[MAX_3_TREE];
+//Lumberjack Job
+
 
 //anti cheat
 new cheatID[MAX_PLAYERS];
@@ -1077,6 +1089,7 @@ public OnGameModeInit()
     //Loading model stuff to the skin menu
     AddObjects();
     AddHousesInteriors();
+	AddLumberJackObjects();
 //  offersent = SetTimerEx("ResetOfferSent", 240000, 1);
     checkgastimer = SetTimer("CheckGas", VEHICLES_GAS_TIMER, 1);
     onemintimer = SetTimer("OneMinuteTimer", 60000, 1);
@@ -1619,6 +1632,65 @@ public OnPlayerDisconnect(playerid, reason)
 }
 
 /* =================== Stocks =================== */
+stock AddLumberJackObjects()
+{
+	Level_two_tree[0] = CreateDynamicObject(655, -471.19479, -52.98130, 59.20140,   0.00000, 0.00000, -69.00000);
+	Level_two_tree[1] = CreateDynamicObject(655, -471.19479, -52.98130, 59.20140,   0.00000, 0.00000, -69.00000);
+	Level_two_tree[2] = CreateDynamicObject(655, -472.93802, -43.83394, 58.96991,   0.00000, 0.00000, 0.00000);
+	Level_two_tree[3] = CreateDynamicObject(655, -460.96335, -38.72423, 58.92886,   0.00000, 0.00000, 0.00000);
+	Level_two_tree[4] = CreateDynamicObject(655, -466.73715, -46.23399, 58.95166,   0.00000, 0.00000, 0.00000);
+	Level_two_tree[5] = CreateDynamicObject(655, -480.26727, -53.08250, 59.32454,   0.00000, 0.00000, 0.00000);
+	Level_two_tree[6] = CreateDynamicObject(655, -479.26199, -47.86682, 59.09486,   0.00000, 0.00000, 0.00000);
+	Level_two_tree[7] = CreateDynamicObject(655, -480.64752, -40.63152, 58.98586,   0.00000, 0.00000, 0.00000);
+	Level_three_tree[0] = CreateDynamicObject(664, -489.99545, -44.24464, 60.24883,   0.00000, 0.00000, 0.00000);
+	Level_three_tree[1] = CreateDynamicObject(664, -442.04510, -81.95722, 58.04838,   0.00000, 0.00000, 0.00000);
+	Level_three_tree[2] = CreateDynamicObject(664, -439.93881, -113.12749, 61.77155,   0.00000, 0.00000, 0.00000);
+	Level_three_tree[3] = CreateDynamicObject(664, -533.06744, -37.34577, 61.67760,   0.00000, 0.00000, 0.00000);
+	Level_one_tree[0] = CreateDynamicObject(673, -498.96558, -150.32407, 73.78341,   0.00000, 0.00000, 0.00000);
+	Level_one_tree[1] = CreateDynamicObject(673, -495.11652, -152.33636, 74.75414,   0.00000, 0.00000, 0.00000);
+	Level_one_tree[2] = CreateDynamicObject(673, -492.21011, -149.39110, 74.00037,   0.00000, 0.00000, 0.00000);
+	Level_one_tree[3] = CreateDynamicObject(673, -489.32184, -153.27153, 74.83363,   0.00000, 0.00000, 0.00000);
+	Level_one_tree[4] = CreateDynamicObject(673, -485.85339, -152.96667, 74.66115,   0.00000, 0.00000, 0.00000);
+	Level_one_tree[5] = CreateDynamicObject(673, -487.72876, -148.22897, 73.58713,   0.00000, 0.00000, 0.00000);
+	Level_one_tree[6] = CreateDynamicObject(673, -482.93277, -151.10966, 74.11545,   0.00000, 0.00000, 0.00000);
+	Level_one_tree[7] = CreateDynamicObject(673, -478.19635, -153.30046, 74.47131,   0.00000, 0.00000, 0.00000);
+	Level_one_tree[8] = CreateDynamicObject(673, -481.04294, -149.23343, 73.55993,   0.00000, 0.00000, 0.00000);
+	Level_one_tree[9] = CreateDynamicObject(673, -476.48898, -149.85435, 73.52540,   0.00000, 0.00000, 0.00000);
+	CreateDynamicObject(13490, -457.48822, -186.38516, 19.88281,   356.85840, 0.00000, 3.14159);
+	CreateDynamicObject(13490, -454.42242, -180.23033, 19.88281,   356.85840, 0.00000, 3.14159);
+	Level_one_tree[10] = CreateDynamicObject(673, -470.83102, -146.79898, 72.51149,   0.00000, 0.00000, 0.00000);
+	Level_one_tree[11] = CreateDynamicObject(673, -468.84439, -152.39691, 73.84797,   0.00000, 0.00000, 0.00000);
+	Level_one_tree[12] = CreateDynamicObject(673, -477.78070, -146.48019, 72.72443,   0.00000, 0.00000, 0.00000);
+	Level_one_tree[13] = CreateDynamicObject(673, -473.70132, -149.96938, 73.44292,   0.00000, 0.00000, 0.00000);
+	Level_one_tree[14] = CreateDynamicObject(673, -496.46140, -147.87315, 73.51994,   0.00000, 0.00000, 0.00000);
+	Level_one_tree[15] = CreateDynamicObject(673, -441.45010, -75.10637, 58.09131,   0.00000, 0.00000, 0.00000);
+	Level_one_tree[16] = CreateDynamicObject(673, -448.11343, -77.43194, 58.35195,   0.00000, 0.00000, 0.00000);
+	Level_one_tree[17] = CreateDynamicObject(673, -435.98355, -89.95840, 57.75246,   0.00000, 0.00000, 0.00000);
+	Level_one_tree[18] = CreateDynamicObject(673, -444.30643, -86.91438, 58.12240,   0.00000, 0.00000, 0.00000);
+	Level_one_tree[19] = CreateDynamicObject(673, -450.16949, -82.88100, 58.39711,   0.00000, 0.00000, 0.00000);
+	Level_one_tree[20] = CreateDynamicObject(673, -468.70566, -74.51253, 59.23436,   0.00000, 0.00000, 0.00000);
+	Level_one_tree[21] = CreateDynamicObject(673, -466.60318, -67.06584, 59.08105,   0.00000, 0.00000, 0.00000);
+	Level_one_tree[22] = CreateDynamicObject(673, -473.12997, -75.78997, 59.40861,   0.00000, 0.00000, 0.00000);
+	Level_one_tree[23] = CreateDynamicObject(673, -473.61780, -72.37457, 59.45388,   0.00000, 0.00000, 0.00000);
+	Level_one_tree[24] = CreateDynamicObject(673, -472.66718, -67.82055, 59.36488,   0.00000, 0.00000, 0.00000);
+	Level_two_tree[8] = CreateDynamicObject(655, -481.06366, -132.37408, 67.61156,   0.00000, 0.00000, 0.00000);
+	Level_two_tree[9] = CreateDynamicObject(655, -491.27158, -110.71741, 62.83430,   0.00000, 0.00000, 0.00000);
+	Level_two_tree[10] = CreateDynamicObject(655, -456.88995, -123.31267, 63.84986,   0.00000, 0.00000, 0.00000);
+	Level_two_tree[11] = CreateDynamicObject(655, -474.09811, -97.74814, 60.09623,   0.00000, 0.00000, 0.00000);
+	Level_two_tree[12] = CreateDynamicObject(655, -495.33774, -92.74224, 60.34557,   0.00000, 0.00000, 0.00000);
+	Level_two_tree[13] = CreateDynamicObject(732, -537.42462, -138.81581, 72.64963,   0.00000, 0.00000, 0.00000);
+	Level_two_tree[14] = CreateDynamicObject(732, -553.19745, -136.29666, 72.30764,   0.00000, 0.00000, 0.00000);
+	Level_two_tree[15] = CreateDynamicObject(732, -544.42267, -130.62860, 69.62955,   0.00000, 0.00000, 0.00000);
+	Level_two_tree[16] = CreateDynamicObject(732, -574.92969, -145.12036, 75.89312,   0.00000, 0.00000, 0.00000);
+	Level_two_tree[17] = CreateDynamicObject(732, -568.34509, -134.87567, 72.28563,   0.00000, 0.00000, 0.00000);
+	Level_two_tree[18] = CreateDynamicObject(732, -542.44006, -117.48473, 65.94681,   0.00000, 0.00000, 0.00000);
+	Level_two_tree[19] = CreateDynamicObject(732, -535.14288, -128.14667, 68.43265,   0.00000, 0.00000, 0.00000);
+	Level_two_tree[20] = CreateDynamicObject(732, -528.06555, -140.10623, 72.76089,   0.00000, 0.00000, 0.00000);
+	Level_two_tree[21] = CreateDynamicObject(732, -531.00012, -117.26604, 65.38523,   0.00000, 0.00000, 0.00000);
+	CreateDynamicObject(1368, -502.45340, -55.28540, 60.48060,   0.00000, 0.00000, -85.26002);
+	CreateDynamicObject(1368, -502.28201, -58.29841, 60.48060,   0.00000, 0.00000, -83.82002);
+}
+
 stock IsPlayerInWater(playerid)
 {
         new Float:Z;
@@ -4158,7 +4230,14 @@ stock GivePermWeapon(playerid, slot, wepid, ammo)
 
 stock RemoveObjectsFromServer(playerid)
 {
-    //Ferma Maho Montgomery
+	//Lumberjack job
+	RemoveBuildingForPlayer(playerid, 785, -449.9375, 10.8359, 46.5391, 0.25);
+	RemoveBuildingForPlayer(playerid, 12807, -478.1875, -100.4141, 64.4609, 0.25);
+	RemoveBuildingForPlayer(playerid, 694, -439.1875, -19.9375, 58.0938, 0.25);
+	RemoveBuildingForPlayer(playerid, 791, -449.9375, 10.8359, 46.5391, 0.25);
+	//Lumberjack job
+   
+   //Ferma Maho Montgomery
     RemoveBuildingForPlayer(playerid, 13002, 1554.0547, -0.3125, 26.8125, 0.25);
     //Blueberry random
     RemoveBuildingForPlayer(playerid, 1351, 343.4141, -136.1016, 0.4609, 0.25);
@@ -11038,6 +11117,27 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
     }
     if(PRESSED(KEY_FIRE))
     {
+		//================= Lumberjack Job =================//
+		if(job == LUMBER)
+		{	
+			for (new i = 0; i <= MAX_1_TREE; i++)
+			{
+				if(IsPlayerInRangeOfPoint(playerid, 1.0, LumberTrees1[i][tX], LumberTrees1[i][tY], LumberTrees1[i][tZ]))
+				{
+					SCM(playerid, -1, "SUCCES: Ai lovit copacul cu toporul! + $100");
+					GiveCash(playerid, 100);
+				}
+				else if(IsPlayerInRangeOfPoint(playerid, 1.0, LumberTrees2[i][tX], LumberTrees2[i][tY], LumberTrees2[i][tZ]))
+				{
+					SCM(playerid, -1, "ESEC: Copacul este de level 2!");
+				}
+				else if(IsPlayerInRangeOfPoint(playerid, 1.0, LumberTrees3[i][tX], LumberTrees3[i][tY], LumberTrees3[i][tZ]))
+				{
+					SCM(playerid, -1, "ESEC: Copacul este de level 3!");
+				}
+			}
+		}
+		//================= Lumberjack Job =================//
         //================= Farmer Job =====================//
 		if(IsPlayerInAnyVehicle(playerid) && GetPlayerVehicleID(playerid) == FarmInfo[playerid][pVehicleHire])
 	    {
@@ -36976,17 +37076,26 @@ CMD:exittrailer(playerid, params[])
 }
 
 
-//========================= Miner Job ======================//]
+//========================= Lumberjack Job ======================//]
 
 // Commands
-CMD:mine(playerid, params[])
+/*CMD:cuttree(playerid, params[])
 {
+ 
+	if(!IsPlayerConnected(playerid)) return SCM(playerid, COLOR_GREY, "Trebuie sa fi conectat pentru a folosi aceasta comanda!");
+	if(PlayerInfo[playerid][pJob] != LUMBER) return SCM(playerid, COLOR_GREY, "[SERVER]: Nu ai jobul de Lumberjack!");
+	for (new i = 0; i < MAX_1_TREE; i++)
+	{
+		if(IsPlayerInRangeOfPoint(playerid, 0.5, LumberTrees1[i][tX], LumberTrees1[i][tY], LumberTrees1[i][tZ]))
+		{
+			SCM()
+		}
+	}
+	
+
+}*/
 
 
 
-}
 
-
-
-
-//========================= Miner Job ======================//
+//========================= Lumberjack Job ======================//
