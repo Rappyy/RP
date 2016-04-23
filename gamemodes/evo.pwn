@@ -36975,3 +36975,11 @@ CMD:exittrailer(playerid, params[])
 		SCM(playerid, COLOR_GREY, "Nu esti intr-o rulota!");
 	}
 }
+
+///////////////////////// Miner Job //////////////////////////////
+
+//Comenzi
+
+
+
+///////////////////////// Miner Job //////////////////////////////
