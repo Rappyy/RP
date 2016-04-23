@@ -43,10 +43,9 @@ new dbHandle;
 #if defined localhost_mysql
 
     #define SQL_HOST "127.0.0.1"
-    #define SQL_USER "root"
-    #define SQL_PASS ""
-    #define SQL_DB "evorp_test"
-
+    #define SQL_USER "rappy"
+    #define SQL_PASS "Andrei93"
+    #define SQL_DB "evo-rp"
 #else
 
     #define SQL_HOST "127.0.0.1"
