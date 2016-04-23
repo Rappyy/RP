@@ -36897,7 +36897,7 @@ CMD:spraytag(playerid, params[])
     else
     {
         msize = (size%10)*10;
-        printf("msize = %d", msize);
+        printf("MSIZE = %d", msize);
     }
 
     CreateSpray(id, text, GetName(playerid), X+1, Y, Z, 0, 0, R, size, msize, bold, color, playerid);
