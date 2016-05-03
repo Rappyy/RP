@@ -35,7 +35,7 @@ native gpci (playerid, serial [], len); // this is the native.
 27 - Trucking job (Dropping).
 28 - Trucking job (Returning).
 -----------------------------------*/
-#define localhost_mysql
+//#define localhost_mysql
 
 //MySQL Information
 new dbHandle;
@@ -263,12 +263,12 @@ new Menu:FoodStallMenu;
 #define StopPlayerHoldingObject(%1) RemovePlayerAttachedObject(%1,MAX_PLAYER_ATTACHED_OBJECTS-1)
 #define IsPlayerHoldingObject(%1) IsPlayerAttachedObjectSlotUsed(%1,MAX_PLAYER_ATTACHED_OBJECTS-1)
 
-#define GameModeVersion "1.0"
+#define GameModeVersion "5.0"
 #define GameModeText "EVO:RP "GameModeVersion""
 #if defined localhost_mysql
     #define ServerName "Evolution Role Play - Server de teste"
 #else
-    #define ServerName "Evolution Role Play [www.evolution-roleplay.ro]"
+    #define ServerName "Evolution Role Play [www.evolution-rp.ro]"
 #endif
 #define LANGUAGE "Romanian"
 
@@ -1062,7 +1062,7 @@ public OnGameModeInit()
     AllowInteriorWeapons(1);
     EnableStuntBonusForAll(0);
     SetNameTagDrawDistance(22.5);
-    SendRconCommand("weburl www.evolution-roleplay.ro");
+    SendRconCommand("weburl www.evolution-rp.ro");
     SetGameModeText(GameModeText);
     format(msg, sizeof(msg), "hostname %s", ServerName);
     SendRconCommand(msg);
@@ -13067,7 +13067,7 @@ public OnAccountCheck(playerid)
     }
     else
     {
-        SCM(playerid, COLOR_GREY, "Trebuie sa te inregistrezi pe site! (www.evolution-roleplay.ro/register)");
+        SCM(playerid, COLOR_GREY, "Trebuie sa te inregistrezi pe site! (www.evolution-rp.ro/register)");
         SetTimerEx("KickPlayer",500,0,"d",playerid);
         //Send registration dialog
 /*      ServerMSG(playerid, "Pentru a te inregistra, introdu o parola cu care te vei loga.");
