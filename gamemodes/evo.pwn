@@ -50,9 +50,9 @@ new dbHandle;
 #else
 
     #define SQL_HOST "127.0.0.1"
-    #define SQL_USER "evorp_server"
+    #define SQL_USER "iulian"
     #define SQL_PASS "0zie88y7"
-    #define SQL_DB "evorp"
+    #define SQL_DB "evo_rp"
 
 #endif
 
@@ -288,25 +288,25 @@ new Menu:FoodStallMenu;
 //====Defines====
 #define MAX_LABELS 50
 #define MAX_JOBS 10
-#define MAX_DOORS 30
-#define MAX_INFOS 30
-#define MAX_INTERIORS 50
+#define MAX_DOORS 50
+#define MAX_INFOS 50
+#define MAX_INTERIORS 100
 #define MAX_BANKS 3
-#define MAX_ATMS 20
-#define MAX_GAS_STATIONS 20
+#define MAX_ATMS 50
+#define MAX_GAS_STATIONS 50
 #define MAX_HOUSES 602 // Needs to be plus 1
-#define MAX_GPS_LOCATION 20
-#define MAX_BIZ 75
+#define MAX_GPS_LOCATION 50
+#define MAX_BIZ 100
 #define MAX_FURNITURE 100
 #define MAX_HOUSE_WEAPONS 6 // Needs to be plus 1
 #define MAX_VEHICLE_WEAPONS 6 // Needs to be plus 1
 #define MAX_FOOD_STANDS 1
-#define MAX_WEP_DROPS 50
-#define MAX_RADIO_CHANNELS 1000
+#define MAX_WEP_DROPS 100
+#define MAX_RADIO_CHANNELS 100
 #define MAX_RADIO_SLOTS 4 // Needs to be plus 1
-#define MAX_NOTES 6
+#define MAX_NOTES 5
 #define MAX_DEALERSHIPS 3
-#define MAX_PARK_METERS 50
+#define MAX_PARK_METERS 100
 #define MAX_APBS 11
 #define MAX_FACTIONS 11
 #define MAX_FACTION_DOORS 60
@@ -4196,19 +4196,6 @@ stock RemoveObjectsFromServer(playerid)
     RemoveBuildingForPlayer(playerid, 1440, 346.2344, -103.7656, 0.8125, 0.25);
     RemoveBuildingForPlayer(playerid, 13060, 360.5156, -97.2344, 3.3516, 0.25);
     RemoveBuildingForPlayer(playerid, 1440, 344.2188, -78.9063, 0.8906, 0.25);
-    //Redcounty Camp
-    RemoveBuildingForPlayer(playerid, 3405, -447.1016, -48.5938, 61.3594, 0.25);
-    RemoveBuildingForPlayer(playerid, 3405, -435.6875, -48.6016, 60.8594, 0.25);
-    RemoveBuildingForPlayer(playerid, 3423, -435.8438, -63.5234, 57.8672, 0.25);
-    RemoveBuildingForPlayer(playerid, 13369, -569.6953, -107.1016, 67.5000, 0.25);
-    RemoveBuildingForPlayer(playerid, 12807, -478.1875, -100.4141, 64.4609, 0.25);
-    RemoveBuildingForPlayer(playerid, 3415, -435.8438, -63.5234, 57.8672, 0.25);
-    RemoveBuildingForPlayer(playerid, 12808, -563.3125, -57.1875, 65.4375, 0.25);
-    RemoveBuildingForPlayer(playerid, 13435, -447.6797, -52.9063, 61.5625, 0.25);
-    RemoveBuildingForPlayer(playerid, 3403, -447.1016, -48.5938, 61.3594, 0.25);
-    RemoveBuildingForPlayer(playerid, 3403, -435.6875, -48.6016, 60.8594, 0.25);
-    RemoveBuildingForPlayer(playerid, 834, -490.9688, -39.3672, 61.6328, 0.25);
-    RemoveBuildingForPlayer(playerid, 13004, -510.6719, -177.9141, 78.5703, 0.25);
     //skatepark Blueberry
     RemoveBuildingForPlayer(playerid, 13029, 93.4063, -173.8281, 1.9688, 0.25);
     RemoveBuildingForPlayer(playerid, 13189, 92.1250, -164.9141, 1.5859, 0.25);
@@ -4546,9 +4533,6 @@ stock RemoveObjectsFromServer(playerid)
     RemoveBuildingForPlayer(playerid, 647, 1051.4688, -1775.6094, 13.9766, 0.25);
     RemoveBuildingForPlayer(playerid, 620, 1049.7891, -1757.1172, 12.3516, 0.25);
     RemoveBuildingForPlayer(playerid, 647, 1051.4688, -1752.2500, 13.9766, 0.25);
-    //RESTAURANT SKATEPARK
-    RemoveBuildingForPlayer(playerid, 4606, 1825.0000, -1413.9297, 12.5547, 0.25);
-    RemoveBuildingForPlayer(playerid, 4594, 1825.0000, -1413.9297, 12.5547, 0.25);
     
     return 1;   
 }
@@ -8438,8 +8422,8 @@ stock ShowAPB(playerid, number)
     {
         if(ApbInfo[i][apbID] == number)
         {
-            SCMEx(playerid, COLOR_LIGHTRED, "APB NR: %d || Created by: %s", ApbInfo[i][apbID], ApbInfo[i][apbOfficer]);
-            SCMEx(playerid, COLOR_LIGHTRED, "Suspect: %s || Charges: %s ", ApbInfo[i][apbSuspect], ApbInfo[i][apbCharge]);
+            SCMEx(playerid, COLOR_LIGHTRED, "APB NR: %d || Creat de: %s", ApbInfo[i][apbID], ApbInfo[i][apbOfficer]);
+            SCMEx(playerid, COLOR_LIGHTRED, "Suspect: %s || Acuzatii: %s ", ApbInfo[i][apbSuspect], ApbInfo[i][apbCharge]);
             SCM(playerid, COLOR_LIGHTRED, "_____________________________________");
         }
     }
@@ -11980,7 +11964,7 @@ public RemoteJackKick(playerid)
 public SetPlayerSpawn(playerid)
 {
     StopPlayerSpec(playerid);
-    SetSpawnInfo(playerid, 0, PlayerInfo[playerid][pSkin], 2263.3784,-85.1663,26.4535, 1.0, -1, -1, -1, -1, -1, -1);
+    SetSpawnInfo(playerid, 0, PlayerInfo[playerid][pSkin], 1686.7380,-2242.9150,-2.6913, 1.0, -1, -1, -1, -1, -1, -1);
     SpawnPlayer(playerid);
     new house = PlayerInfo[playerid][pHouseKey];
     if(GetIntVar(playerid, "JustDoneRegister") == 1)
@@ -16256,7 +16240,7 @@ public CheckStatus()
 
             PlayerInfo[i][pJailTime] = 0;
             PlayerInfo[i][pJailed] = 0;
-            SetPlayerPos(i, 2263.3784,-85.1663,26.4535);
+            SetPlayerPos(i, 1686.7380,-2242.9150,-2.6913);
             SetInterior(i, 0);
             SetPlayerVirtualWorld(i, 0);
             GameTextForPlayer(i,"~g~Ai fost eliberat din admin-jail.",5000,1);
@@ -16524,12 +16508,12 @@ public OneMinuteTimer()
     tmphour = shifthour;
     if ((tmphour > ghour) || (tmphour == 0 && ghour == 23))
     {
-        tmphour+=2;
+        // tmphour+=2; // WINTER
         format(string, sizeof(string), "SERVER: Acum este ora %d:00 ",tmphour);
         SCMALL(COLOR_WHITE,string);
         ghour = tmphour;
-        if(tmphour <= 12) SetWorldTime(tmphour-2);
-        else if(tmphour > 12) SetWorldTime(tmphour+5);
+        // if(tmphour <= 12) SetWorldTime(tmphour-2); // WINTER
+        // else if(tmphour > 12) SetWorldTime(tmphour+5); // WINTER
     }
     //=============================================================================
     foreach(new i : Player)
@@ -20477,7 +20461,7 @@ forward OnGPSLoad();
 COMMAND:gps(playerid, params[])
 {
     new gpsstr[500];
-    format(gpsstr, sizeof(gpsstr), "1. %s", GPSInfo[0][gpsName]);
+//    format(gpsstr, sizeof(gpsstr), "1. %s", GPSInfo[0][gpsName]);
     for(new i=1;i<MAX_GPS_LOCATION;i++)
     {
         if(GPSInfo[i][gpsOn] == 1)
