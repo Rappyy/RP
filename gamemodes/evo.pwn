@@ -20608,7 +20608,7 @@ CMD:notehelp(playerid, params[])
 CMD:fishhelp(playerid, params[])
 {
     SCM(playerid, COLOR_LIGHTGREEN,"___________________FISHHELP___________________");
-    SCM(playerid, COLOR_OOC,"** FISHHELP ** Trebuie sa duci inapoi pestele care are pana in 300kg.");
+    SCM(playerid, COLOR_OOC,"** FISHHELP ** Trebuie sa duci inapoi pestele care are pana in 100kg.");
     SCM(playerid, COLOR_GREY,"** FISHHELP ** /gofishing - Incepi sa pescuiesti dintro barca.");
     SCM(playerid, COLOR_GREY,"** FISHHELP ** /stopfishing - Inchei sesiunea de pescuit.");
     SCM(playerid, COLOR_GREY,"** FISHHELP ** /myfish - Iti arata pestii tai prinsi.");
