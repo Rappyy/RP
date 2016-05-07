@@ -16240,7 +16240,7 @@ public CheckStatus()
 
             PlayerInfo[i][pJailTime] = 0;
             PlayerInfo[i][pJailed] = 0;
-            SetPlayerPos(i, 1686.7380,-2242.9150,-2.6913);
+            SetPlayerPos(i, 1553.3107, 1675.8288, 16.1953);
             SetInterior(i, 0);
             SetPlayerVirtualWorld(i, 0);
             GameTextForPlayer(i,"~g~Ai fost eliberat din admin-jail.",5000,1);
@@ -16261,7 +16261,7 @@ public CheckStatus()
             {
                 PlayerInfo[i][pJailTime2] = 0;
                 PlayerInfo[i][pJailed] = 0;
-                SetPlayerPos(i, 1244.9471,335.5851,19.5547);
+                SetPlayerPos(i, 1553.3107, 1675.8288, 16.1953);
                 SetInterior(i, 0);
                 SetPlayerVirtualWorld(i, 0);
                 GameTextForPlayer(i,"~g~Libertate~n~~w~Incearca sa fi un cetatean mai bun",5000,1);
@@ -22641,7 +22641,7 @@ CMD:acceptdeath(playerid, params[])
         PlayerInfo[playerid][pDied] = 0;
         adeadtimer[playerid] = 0;
         FreezePlayer(playerid);
-        PutPlayer(playerid, 1245.5055,337.2111,19.5547);
+        PutPlayer(playerid, 1176.9000, -1323.8225, 14.0441);
         SCM(playerid, COLOR_LIGHTRED, "[SPITAL] Ingrijirea medicala a costat 20$.");
 		GiveCash(playerid, -20);
         SetPlayerChatBubble(playerid, ".", COLOR_LIGHTRED, 10.0, 100);
@@ -28868,7 +28868,7 @@ CMD:unarrest(playerid, params[])
 	if(PlayerInfo[targetid][pJailed] == 1) return SCM(playerid, -1, "Acel jucator este in Admin Jail!");
     PlayerInfo[targetid][pJailed] = 0;
     PlayerInfo[targetid][pJailTime2] = 0;
-    SetPlayerPos(targetid, 1541.0981,-1675.2145,13.5519);
+    SetPlayerPos(targetid, 1553.3107, 1675.8288, 16.1953);
     format(msg, sizeof(msg), "[Arrest] %s %s l-a scos pe %s din inchisoare.", GetRankName(playerid), GetNameEx(playerid), GetNameEx(targetid));
     ARESTMSG(COLOR_LIGHTRED, msg);
     SetSpawnInfo(playerid, 0, PlayerInfo[playerid][pSkin], 2262.7705,-86.0881,26.4535, 1.0, -1, -1, -1, -1, -1, -1);
@@ -31903,7 +31903,7 @@ CMD:aunjail(playerid, params[])
     PlayerInfo[targetid][pJailed] = 0;
     PlayerInfo[targetid][pJailTime] = 0;
     PlayerInfo[targetid][pJailTime2] = 0;
-    SetPlayerPos(targetid, 2262.7705,-86.0881,26.4535);
+    SetPlayerPos(targetid, 1553.3107, 1675.8288, 16.1953);
     format(msg, sizeof(msg), "AdmCmd: %s a fost scos din Ajail de catre %s.", GetName(targetid), GetName(playerid));
     LOCALAMSG(targetid, 20, COLOR_LIGHTRED, msg);
     SetSpawnInfo(playerid, 0, PlayerInfo[playerid][pSkin], 2262.7705,-86.0881,26.4535, 1.0, -1, -1, -1, -1, -1, -1);
@@ -32750,12 +32750,6 @@ CMD:serverobjects(playerid, params[])
     mysql_function_query(dbHandle, query, true, "ShowAmount", "is[128]", playerid, "Dynamic objects");
     return 1;
 }
-
-/*CMD:penis(playerid, params[])
-{
-    PlayerInfo[playerid][pAdmin] = BIG_ADMIN_LEVEL;
-    return 1;
-}*/
 
 CMD:makeadmin(playerid, params[])
 {
@@ -36675,6 +36669,14 @@ CMD:checkweapons(playerid, params[])
     return 1;
 }
 
+CMD:displaycoords(playerid, params[])
+{
+	new Float:pos[3];
+	GetPlayerPos(playerid, pos[0], pos[1], pos[2]);
+	SCMEx(playerid, COLOR_WHITE, "Coordonate: %f %f %f", pos[0], pos[1], pos[2]);
+	return 1;
+}
+
 CMD:checkserials(playerid, params[])
 {
     if(!CheckAdmin(playerid, ADMIN_LEVEL_1)) return NotAuthMSG(playerid);
@@ -36875,7 +36877,7 @@ CMD:trash(playerid, params[])
                 {
                     SetPVarInt(playerid, "GarbageFull", 1);
                     SCM(playerid, COLOR_GREY, "Trebuie sa te intorci la groapa de gunoi pentru a descarca masina");
-                    SetPlayerCheckpoint(playerid, 2402.4753,90.8707,27.1285, 4.0);
+                    SetPlayerCheckpoint(playerid, 2108.7170, -1977.7446, 13.5468, 4.0);
                 }				
 			}
 			else
@@ -36893,7 +36895,7 @@ CMD:trash(playerid, params[])
 
 CMD:takeuniform(playerid, params[])
 {
-	if(!PlayerToPoint(2.0, playerid, 2409.2390,82.0389,26.4731)) return SCM(playerid, -1, "Trebuie sa te aflii la locul pentru Uniforma de gunoier!");
+	if(!PlayerToPoint(2.0, playerid, 2195.5798, -1973.2034, 13.5589)) return SCM(playerid, -1, "Trebuie sa te aflii la locul pentru Uniforma de gunoier!");
 	if(PlayerInfo[playerid][pJob] != GARBAGE) return SCM(playerid, -1, "Nu ai jobul de gunoier!");
 	if(GetPVarInt(playerid, "TrashUniform") == 0)
 	{
