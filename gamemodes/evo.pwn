@@ -35,7 +35,7 @@ native gpci (playerid, serial [], len); // this is the native.
 27 - Trucking job (Dropping).
 28 - Trucking job (Returning).
 -----------------------------------*/
-#define localhost_mysql
+//#define localhost_mysql
 
 //MySQL Information
 new dbHandle;
@@ -49,9 +49,9 @@ new dbHandle;
 #else
 
     #define SQL_HOST "127.0.0.1"
-    #define SQL_USER "evorp_server"
+    #define SQL_USER "iulian"
     #define SQL_PASS "0zie88y7"
-    #define SQL_DB "evorp"
+    #define SQL_DB "evo_rp"
 
 #endif
 
@@ -263,12 +263,12 @@ new Menu:FoodStallMenu;
 #define StopPlayerHoldingObject(%1) RemovePlayerAttachedObject(%1,MAX_PLAYER_ATTACHED_OBJECTS-1)
 #define IsPlayerHoldingObject(%1) IsPlayerAttachedObjectSlotUsed(%1,MAX_PLAYER_ATTACHED_OBJECTS-1)
 
-#define GameModeVersion "1.0"
+#define GameModeVersion "5.0"
 #define GameModeText "EVO:RP "GameModeVersion""
 #if defined localhost_mysql
     #define ServerName "Evolution Role Play - Server de teste"
 #else
-    #define ServerName "Evolution Role Play [www.evolution-roleplay.ro]"
+    #define ServerName "Evolution Role Play [www.evolution-rp.ro]"
 #endif
 #define LANGUAGE "Romanian"
 
@@ -287,26 +287,33 @@ new Menu:FoodStallMenu;
 
 //====Defines====
 #define MAX_LABELS 50
+<<<<<<< HEAD
 #define MAX_JOBS 12
 #define MAX_DOORS 30
 #define MAX_INFOS 30
 #define MAX_INTERIORS 50
+=======
+#define MAX_JOBS 10
+#define MAX_DOORS 50
+#define MAX_INFOS 50
+#define MAX_INTERIORS 100
+>>>>>>> refs/remotes/origin/Moving-Server-to-LS/RC
 #define MAX_BANKS 3
-#define MAX_ATMS 20
-#define MAX_GAS_STATIONS 20
+#define MAX_ATMS 50
+#define MAX_GAS_STATIONS 50
 #define MAX_HOUSES 602 // Needs to be plus 1
-#define MAX_GPS_LOCATION 20
-#define MAX_BIZ 75
+#define MAX_GPS_LOCATION 50
+#define MAX_BIZ 100
 #define MAX_FURNITURE 100
 #define MAX_HOUSE_WEAPONS 6 // Needs to be plus 1
 #define MAX_VEHICLE_WEAPONS 6 // Needs to be plus 1
 #define MAX_FOOD_STANDS 1
-#define MAX_WEP_DROPS 50
-#define MAX_RADIO_CHANNELS 1000
+#define MAX_WEP_DROPS 100
+#define MAX_RADIO_CHANNELS 100
 #define MAX_RADIO_SLOTS 4 // Needs to be plus 1
-#define MAX_NOTES 6
+#define MAX_NOTES 5
 #define MAX_DEALERSHIPS 3
-#define MAX_PARK_METERS 50
+#define MAX_PARK_METERS 100
 #define MAX_APBS 11
 #define MAX_FACTIONS 11
 #define MAX_FACTION_DOORS 60
@@ -1073,7 +1080,7 @@ public OnGameModeInit()
     AllowInteriorWeapons(1);
     EnableStuntBonusForAll(0);
     SetNameTagDrawDistance(22.5);
-    SendRconCommand("weburl www.evolution-roleplay.ro");
+    SendRconCommand("weburl www.evolution-rp.ro");
     SetGameModeText(GameModeText);
     format(msg, sizeof(msg), "hostname %s", ServerName);
     SendRconCommand(msg);
@@ -4274,19 +4281,6 @@ stock RemoveObjectsFromServer(playerid)
     RemoveBuildingForPlayer(playerid, 1440, 346.2344, -103.7656, 0.8125, 0.25);
     RemoveBuildingForPlayer(playerid, 13060, 360.5156, -97.2344, 3.3516, 0.25);
     RemoveBuildingForPlayer(playerid, 1440, 344.2188, -78.9063, 0.8906, 0.25);
-    //Redcounty Camp
-    RemoveBuildingForPlayer(playerid, 3405, -447.1016, -48.5938, 61.3594, 0.25);
-    RemoveBuildingForPlayer(playerid, 3405, -435.6875, -48.6016, 60.8594, 0.25);
-    RemoveBuildingForPlayer(playerid, 3423, -435.8438, -63.5234, 57.8672, 0.25);
-    RemoveBuildingForPlayer(playerid, 13369, -569.6953, -107.1016, 67.5000, 0.25);
-    RemoveBuildingForPlayer(playerid, 12807, -478.1875, -100.4141, 64.4609, 0.25);
-    RemoveBuildingForPlayer(playerid, 3415, -435.8438, -63.5234, 57.8672, 0.25);
-    RemoveBuildingForPlayer(playerid, 12808, -563.3125, -57.1875, 65.4375, 0.25);
-    RemoveBuildingForPlayer(playerid, 13435, -447.6797, -52.9063, 61.5625, 0.25);
-    RemoveBuildingForPlayer(playerid, 3403, -447.1016, -48.5938, 61.3594, 0.25);
-    RemoveBuildingForPlayer(playerid, 3403, -435.6875, -48.6016, 60.8594, 0.25);
-    RemoveBuildingForPlayer(playerid, 834, -490.9688, -39.3672, 61.6328, 0.25);
-    RemoveBuildingForPlayer(playerid, 13004, -510.6719, -177.9141, 78.5703, 0.25);
     //skatepark Blueberry
     RemoveBuildingForPlayer(playerid, 13029, 93.4063, -173.8281, 1.9688, 0.25);
     RemoveBuildingForPlayer(playerid, 13189, 92.1250, -164.9141, 1.5859, 0.25);
@@ -4516,6 +4510,114 @@ stock RemoveObjectsFromServer(playerid)
     RemoveBuildingForPlayer(playerid, 1351, 1227.1719, 341.6094, 18.4766, 0.25);
     RemoveBuildingForPlayer(playerid, 1351, 1270.9063, 345.2344, 18.4766, 0.25);
     RemoveBuildingForPlayer(playerid, 1351, 1325.9297, 358.0781, 18.4766, 0.25);
+    //MALL
+    RemoveBuildingForPlayer(playerid, 6130, 1117.5859, -1490.0078, 32.7188, 10.0);
+    RemoveBuildingForPlayer(playerid, 6255, 1117.5859, -1490.0078, 32.7188, 10.0);
+    RemoveBuildingForPlayer(playerid, 762, 1175.3594, -1420.1875, 19.8828, 0.25);
+    RemoveBuildingForPlayer(playerid, 615, 1166.3516, -1417.6953, 13.9531, 0.25);
+    RemoveBuildingForPlayer(playerid, 615, 1147.6016, -1416.8750, 13.9531, 0.25);//POD
+    //LSPD - EXTERIOR
+    RemoveBuildingForPlayer(playerid, 647, 1541.4766, -1648.4531, 14.4375, 0.25);
+    RemoveBuildingForPlayer(playerid, 647, 1541.7422, -1638.9141, 14.4375, 0.25);
+    //GANTON - TYRANDE
+    RemoveBuildingForPlayer(playerid, 1307, 2263.5234, -1742.1953, 12.7500, 0.25);
+    RemoveBuildingForPlayer(playerid, 1307, 2295.7031, -1742.1953, 12.7500, 0.25);
+    //SPITAL - IULY
+    RemoveBuildingForPlayer(playerid, 1297, 1190.7734, -1320.8594, 15.9453, 0.25);
+    //ELCORONA
+    RemoveBuildingForPlayer(playerid, 4982, 1892.5391, -2012.8281, 21.3750, 0.25);
+    RemoveBuildingForPlayer(playerid, 1226, 1882.3672, -1992.1328, 16.2734, 0.25);
+    //MAIN STREET SOUTH
+    RemoveBuildingForPlayer(playerid, 713, 1304.7734, -1753.5859, 12.4375, 0.25);
+    RemoveBuildingForPlayer(playerid, 713, 1304.7734, -1729.9375, 12.4375, 0.25);
+    RemoveBuildingForPlayer(playerid, 713, 1304.7734, -1780.1094, 12.4375, 0.25);
+    RemoveBuildingForPlayer(playerid, 713, 1304.7734, -1808.4922, 12.4375, 0.25);
+    RemoveBuildingForPlayer(playerid, 713, 1304.7734, -1839.8672, 12.4375, 0.25);
+    RemoveBuildingForPlayer(playerid, 6253, 1305.4688, -1619.7422, 13.3984, 0.25);
+    RemoveBuildingForPlayer(playerid, 620, 1304.1172, -1696.7969, 12.2891, 0.25);
+    RemoveBuildingForPlayer(playerid, 620, 1305.6719, -1669.8984, 12.5859, 0.25);
+    RemoveBuildingForPlayer(playerid, 620, 1305.5625, -1641.5313, 12.2891, 0.25);
+    RemoveBuildingForPlayer(playerid, 620, 1305.5625, -1614.8281, 12.2891, 0.25);
+    RemoveBuildingForPlayer(playerid, 6046, 1305.4688, -1619.7422, 13.3984, 0.25);
+    RemoveBuildingForPlayer(playerid, 620, 1305.6719, -1583.7031, 12.5859, 0.25);
+    //24-7 GARA - IULY
+    RemoveBuildingForPlayer(playerid, 4983, 1961.0313, -1871.4063, 23.7734, 0.25);
+    //DRUG COMPANY
+    RemoveBuildingForPlayer(playerid, 3244, 2632.3906, -2073.6406, 12.7578, 0.25);
+    RemoveBuildingForPlayer(playerid, 3244, 2632.3906, -2136.3281, 12.7578, 0.25);
+    RemoveBuildingForPlayer(playerid, 3682, 2673.0859, -2114.9063, 36.5469, 0.25);
+    RemoveBuildingForPlayer(playerid, 3683, 2684.7656, -2088.0469, 20.1172, 0.25);
+    RemoveBuildingForPlayer(playerid, 3289, 2679.2344, -2106.9766, 12.5391, 0.25);
+    RemoveBuildingForPlayer(playerid, 3290, 2647.1016, -2073.3750, 12.4453, 0.25);
+    RemoveBuildingForPlayer(playerid, 3290, 2658.7188, -2073.3750, 12.4453, 0.25);
+    RemoveBuildingForPlayer(playerid, 3290, 2671.5000, -2073.3750, 12.4453, 0.25);
+    RemoveBuildingForPlayer(playerid, 3779, 2631.9141, -2098.5781, 20.0078, 0.25);
+    RemoveBuildingForPlayer(playerid, 3779, 2653.9375, -2092.3359, 20.0078, 0.25);
+    RemoveBuildingForPlayer(playerid, 3675, 2663.0547, -2121.6563, 30.6250, 0.25);
+    RemoveBuildingForPlayer(playerid, 3675, 2665.7734, -2122.5078, 22.2813, 0.25);
+    RemoveBuildingForPlayer(playerid, 3675, 2667.3594, -2120.7969, 19.4297, 0.25);
+    RemoveBuildingForPlayer(playerid, 3675, 2669.3359, -2120.7969, 26.9141, 0.25);
+    RemoveBuildingForPlayer(playerid, 3675, 2669.3359, -2120.7969, 13.2500, 0.25);
+    RemoveBuildingForPlayer(playerid, 3675, 2679.4375, -2121.6563, 21.4297, 0.25);
+    RemoveBuildingForPlayer(playerid, 3675, 2675.8594, -2121.6563, 25.6016, 0.25);
+    RemoveBuildingForPlayer(playerid, 3675, 2684.2031, -2122.5078, 22.8906, 0.25);
+    RemoveBuildingForPlayer(playerid, 3675, 2685.0547, -2119.7891, 14.5391, 0.25);
+    RemoveBuildingForPlayer(playerid, 3675, 2685.1172, -2119.1016, 19.4297, 0.25);
+    RemoveBuildingForPlayer(playerid, 3637, 2631.9141, -2098.5781, 20.0078, 0.25);
+    RemoveBuildingForPlayer(playerid, 3637, 2653.9375, -2092.3359, 20.0078, 0.25);
+    RemoveBuildingForPlayer(playerid, 3673, 2673.0859, -2114.9063, 36.5469, 0.25);
+    RemoveBuildingForPlayer(playerid, 3258, 2679.2344, -2106.9766, 12.5391, 0.25);
+    RemoveBuildingForPlayer(playerid, 3674, 2682.3203, -2114.5313, 39.0313, 0.25);
+    RemoveBuildingForPlayer(playerid, 3636, 2684.7656, -2088.0469, 20.1172, 0.25);
+    RemoveBuildingForPlayer(playerid, 3256, 2647.1016, -2073.3750, 12.4453, 0.25);
+    RemoveBuildingForPlayer(playerid, 3256, 2658.7188, -2073.3750, 12.4453, 0.25);
+    RemoveBuildingForPlayer(playerid, 3256, 2671.5000, -2073.3750, 12.4453, 0.25);
+    //primarie
+    RemoveBuildingForPlayer(playerid, 713, 1407.1953, -1749.3125, 13.0938, 0.25);
+    RemoveBuildingForPlayer(playerid, 713, 1405.2344, -1821.1172, 13.1016, 0.25);
+    RemoveBuildingForPlayer(playerid, 620, 1417.9766, -1832.5313, 11.9844, 0.25);
+    RemoveBuildingForPlayer(playerid, 673, 1405.5781, -1831.6953, 12.3984, 0.25);
+    RemoveBuildingForPlayer(playerid, 4174, 1435.7656, -1823.6641, 15.1797, 0.25);
+    RemoveBuildingForPlayer(playerid, 700, 1404.9141, -1765.2656, 12.9141, 0.25);
+    RemoveBuildingForPlayer(playerid, 4173, 1427.2734, -1756.1797, 15.0000, 0.25);
+    RemoveBuildingForPlayer(playerid, 673, 1415.3125, -1748.5625, 12.3984, 0.25);
+    RemoveBuildingForPlayer(playerid, 620, 1429.5313, -1748.4219, 12.9063, 0.25);
+    RemoveBuildingForPlayer(playerid, 700, 1438.0313, -1747.9375, 13.4453, 0.25);
+    RemoveBuildingForPlayer(playerid, 620, 1447.9063, -1748.2266, 12.9063, 0.25);
+    RemoveBuildingForPlayer(playerid, 620, 1516.0000, -1748.6016, 13.0078, 0.25);
+    RemoveBuildingForPlayer(playerid, 620, 1549.5313, -1832.3125, 12.8828, 0.25);
+    RemoveBuildingForPlayer(playerid, 673, 1555.6641, -1830.5938, 13.0234, 0.25);
+    RemoveBuildingForPlayer(playerid, 4175, 1524.4141, -1823.8516, 15.1797, 0.25);
+    RemoveBuildingForPlayer(playerid, 700, 1554.8203, -1816.1563, 13.4766, 0.25);
+    RemoveBuildingForPlayer(playerid, 673, 1553.2578, -1764.8125, 12.7969, 0.25);
+    RemoveBuildingForPlayer(playerid, 4172, 1534.7656, -1756.1797, 15.0000, 0.25);
+    RemoveBuildingForPlayer(playerid, 620, 1533.2656, -1749.0234, 12.8047, 0.25);
+    RemoveBuildingForPlayer(playerid, 673, 1522.1641, -1748.5703, 13.0234, 0.25);
+    RemoveBuildingForPlayer(playerid, 700, 1553.7031, -1747.9375, 13.4063, 0.25);
+    RemoveBuildingForPlayer(playerid, 647, 1541.4453, -1713.3047, 14.4297, 0.25);
+    RemoveBuildingForPlayer(playerid, 647, 1541.2969, -1702.6016, 14.4375, 0.25);
+    RemoveBuildingForPlayer(playerid, 647, 1546.6016, -1693.3906, 14.4375, 0.25);
+    RemoveBuildingForPlayer(playerid, 647, 1546.8672, -1687.1016, 14.4375, 0.25);
+    RemoveBuildingForPlayer(playerid, 647, 1546.6016, -1664.6250, 14.4375, 0.25);
+    RemoveBuildingForPlayer(playerid, 647, 1546.8672, -1658.3438, 14.4375, 0.25);
+    RemoveBuildingForPlayer(playerid, 647, 1541.4766, -1648.4531, 14.4375, 0.25);
+    RemoveBuildingForPlayer(playerid, 647, 1541.7422, -1638.9141, 14.4375, 0.25);
+    //LITTLE ITALY
+    RemoveBuildingForPlayer(playerid, 1227, 1092.0078, -1881.2813, 13.3047, 0.25);
+    RemoveBuildingForPlayer(playerid, 1220, 1092.8438, -1879.6016, 12.8594, 0.25);
+    RemoveBuildingForPlayer(playerid, 1635, 1091.8828, -1878.3750, 16.0391, 0.25);
+    RemoveBuildingForPlayer(playerid, 1220, 1093.5391, -1878.6094, 12.8594, 0.25);
+    RemoveBuildingForPlayer(playerid, 1227, 1175.3828, -1877.5625, 13.3047, 0.25);
+    RemoveBuildingForPlayer(playerid, 1227, 1091.9844, -1876.8281, 13.3047, 0.25);
+    RemoveBuildingForPlayer(playerid, 1227, 1101.9922, -1874.9766, 13.3047, 0.25);
+    RemoveBuildingForPlayer(playerid, 1227, 1117.4688, -1874.9766, 13.3047, 0.25);
+    //PARCARE CONFERENCE CENTER
+    RemoveBuildingForPlayer(playerid, 713, 1109.6953, -1752.6172, 11.8516, 0.25);
+    RemoveBuildingForPlayer(playerid, 713, 1098.4141, -1725.7422, 12.1563, 0.25);
+    RemoveBuildingForPlayer(playerid, 713, 1055.2813, -1725.7422, 12.1563, 0.25);
+    RemoveBuildingForPlayer(playerid, 647, 1051.4688, -1775.6094, 13.9766, 0.25);
+    RemoveBuildingForPlayer(playerid, 620, 1049.7891, -1757.1172, 12.3516, 0.25);
+    RemoveBuildingForPlayer(playerid, 647, 1051.4688, -1752.2500, 13.9766, 0.25);
     
     return 1;   
 }
@@ -8405,8 +8507,8 @@ stock ShowAPB(playerid, number)
     {
         if(ApbInfo[i][apbID] == number)
         {
-            SCMEx(playerid, COLOR_LIGHTRED, "APB NR: %d || Created by: %s", ApbInfo[i][apbID], ApbInfo[i][apbOfficer]);
-            SCMEx(playerid, COLOR_LIGHTRED, "Suspect: %s || Charges: %s ", ApbInfo[i][apbSuspect], ApbInfo[i][apbCharge]);
+            SCMEx(playerid, COLOR_LIGHTRED, "APB NR: %d || Creat de: %s", ApbInfo[i][apbID], ApbInfo[i][apbOfficer]);
+            SCMEx(playerid, COLOR_LIGHTRED, "Suspect: %s || Acuzatii: %s ", ApbInfo[i][apbSuspect], ApbInfo[i][apbCharge]);
             SCM(playerid, COLOR_LIGHTRED, "_____________________________________");
         }
     }
@@ -11968,7 +12070,7 @@ public RemoteJackKick(playerid)
 public SetPlayerSpawn(playerid)
 {
     StopPlayerSpec(playerid);
-    SetSpawnInfo(playerid, 0, PlayerInfo[playerid][pSkin], 2263.3784,-85.1663,26.4535, 1.0, -1, -1, -1, -1, -1, -1);
+    SetSpawnInfo(playerid, 0, PlayerInfo[playerid][pSkin], 1686.7380,-2242.9150,-2.6913, 1.0, -1, -1, -1, -1, -1, -1);
     SpawnPlayer(playerid);
     new house = PlayerInfo[playerid][pHouseKey];
     if(GetIntVar(playerid, "JustDoneRegister") == 1)
@@ -13055,7 +13157,7 @@ public OnAccountCheck(playerid)
     }
     else
     {
-        SCM(playerid, COLOR_GREY, "Trebuie sa te inregistrezi pe site! (www.evolution-roleplay.ro/register)");
+        SCM(playerid, COLOR_GREY, "Trebuie sa te inregistrezi pe site! (www.evolution-rp.ro/register)");
         SetTimerEx("KickPlayer",500,0,"d",playerid);
         //Send registration dialog
 /*      ServerMSG(playerid, "Pentru a te inregistra, introdu o parola cu care te vei loga.");
@@ -16244,7 +16346,7 @@ public CheckStatus()
 
             PlayerInfo[i][pJailTime] = 0;
             PlayerInfo[i][pJailed] = 0;
-            SetPlayerPos(i, 2263.3784,-85.1663,26.4535);
+            SetPlayerPos(i, 1686.7380,-2242.9150,-2.6913);
             SetInterior(i, 0);
             SetPlayerVirtualWorld(i, 0);
             GameTextForPlayer(i,"~g~Ai fost eliberat din admin-jail.",5000,1);
@@ -16512,12 +16614,12 @@ public OneMinuteTimer()
     tmphour = shifthour;
     if ((tmphour > ghour) || (tmphour == 0 && ghour == 23))
     {
-        tmphour+=2;
+        // tmphour+=2; // WINTER
         format(string, sizeof(string), "SERVER: Acum este ora %d:00 ",tmphour);
         SCMALL(COLOR_WHITE,string);
         ghour = tmphour;
-        if(tmphour <= 12) SetWorldTime(tmphour-2);
-        else if(tmphour > 12) SetWorldTime(tmphour+5);
+        // if(tmphour <= 12) SetWorldTime(tmphour-2); // WINTER
+        // else if(tmphour > 12) SetWorldTime(tmphour+5); // WINTER
     }
     //=============================================================================
     foreach(new i : Player)
@@ -20407,7 +20509,7 @@ Dialog:ClothingDialog(playerid, response, listitem, inputtext[])
 /* =================== Dialogs =================== */
 
 /* =================== PlayerCommands =================== */
-COMMAND:bag(playerid,params[])
+CMD:bag(playerid,params[])
 {
     if(bag[playerid] == 0)
     {
@@ -20424,11 +20526,28 @@ COMMAND:bag(playerid,params[])
     return 1;
 }
 
-COMMAND:briefcase(playerid,params[])
+CMD:briefcase(playerid,params[])
 {
     if(briefcase[playerid] == 0)
     {
         SetPlayerAttachedObject(playerid, 6, 1210, 6,0.3,0.1,0,0,-90,0);
+        briefcase[playerid] = 1;
+        return 1;
+    }
+    else if(briefcase[playerid] == 1)
+    {
+        RemovePlayerAttachedObject(playerid, 6);
+        briefcase[playerid] = 0;
+        return 1;
+    }
+    return 1;
+}
+
+CMD:suitcase(playerid,params[])
+{
+    if(briefcase[playerid] == 0)
+    {
+        SetPlayerAttachedObject(playerid, 6, 19624, 6,0.3,0.1,0,0,-90,0);
         briefcase[playerid] = 1;
         return 1;
     }
@@ -20448,13 +20567,16 @@ forward OnGPSLoad();
 COMMAND:gps(playerid, params[])
 {
     new gpsstr[500];
-    format(gpsstr, sizeof(gpsstr), "1. %s", GPSInfo[0][gpsName]);
+//    format(gpsstr, sizeof(gpsstr), "1. %s", GPSInfo[0][gpsName]);
     for(new i=1;i<MAX_GPS_LOCATION;i++)
     {
-        format(msg, sizeof(msg), "\n%d. %s", i, GPSInfo[i][gpsName]);
-        strcat(gpsstr, msg);
+        if(GPSInfo[i][gpsOn] == 1)
+        {
+            format(msg, sizeof(msg), "\n%d. %s", i, GPSInfo[i][gpsName]);
+            strcat(gpsstr, msg);
+        }
     }
-    ShowDialog(playerid, Show:<DialogGPS>, DIALOG_STYLE_LIST, "GPS - Evolution", gpsstr, "Ok", "Inchide");
+    ShowDialog(playerid, Show:<DialogGPS>, DIALOG_STYLE_LIST, "GPS - Los Santos/Red County", gpsstr, "Ok", "Inchide");
     return 1;
 }
 
