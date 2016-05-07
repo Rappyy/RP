@@ -4263,17 +4263,7 @@ stock RemoveObjectsFromServer(playerid)
     RemoveBuildingForPlayer(playerid, 16669, 380.2578, 1914.9609, 17.4297, 0.25);
     RemoveBuildingForPlayer(playerid, 3267, 15.6172, 1719.1641, 22.4141, 0.25);
     RemoveBuildingForPlayer(playerid, 3267, 237.6953, 1696.8750, 22.4141, 0.25);
-    //Park Montgomery
-    RemoveBuildingForPlayer(playerid, 13224, 1320.843, 266.687, 22.851, 0.250);
-    RemoveBuildingForPlayer(playerid, 13562, 1308.460, 255.023, 27.804, 0.250);
-    RemoveBuildingForPlayer(playerid, 1294, 1311.335, 277.773, 23.023, 0.250);
-    RemoveBuildingForPlayer(playerid, 764, 1329.000, 246.414, 18.937, 0.250);
-    RemoveBuildingForPlayer(playerid, 12847, 1320.843, 266.687, 22.851, 0.250);
-    RemoveBuildingForPlayer(playerid, 12848, 1333.351, 271.007, 19.554, 0.250);
-    RemoveBuildingForPlayer(playerid, 1687, 1326.656, 264.062, 24.859, 0.250);
-    RemoveBuildingForPlayer(playerid, 764, 1333.062, 255.789, 17.492, 0.250);
-    RemoveBuildingForPlayer(playerid, 764, 1337.125, 265.156, 18.937, 0.250);
-    RemoveBuildingForPlayer(playerid, 764, 1341.179, 274.531, 17.843, 0.250);
+
     //Primarie Palomino
     RemoveBuildingForPlayer(playerid, 13026, 2261.4219, -71.8125, 25.5781, 0.25);
     RemoveBuildingForPlayer(playerid, 781, 2253.7734, -79.5313, 25.4922, 0.25);
@@ -4439,9 +4429,7 @@ stock RemoveObjectsFromServer(playerid)
     RemoveBuildingForPlayer(playerid, 1307, 2295.7031, -1742.1953, 12.7500, 0.25);
     //SPITAL - IULY
     RemoveBuildingForPlayer(playerid, 1297, 1190.7734, -1320.8594, 15.9453, 0.25);
-    //ELCORONA
-    RemoveBuildingForPlayer(playerid, 4982, 1892.5391, -2012.8281, 21.3750, 0.25);
-    RemoveBuildingForPlayer(playerid, 1226, 1882.3672, -1992.1328, 16.2734, 0.25);
+
     //MAIN STREET SOUTH
     RemoveBuildingForPlayer(playerid, 713, 1304.7734, -1753.5859, 12.4375, 0.25);
     RemoveBuildingForPlayer(playerid, 713, 1304.7734, -1729.9375, 12.4375, 0.25);
@@ -4457,36 +4445,7 @@ stock RemoveObjectsFromServer(playerid)
     RemoveBuildingForPlayer(playerid, 620, 1305.6719, -1583.7031, 12.5859, 0.25);
     //24-7 GARA - IULY
     RemoveBuildingForPlayer(playerid, 4983, 1961.0313, -1871.4063, 23.7734, 0.25);
-    //DRUG COMPANY
-    RemoveBuildingForPlayer(playerid, 3244, 2632.3906, -2073.6406, 12.7578, 0.25);
-    RemoveBuildingForPlayer(playerid, 3244, 2632.3906, -2136.3281, 12.7578, 0.25);
-    RemoveBuildingForPlayer(playerid, 3682, 2673.0859, -2114.9063, 36.5469, 0.25);
-    RemoveBuildingForPlayer(playerid, 3683, 2684.7656, -2088.0469, 20.1172, 0.25);
-    RemoveBuildingForPlayer(playerid, 3289, 2679.2344, -2106.9766, 12.5391, 0.25);
-    RemoveBuildingForPlayer(playerid, 3290, 2647.1016, -2073.3750, 12.4453, 0.25);
-    RemoveBuildingForPlayer(playerid, 3290, 2658.7188, -2073.3750, 12.4453, 0.25);
-    RemoveBuildingForPlayer(playerid, 3290, 2671.5000, -2073.3750, 12.4453, 0.25);
-    RemoveBuildingForPlayer(playerid, 3779, 2631.9141, -2098.5781, 20.0078, 0.25);
-    RemoveBuildingForPlayer(playerid, 3779, 2653.9375, -2092.3359, 20.0078, 0.25);
-    RemoveBuildingForPlayer(playerid, 3675, 2663.0547, -2121.6563, 30.6250, 0.25);
-    RemoveBuildingForPlayer(playerid, 3675, 2665.7734, -2122.5078, 22.2813, 0.25);
-    RemoveBuildingForPlayer(playerid, 3675, 2667.3594, -2120.7969, 19.4297, 0.25);
-    RemoveBuildingForPlayer(playerid, 3675, 2669.3359, -2120.7969, 26.9141, 0.25);
-    RemoveBuildingForPlayer(playerid, 3675, 2669.3359, -2120.7969, 13.2500, 0.25);
-    RemoveBuildingForPlayer(playerid, 3675, 2679.4375, -2121.6563, 21.4297, 0.25);
-    RemoveBuildingForPlayer(playerid, 3675, 2675.8594, -2121.6563, 25.6016, 0.25);
-    RemoveBuildingForPlayer(playerid, 3675, 2684.2031, -2122.5078, 22.8906, 0.25);
-    RemoveBuildingForPlayer(playerid, 3675, 2685.0547, -2119.7891, 14.5391, 0.25);
-    RemoveBuildingForPlayer(playerid, 3675, 2685.1172, -2119.1016, 19.4297, 0.25);
-    RemoveBuildingForPlayer(playerid, 3637, 2631.9141, -2098.5781, 20.0078, 0.25);
-    RemoveBuildingForPlayer(playerid, 3637, 2653.9375, -2092.3359, 20.0078, 0.25);
-    RemoveBuildingForPlayer(playerid, 3673, 2673.0859, -2114.9063, 36.5469, 0.25);
-    RemoveBuildingForPlayer(playerid, 3258, 2679.2344, -2106.9766, 12.5391, 0.25);
-    RemoveBuildingForPlayer(playerid, 3674, 2682.3203, -2114.5313, 39.0313, 0.25);
-    RemoveBuildingForPlayer(playerid, 3636, 2684.7656, -2088.0469, 20.1172, 0.25);
-    RemoveBuildingForPlayer(playerid, 3256, 2647.1016, -2073.3750, 12.4453, 0.25);
-    RemoveBuildingForPlayer(playerid, 3256, 2658.7188, -2073.3750, 12.4453, 0.25);
-    RemoveBuildingForPlayer(playerid, 3256, 2671.5000, -2073.3750, 12.4453, 0.25);
+
     //primarie
     RemoveBuildingForPlayer(playerid, 713, 1407.1953, -1749.3125, 13.0938, 0.25);
     RemoveBuildingForPlayer(playerid, 713, 1405.2344, -1821.1172, 13.1016, 0.25);
@@ -17589,9 +17548,9 @@ Dialog:ConfirmDS(playerid, response, listitem, inputtext[])
         }
         else //Vehicles
         {
-            ParkX = 648.4963;
-            ParkY = -499.7035;
-            ParkZ = 16.0630;
+            ParkX = 1705.2166;
+            ParkY = -1512.1454;
+            ParkZ = 13.1163;
         }
         PlayerInfo[playerid][pCarKey] = CreateVehicle(modelid, ParkX, ParkY, ParkZ, 0.0, 1, 1, -1);
         VehicleInfo[PlayerInfo[playerid][pCarKey]][carModel] = modelid;
@@ -20993,7 +20952,7 @@ CMD:dshout(playerid, params[])
 
 CMD:dmv(playerid, params[])
 {
-    if(!PlayerToPoint(3.0, playerid, 919.9804,2368.6238,246.4621)) return SCM(playerid, COLOR_GREY, "Nu esti in DMV (Conference Center).");
+    if(!PlayerToPoint(3.0, playerid, 1247.9946,-1560.4233,13.5634)) return SCM(playerid, COLOR_GREY, "Nu esti in DMV (Conference Center).");
     format(msg, sizeof(msg), "{ffffff}Tip A: Motociclete ({229a3d}$20{ffffff})\nTip B: Autovehicule cu 2/4 usi ({229a3d}$100{ffffff})\nTip C: Autoutilitare + Autobuze ({229a3d}$200{ffffff})\nLicenta de taximetrist ({229a3d}$300{ffffff})\nBrevet de pilot ({229a3d}$20.000{ffffff})");
     ShowDialog(playerid, Show:<DMV>, DIALOG_STYLE_LIST, "DMV - Alege tipul de licenta", msg, "Alege", "Inchide");
 
@@ -21040,7 +20999,7 @@ Dialog:DMV(playerid, response, listitem, inputtext[])
                 SetPlayerCheckpoint(playerid, DMV[dmv_carstage[playerid]][dX], DMV[dmv_carstage[playerid]][dY], DMV[dmv_carstage[playerid]][dZ], 4);
             }
             case 2:{
-                SCM(playerid, COLOR_OOC, "Urca intr-un Flatbelt si urmareste checkpointurile pentru a primi un permis de tip C.");
+                SCM(playerid, COLOR_OOC, "Urca intr-un Yankee si urmareste checkpointurile pentru a primi un permis de tip C.");
                 SCM(playerid, COLOR_GREY, "Foloseste '/quitdmv' pentru a anula examenul!");
                 SetIntVar(playerid, "DMV", 1);
                 dmv_bigcar[playerid] = 1;
@@ -23114,7 +23073,7 @@ CMD:advert(playerid, params[])
     if(PlayerInfo[playerid][pLevel] < 2) return SCM(playerid, COLOR_GREY, "Iti trebuie nivel 2.");
     new cost = 250;
     if(isnull(params)) return SyntaxMSG(playerid, "(/ad)vert [text]");
-    if(!PlayerToPoint(5.0,playerid,916.4379,2375.8867,246.4621)) return SCM(playerid, COLOR_GREY, "Nu esti la compania de publicitate!");
+    if(!PlayerToPoint(5.0,playerid,1128.6497,-1488.9880,22.7615)) return SCM(playerid, COLOR_GREY, "Nu esti la compania de publicitate!");
     format(msg, sizeof(msg), "Nu ai banii necesari. ($%d)", cost);
     if(GetCash(playerid) < cost) return ErrorMsg(playerid, msg);
     format(msg, sizeof(msg), "Trebuie sa astepti %d secunde pentru a putea pune un nou anunt.", 60 - (gettime() - AdvertWait));
