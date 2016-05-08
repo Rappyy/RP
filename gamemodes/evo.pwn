@@ -16145,7 +16145,7 @@ public CheckStatus()
 
             PlayerInfo[i][pJailTime] = 0;
             PlayerInfo[i][pJailed] = 0;
-            SetPlayerPos(i, 2263.3784,-85.1663,26.4535);
+            SetPlayerPos(i, 1541.8428,-1673.6177,13.5533);
             SetInterior(i, 0);
             SetPlayerVirtualWorld(i, 0);
             GameTextForPlayer(i,"~g~Ai fost eliberat din admin-jail.",5000,1);
@@ -31788,10 +31788,10 @@ CMD:aunjail(playerid, params[])
     PlayerInfo[targetid][pJailed] = 0;
     PlayerInfo[targetid][pJailTime] = 0;
     PlayerInfo[targetid][pJailTime2] = 0;
-    SetPlayerPos(targetid, 2262.7705,-86.0881,26.4535);
+    SetPlayerPos(targetid, 1541.8428, -1673.6177, 13.5533);
     format(msg, sizeof(msg), "AdmCmd: %s a fost scos din Ajail de catre %s.", GetName(targetid), GetName(playerid));
     LOCALAMSG(targetid, 20, COLOR_LIGHTRED, msg);
-    SetSpawnInfo(playerid, 0, PlayerInfo[playerid][pSkin], 2262.7705,-86.0881,26.4535, 1.0, -1, -1, -1, -1, -1, -1);
+    SetSpawnInfo(playerid, 0, PlayerInfo[playerid][pSkin], 1541.8428, -1673.6177, 13.5533, 1.0, -1, -1, -1, -1, -1, -1);
     PlayerTextDrawHide(targetid,jail_timeleft[targetid]);
     return 1;
 }
