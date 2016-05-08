@@ -8165,7 +8165,7 @@ public HandleDMV(playerid)
     PlaySound(playerid, 1138);
     if(dmv_bike[playerid] == 1)
     {
-        if(dmv_bikestage[playerid] == 12)
+        if(dmv_bikestage[playerid] == 26)
         {
             PlayerInfo[playerid][pBikeLic] = 1;
             SCM(playerid, COLOR_GREEN, "Felicitari! Ai obtinut licenta de categorie A (motociclete).");
@@ -8182,7 +8182,7 @@ public HandleDMV(playerid)
     }
     if(dmv_car[playerid] == 1)
     {
-        if(dmv_carstage[playerid] == 12)
+        if(dmv_carstage[playerid] == 57)
         {
             PlayerInfo[playerid][pCarLic] = 1;
             SCM(playerid, COLOR_GREEN, "Felicitari! Ai obtinut licenta de categorie B (vehicule 2/4 usi).");
@@ -8199,7 +8199,7 @@ public HandleDMV(playerid)
     }
     if(dmv_bigcar[playerid] == 1)
     {
-        if(dmv_bigcarstage[playerid] == 12)
+        if(dmv_bigcarstage[playerid] == 23)
         {
             PlayerInfo[playerid][pBigLic] = 1;
             SCM(playerid, COLOR_GREEN, "Felicitari! Ai obtinut licenta de categorie C (autoutilitare + autobuze).");
@@ -20682,7 +20682,7 @@ CMD:notehelp(playerid, params[])
 CMD:fishhelp(playerid, params[])
 {
     SCM(playerid, COLOR_LIGHTGREEN,"___________________FISHHELP___________________");
-    SCM(playerid, COLOR_OOC,"** FISHHELP ** Trebuie sa duci inapoi pestele care are pana in 300kg.");
+    SCM(playerid, COLOR_OOC,"** FISHHELP ** Trebuie sa duci inapoi pestele care are pana in 100kg.");
     SCM(playerid, COLOR_GREY,"** FISHHELP ** /gofishing - Incepi sa pescuiesti dintro barca.");
     SCM(playerid, COLOR_GREY,"** FISHHELP ** /stopfishing - Inchei sesiunea de pescuit.");
     SCM(playerid, COLOR_GREY,"** FISHHELP ** /myfish - Iti arata pestii tai prinsi.");
