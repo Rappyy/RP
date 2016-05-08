@@ -263,6 +263,7 @@ new Menu:FoodStallMenu;
 #define StopPlayerHoldingObject(%1) RemovePlayerAttachedObject(%1,MAX_PLAYER_ATTACHED_OBJECTS-1)
 #define IsPlayerHoldingObject(%1) IsPlayerAttachedObjectSlotUsed(%1,MAX_PLAYER_ATTACHED_OBJECTS-1)
 
+<<<<<<< HEAD
 #define GameModeVersion "5.0"
 #define GameModeText "EVO:RP "GameModeVersion""
 #if defined localhost_mysql
@@ -16240,7 +16241,7 @@ public CheckStatus()
 
             PlayerInfo[i][pJailTime] = 0;
             PlayerInfo[i][pJailed] = 0;
-            SetPlayerPos(i, 1553.3107, 1675.8288, 16.1953);
+            SetPlayerPos(i, 1541.8428,-1673.6177,13.5533);
             SetInterior(i, 0);
             SetPlayerVirtualWorld(i, 0);
             GameTextForPlayer(i,"~g~Ai fost eliberat din admin-jail.",5000,1);
@@ -20723,7 +20724,7 @@ CMD:notehelp(playerid, params[])
 CMD:fishhelp(playerid, params[])
 {
     SCM(playerid, COLOR_LIGHTGREEN,"___________________FISHHELP___________________");
-    SCM(playerid, COLOR_OOC,"** FISHHELP ** Trebuie sa duci inapoi pestele care are pana in 300kg.");
+    SCM(playerid, COLOR_OOC,"** FISHHELP ** Trebuie sa duci inapoi pestele care are pana in 100kg.");
     SCM(playerid, COLOR_GREY,"** FISHHELP ** /gofishing - Incepi sa pescuiesti dintro barca.");
     SCM(playerid, COLOR_GREY,"** FISHHELP ** /stopfishing - Inchei sesiunea de pescuit.");
     SCM(playerid, COLOR_GREY,"** FISHHELP ** /myfish - Iti arata pestii tai prinsi.");
@@ -31903,10 +31904,10 @@ CMD:aunjail(playerid, params[])
     PlayerInfo[targetid][pJailed] = 0;
     PlayerInfo[targetid][pJailTime] = 0;
     PlayerInfo[targetid][pJailTime2] = 0;
-    SetPlayerPos(targetid, 1553.3107, 1675.8288, 16.1953);
+    SetPlayerPos(targetid, 1541.8428, -1673.6177, 13.5533);
     format(msg, sizeof(msg), "AdmCmd: %s a fost scos din Ajail de catre %s.", GetName(targetid), GetName(playerid));
     LOCALAMSG(targetid, 20, COLOR_LIGHTRED, msg);
-    SetSpawnInfo(playerid, 0, PlayerInfo[playerid][pSkin], 2262.7705,-86.0881,26.4535, 1.0, -1, -1, -1, -1, -1, -1);
+    SetSpawnInfo(playerid, 0, PlayerInfo[playerid][pSkin], 1541.8428, -1673.6177, 13.5533, 1.0, -1, -1, -1, -1, -1, -1);
     PlayerTextDrawHide(targetid,jail_timeleft[targetid]);
     return 1;
 }
@@ -37092,3 +37093,11 @@ CMD:exittrailer(playerid, params[])
 		SCM(playerid, COLOR_GREY, "Nu esti intr-o rulota!");
 	}
 }
+
+///////////////////////// Miner Job //////////////////////////////
+
+//Comenzi
+
+
+
+///////////////////////// Miner Job //////////////////////////////
