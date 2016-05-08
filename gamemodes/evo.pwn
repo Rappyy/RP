@@ -35,7 +35,7 @@ native gpci (playerid, serial [], len); // this is the native.
 27 - Trucking job (Dropping).
 28 - Trucking job (Returning).
 -----------------------------------*/
-//#define localhost_mysql
+#define localhost_mysql
 
 //MySQL Information
 new dbHandle;
@@ -15743,7 +15743,7 @@ public AntiAFK()
             AFKTime[i]++;
             if(AFKTime[i] >= 15)
             {
-                Kick(i);
+                KickEx(i, "[ANTI-AFK] Ai primit kick deoarece ai stat AFK mai mult de 15 minute.");
             }
         }
     }
@@ -20497,6 +20497,7 @@ public OnGPSLoad()
             GPSInfo[total][gpsX] = cache_get_row_float(total, 2);
             GPSInfo[total][gpsY] = cache_get_row_float(total, 3);
             GPSInfo[total][gpsZ] = cache_get_row_float(total, 4);
+            GPSInfo[total][gpsOn] = 1;
             total++;
         }
     }
