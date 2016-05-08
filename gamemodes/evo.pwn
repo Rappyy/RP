@@ -263,7 +263,6 @@ new Menu:FoodStallMenu;
 #define StopPlayerHoldingObject(%1) RemovePlayerAttachedObject(%1,MAX_PLAYER_ATTACHED_OBJECTS-1)
 #define IsPlayerHoldingObject(%1) IsPlayerAttachedObjectSlotUsed(%1,MAX_PLAYER_ATTACHED_OBJECTS-1)
 
-<<<<<<< HEAD
 #define GameModeVersion "5.0"
 #define GameModeText "EVO:RP "GameModeVersion""
 #if defined localhost_mysql
