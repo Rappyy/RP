@@ -211,8 +211,8 @@ new Menu:FoodStallMenu;
 //-------------------------
 #define BOOMBOX_PRICE 200
 //-------------------------
-#define VEHICLE_RENT_COST 10
-#define BIKE_RENT_COST 2
+#define VEHICLE_RENT_COST 150
+#define BIKE_RENT_COST 30
 #define CARLIC_PRICE 100
 #define FLYLIC_PRICE 20000
 //==============Dynamic Vehicle Types==============//
@@ -263,7 +263,8 @@ new Menu:FoodStallMenu;
 #define StopPlayerHoldingObject(%1) RemovePlayerAttachedObject(%1,MAX_PLAYER_ATTACHED_OBJECTS-1)
 #define IsPlayerHoldingObject(%1) IsPlayerAttachedObjectSlotUsed(%1,MAX_PLAYER_ATTACHED_OBJECTS-1)
 
-#define GameModeVersion "5.0"
+// VERSION: VERSION(5).MONTH.MONTH
+#define GameModeVersion "5.5.8"
 #define GameModeText "EVO:RP "GameModeVersion""
 #if defined localhost_mysql
     #define ServerName "Evolution Role Play - Server de teste"
@@ -390,6 +391,8 @@ new PlayerText:jail_timeleft[MAX_PLAYERS];
 new Text:hospital_timeleft[MAX_PLAYERS];
 new Text:infotxt[MAX_PLAYERS];
 new PlayerText:ModText[MAX_PLAYERS];
+new PlayerText:EvoRP[MAX_PLAYERS];
+new PlayerText:SSTextDraw[MAX_PLAYERS];
 //===========TextDraws===========//
 
 //anti vehicle spray
@@ -1809,6 +1812,7 @@ stock OnPlayAnim(playerid,animlib[],animname[], Float:Speed, looping, lockx, loc
 
 stock ChatAnimation(playerid, length)
 {
+    if(GetPlayerAnimationIndex(playerid) > 0) return 1;
     if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT && !OnAnim{playerid})
     {
         if(PlayerIsWounded(playerid) || PlayerInCar(playerid) || JackingEngine[playerid] != 0 || JackingLock[playerid] != 0 || GetPlayerSpecialAction(playerid) == SPECIAL_ACTION_DUCK) return 1;
@@ -5586,6 +5590,28 @@ stock ResetPlayerVariables(playerid)
 stock CreateAllTextDraws(playerid)
 {
 
+    SSTextDraw[playerid] = CreatePlayerTextDraw(playerid, -4.666687, 203.514572, "usebox");
+    PlayerTextDrawLetterSize(playerid, SSTextDraw[playerid], -0.301333, -23.066957);
+    PlayerTextDrawTextSize(playerid, SSTextDraw[playerid], 295.000000, 0.000000);
+    PlayerTextDrawAlignment(playerid, SSTextDraw[playerid], 1);
+    PlayerTextDrawColor(playerid, SSTextDraw[playerid], 255);
+    PlayerTextDrawUseBox(playerid, SSTextDraw[playerid], true);
+    PlayerTextDrawBoxColor(playerid, SSTextDraw[playerid], 255);
+    PlayerTextDrawSetShadow(playerid, SSTextDraw[playerid], 0);
+    PlayerTextDrawSetOutline(playerid, SSTextDraw[playerid], 0);
+    PlayerTextDrawBackgroundColor(playerid, SSTextDraw[playerid], 255);
+    PlayerTextDrawFont(playerid, SSTextDraw[playerid], 0);
+
+    EvoRP[playerid] = CreatePlayerTextDraw(playerid, 575.999877, 437.214843, "Evolution Roleplay");
+    PlayerTextDrawLetterSize(playerid, EvoRP[playerid], 0.199331, 0.969479);
+    PlayerTextDrawAlignment(playerid, EvoRP[playerid], 1);
+    PlayerTextDrawColor(playerid, EvoRP[playerid], -1);
+    PlayerTextDrawSetShadow(playerid, EvoRP[playerid], 0);
+    PlayerTextDrawSetOutline(playerid, EvoRP[playerid], 1);
+    PlayerTextDrawBackgroundColor(playerid, EvoRP[playerid], 51);
+    PlayerTextDrawFont(playerid, EvoRP[playerid], 1);
+    PlayerTextDrawSetProportional(playerid, EvoRP[playerid], 1);
+
     RadioDraw[playerid] = CreatePlayerTextDraw(playerid, 520.000000, 103.000000, "~b~Radio Info");
     PlayerTextDrawBackgroundColor(playerid, RadioDraw[playerid], 0x000000ff);
     PlayerTextDrawFont(playerid, RadioDraw[playerid], 3);
@@ -6591,7 +6617,7 @@ stock HandlePaintJobText(playerid, vehicle)
 
 stock BackToDealerShip(playerid, vehicle)
 {
-    SetVehiclePos(vehicle, 643.9642,-501.5375,16.3359);
+    SetVehiclePos(vehicle, 1705.2166, -1512.1454, 13.1163);
     SetCameraBehindPlayer(playerid);
     SetInterior(playerid, 0);
     SetWorld(playerid, 0);
@@ -10022,8 +10048,7 @@ public OnVehicleDeath(vehicleid, killerid)
             {
                 if(GetIntVar(i, "RentedCar") == 1 && GetIntVar(i, "RentVehKey") == vehicleid)
                 {
-                    RentMSG(i, "Masina ta de rent a fost distrusa de cineva si ti-au fost returnati $250.");
-                    GiveCash(i, 250);
+                    RentMSG(i, "Masina ta de rent a fost distrusa de cineva.");
                     RemoveVar(i, "RentedCar");
                     RemoveVar(i, "RentVehKey");
                 }
@@ -16119,11 +16144,9 @@ public CheckStatus()
             SetPlayerHealth(i, 50.0);
             StopPlayerAnims(i);
             SCM(i,COLOR_LIGHTRED,"Ai fost externat din spital.");
-            format(string, sizeof(string), "~g~Libertate~n~~w~Incearca sa nu mai intri in necazuri.");
-            GameTextForPlayer(i, string, 5000, 1);
             RemoveVar(i, "JustAcceptedDeath");
             HospitalWait{i} = 0;
-            PutPlayer(i, 1553.9386,-1675.9238,16.1953);
+            PutPlayer(i, 1176.9000, -1323.8225, 14.0441);
             SetPlayerFacingAngle(i, 270.0);
             SetInterior(i, 0);
             UnFreezePlayer(i);
@@ -20419,14 +20442,16 @@ forward OnGPSLoad();
 
 COMMAND:gps(playerid, params[])
 {
-    new gpsstr[500];
+    new gpsstr[500], showid = 1;
 //    format(gpsstr, sizeof(gpsstr), "1. %s", GPSInfo[0][gpsName]);
     for(new i=1;i<MAX_GPS_LOCATION;i++)
     {
         if(GPSInfo[i][gpsOn] == 1)
         {
-            format(msg, sizeof(msg), "\n%d. %s", i, GPSInfo[i][gpsName]);
+//          if(CheckAdmin(playerid, 2014)) format(msg, sizeof(msg), "{FFFFFF}\n%d. %s ({FF0000}ID: %d{FFFFFF})", showid, GPSInfo[i][gpsName], i);
+            format(msg, sizeof(msg), "{FFFFFF}\n%d. %s", showid, GPSInfo[i][gpsName]);
             strcat(gpsstr, msg);
+            showid++;
         }
     }
     ShowDialog(playerid, Show:<DialogGPS>, DIALOG_STYLE_LIST, "GPS - Los Santos/Red County", gpsstr, "Ok", "Inchide");
@@ -24972,8 +24997,8 @@ CMD:mask(playerid, params[])
 
 CMD:buyclothes(playerid, params[])
 {
-//  if(BizInfo[BizEntered[playerid]][bizType] == 5)
-    if(!PlayerToPoint(3.0, playerid, 207.5281,-100.9595,1005.2578)) return SCM(playerid, COLOR_LIGHTBLUE, "Nu esti la casa de marcat.");
+    if(BizInfo[BizEntered[playerid]][bizType] == 5)
+//    if(!PlayerToPoint(3.0, playerid, 207.5281,-100.9595,1005.2578)) return SCM(playerid, COLOR_LIGHTBLUE, "Nu esti la casa de marcat.");
     if(GetPlayerMoney(playerid) < 500) return SCM(playerid, -1, "Nu ai suficienti bani!");
     PutPlayer(playerid, 217.8763, -98.5028, 1005.2578);
     SetPlayerFacingAngle(playerid, 87.9392);
@@ -24996,9 +25021,10 @@ CMD:done(playerid, params[])
         PutPlayer(playerid, 207.576, -100.983, 1005.26);
         SetCameraBehindPlayer(playerid);
         UnFreezePlayer(playerid);
-        ServerMSG(playerid, "Ai cumparat noile haine cu $500.");
+        ServerMSG(playerid, "Ai cumparat noile haine cu $100.");
         SetSkin(playerid, GetIntVar(playerid, "SkinBuying"));
-        GiveCash(playerid, -500);
+        GiveCash(playerid, -100);
+        BizInfo[BizEntered[playerid]][bizCash] += 100;
         RemoveVar(playerid, "BrowsingSkins");
         RemoveVar(playerid, "SkinBuying");
         SkinSlot[playerid] = 0;
@@ -25041,7 +25067,7 @@ public ColorCar(playerid)
         VehicleInfo[vehicle][carColor1] = VehColor1{playerid};
         VehicleInfo[vehicle][carColor2] = VehColor2{playerid};
         SCM(playerid, COLOR_GREEN2, "Ai schimbat culoarea masinii cu succes pentru $1500.");
-        GiveCash(playerid, -1500);
+        GiveCash(playerid, -1000);
         format(query, sizeof(query), "UPDATE `ownedvehicles` SET `color1` = %d, `color2` = %d WHERE `owner` = '%s' AND `slot` = %d", VehColor1{playerid}, VehColor2{playerid}, GetName(playerid), PlayerInfo[playerid][pVehSlot]);
         mysql_function_query(dbHandle, query, false, "", "");
     }
@@ -25800,7 +25826,7 @@ CMD:vehicle(playerid, params[])
         if(dealerid == -1) return SCM(playerid, COLOR_FADE2, "Nu esti la dealership.");
         if(sscanf(params, "{s[64]}dd", color1, color2)) return SyntaxMSG(playerid, "/v colour [color 1] [color 2]");
         if(color2 < 0 || color2 > 255 || color1 < 0 || color1 > 255) return SCM(playerid, COLOR_LIGHTRED, "Culoare invalida (0-255)!");
-        if(GetCash(playerid) < 150) SCM(playerid, COLOR_INFO, "Schimbarea culorii costa $150.");
+        if(GetCash(playerid) < 1000) SCM(playerid, COLOR_INFO, "Schimbarea culorii costa $1000.");
         VehColor1{playerid} = color1;
         VehColor2{playerid} = color2;
         format(msg, sizeof(msg), "~n~~n~~n~~n~~n~~n~~n~~b~Se vopseste, dureaza 10 secunde...");
@@ -31591,7 +31617,13 @@ CMD:gotofc(playerid)
     return 1;
 }
 
-CMD:flush(playerid,params[])
+CMD:ss(playerid, params[])
+{
+    if(GetPVarInt(playerid, "SSTextDraw") == 0) PlayerTextDrawShow(playerid, SSTextDraw[playerid]);
+    else PlayerTextDrawHide(playerid, SSTextDraw[playerid]);
+}
+
+CMD:flush(playerid, params[])
 {
     for(new i=1;i<=50;i++)
         SendClientMessage(playerid, COLOR_WHITE, "");
@@ -33454,145 +33486,6 @@ public ChangeNameCheck()
 		return true;
     return false;
 }
-
-
-/*CMD:donator(playerid, params[])
-{
-    if(PlayerInfo[playerid][pDonateRank] < 1) return SCM(playerid, COLOR_GREY, "Nu esti donator.");
-    new drank[64], dstr[128];
-    switch(PlayerInfo[playerid][pDonateRank])
-    {
-        case 1: drank = "Donator: {D1740A}Bronze";
-        case 2: drank = "Donator: {B5C7C7}Silver";
-        case 3: drank = "Donator: {E3CF39}Gold";
-        case 4: drank = "Donator: {1FC0E0}Diamond";
-    }
-    format(dstr, sizeof(dstr), "Shimbarea numelui (Ramase:%d)\nShimbarea numarului (Ramase:%d)\nShimbarea sexului (Ramase:%d)", PlayerInfo[playerid][pNameChg], PlayerInfo[playerid][pPhoneChg], PlayerInfo[playerid][pSexChg]);
-    ShowDialog(playerid, Show:<DONATE>, DIALOG_STYLE_LIST, drank, dstr, "Selecteaza", "Inchide");
-    return 1;
-}
-
-Dialog:DONATE(playerid, response, listitem, inputtext[])
-{
-    if(response)
-    {
-        new drank[64];
-        switch(PlayerInfo[playerid][pDonateRank])
-        {
-            case 1: drank = "Donator: {D1740A}Bronze";
-            case 2: drank = "Donator: {B5C7C7}Silver";
-            case 3: drank = "Donator: {E3CF39}Gold";
-            case 4: drank = "Donator: {1FC0E0}Diamond";
-        }
-        switch(listitem)
-        {
-            case 0:
-            {
-                ShowDialog(playerid, Show:<DONATE_NameChange>, DIALOG_STYLE_INPUT, drank, "Selecteaza un nume nou pentru caracterul tau:", "Schimba", "Inchide");
-            }
-            case 1:
-            {
-                ShowDialog(playerid, Show:<DONATE_PhoneChange>, DIALOG_STYLE_INPUT, drank, "Selecteaza un numar de telefon nou pentru caracterul tau:", "Schimba", "Inchide");
-            }
-            case 2:
-            {
-                ShowDialog(playerid, Show:<DONATE_SexChange>, DIALOG_STYLE_LIST, drank, "Masculin\nFeminin", "Schimba", "Inchide");
-            }
-        }
-    }
-    return 1;
-}
-
-
-Dialog:DONATE_NameChange(playerid, response, listitem, inputtext[])
-{
-    if(response)
-    {
-        if(PlayerInfo[playerid][pNameChg] == 0) return SCM(playerid, COLOR_GREY, "Nu mai ai schimbari de nume disponibile!");
-        format(newname[playerid], 128, "%s", inputtext);
-        CheckNameUsage(playerid, inputtext);
-        SetTimerEx("ChangeNamePlayer", 2000, false, "i", playerid);
-    }
-    return 1;
-}
-
-forward ChangeNamePlayer(playerid);
-public ChangeNamePlayer(playerid)
-{
-    if(canchangename[playerid] == 0) return SCM(playerid, COLOR_GREY, "Acest nume este deja folosit.");
-    PlayerInfo[playerid][pNameChg]--;
-    new inputtext[128];
-    format(inputtext, sizeof(inputtext), "%s", newname[playerid]);
-    format(query, sizeof(query), "UPDATE `users` SET `name` = '%s' WHERE `name` = '%s'", inputtext, GetName(playerid));
-    mysql_function_query(dbHandle, query, false, "", "");
-    //-------------------------------------------------------------------------------------------------------------
-    if(PlayerInfo[playerid][pHouseKey] != -1)
-    {
-        format(query, sizeof(query), "UPDATE `houses` SET `owner` = '%s' WHERE `owner` = '%s'", inputtext, GetName(playerid));
-        mysql_function_query(dbHandle, query, false, "", "");
-        format(HouseInfo[PlayerInfo[playerid][pHouseKey]][hOwner], MAX_PLAYER_NAME, "%s", inputtext);
-        UpdateHouseInfo(PlayerInfo[playerid][pHouseKey]);
-        UpdateHouseText(PlayerInfo[playerid][pHouseKey]);
-    }
-    //-------------------------------------------------------------------------------------------------------------
-    if(PlayerInfo[playerid][pBizKey] != -1)
-    {
-        format(query, sizeof(query), "UPDATE `business` SET `owner` = '%s' WHERE `owner` = '%s'", inputtext, GetName(playerid));
-        mysql_function_query(dbHandle, query, false, "", "");
-        format(BizInfo[PlayerInfo[playerid][pBizKey]][bizOwner], MAX_PLAYER_NAME, "%s", inputtext);
-        UpdateBizInfo(PlayerInfo[playerid][pBizKey]);
-    }
-    //-------------------------------------------------------------------------------------------------------------
-    UpdatePlayerVehicles(playerid);
-    //-------------------------------------------------------------------------------------------------------------
-    for(new i = 1; i < MAX_VEHICLES; i++)
-    {
-        if(CompareStrings(VehicleInfo[i][carOwner], GetName(playerid)))
-        {
-            format(VehicleInfo[i][carOwner], MAX_PLAYER_NAME, "%s", GetName(playerid));
-        }
-    }
-    format(query, sizeof(query), "SELECT * FROM `ownedvehicles` WHERE `owner` = '%s' SET `owner` = '%s'", inputtext, GetName(playerid));
-    mysql_function_query(dbHandle, query, false, "", "");
-    //-------------------------------------------------------------------------------------------------------------
-    SCMEx(playerid, COLOR_LIGHTBLUE, "[DONATOR] Numele tau a fost schimbat in %s.", inputtext);
-    SetPlayerName(playerid, inputtext);
-    canchangename[playerid] = 0;
-    strdel(newname[playerid], 0, 128);
-    return 1;
-}
-
-Dialog:DONATE_PhoneChange(playerid, response, listitem, inputtext[])
-{
-    if(response)
-    {
-        if(PlayerInfo[playerid][pPhoneChg] == 0) return SCM(playerid, COLOR_GREY, "Nu mai ai schimbari de numar disponibile!");
-        PlayerInfo[playerid][pPhoneChg]--;
-        PlayerInfo[playerid][pNumber] = strval(inputtext);
-        SCMEx(playerid, COLOR_LIGHTBLUE, "[DONATOR] Numarul tau a fost schimbat in %d.", strval(inputtext));
-    }
-    return 1;
-}
-
-Dialog:DONATE_SexChange(playerid, response, listitem, inputtext[])
-{
-    if(response)
-    {
-        if(PlayerInfo[playerid][pSexChg] == 0) return SCM(playerid, COLOR_GREY, "Nu mai ai schimbari de sex disponibile!");
-        PlayerInfo[playerid][pSexChg]--;
-        if(listitem == 0)
-        {
-            PlayerInfo[playerid][pSex] = 1;
-            SCM(playerid, COLOR_LIGHTBLUE, "[DONATOR] Sexul tau este: Masculin.");
-        }
-        if(listitem == 1)
-        {
-            PlayerInfo[playerid][pSex] = 2;
-            SCM(playerid, COLOR_LIGHTBLUE, "[DONATOR] Sexul tau este: Feminin.");
-        }
-    }
-    return 1;
-}*/
 
 CMD:giveadmin(playerid, params[])
 {
