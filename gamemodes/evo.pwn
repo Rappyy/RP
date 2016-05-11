@@ -22588,7 +22588,7 @@ CMD:pay(playerid, params[])
     if(!PlayerIsOn(pid)) return NotConnectedMSG(playerid);
     if(isAdminDuty(pid)) return NotNearPlayerMSG(playerid);
     if(amount > GetCash(playerid) || amount <= 0) return NoCashMSG(playerid);
-    if(amount > 1000 && GetLevel(playerid) <= 3) return SCM(playerid, -1, "Playerii sub level 3 nu pot plati mai mult de $1,000!");
+    if(amount > 1000 && GetLevel(playerid) < 3) return SCM(playerid, -1, "Playerii sub level 3 nu pot plati mai mult de $1,000!");
     if(!PlayerNearPlayer(5.0, playerid,pid)) return NotNearPlayerMSG(playerid);
     SetIntVar(playerid, "JustPaid", gettime());
     GiveCash(playerid, -amount);
