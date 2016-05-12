@@ -35,7 +35,7 @@ native gpci (playerid, serial [], len); // this is the native.
 27 - Trucking job (Dropping).
 28 - Trucking job (Returning).
 -----------------------------------*/
-#define localhost_mysql
+//#define localhost_mysql
 
 //MySQL Information
 new dbHandle;
@@ -1400,6 +1400,7 @@ public OnPlayerRequestClass(playerid, classid)
 
 public OnPlayerConnect(playerid)
 {
+
     //ANIMS
     gPlayerUsingLoopingAnim[playerid] = 0;
     gPlayerAnimLibsPreloaded[playerid] = 0; 
@@ -1441,6 +1442,7 @@ public OnPlayerConnect(playerid)
     RemoveObjectsFromServer(playerid);
     ResetPlayerVariables(playerid);
     CreateAllTextDraws(playerid);
+    PlayerTextDrawShow(playerid, EvoRP[playerid]);
     SetPlayerSkillLevel(playerid, WEAPONSKILL_PISTOL, 1);
     SetPlayerSkillLevel(playerid, WEAPONSKILL_MICRO_UZI, 1);
     SetPlayerSkillLevel(playerid, WEAPONSKILL_SAWNOFF_SHOTGUN, 1);
@@ -1450,6 +1452,7 @@ public OnPlayerConnect(playerid)
     togglenews[playerid] = 0;
     SecurityMode[playerid] = false;
 
+    
     AttachWep[playerid][wepID] = -1;
     AttachWep[playerid][wepAmmo] = -1;
     AttachWep[playerid][wepType] = -1;
@@ -1460,6 +1463,8 @@ public OnPlayerConnect(playerid)
 
 public OnPlayerDisconnect(playerid, reason)
 {
+    PlayerTextDrawHide(playerid, EvoRP[playerid]);
+
     switch(reason)
     {
         case 0: format(msg,sizeof msg,"** %s (Crashed)",GetNameEx(playerid));
@@ -5592,7 +5597,7 @@ stock CreateAllTextDraws(playerid)
 
     SSTextDraw[playerid] = CreatePlayerTextDraw(playerid, -4.666687, 203.514572, "usebox");
     PlayerTextDrawLetterSize(playerid, SSTextDraw[playerid], -0.301333, -23.066957);
-    PlayerTextDrawTextSize(playerid, SSTextDraw[playerid], 295.000000, 0.000000);
+    PlayerTextDrawTextSize(playerid, SSTextDraw[playerid], 344.666900, 13.688921);
     PlayerTextDrawAlignment(playerid, SSTextDraw[playerid], 1);
     PlayerTextDrawColor(playerid, SSTextDraw[playerid], 255);
     PlayerTextDrawUseBox(playerid, SSTextDraw[playerid], true);
@@ -21765,7 +21770,7 @@ CMD:do(playerid, params[])
         new pos = MAXLEN;
         if(pos < MAXLEN-1) pos = MAXLEN;
         format(msg, sizeof(msg), "* %.*s ...", pos, params);
-        ProxDetector(20.0, playerid, msg, COLOR_PURPLE);
+        ProxDetector(20.0, playerid, msg, COLOR_PURPLE); 
         format(msg, sizeof(msg), "* ... %s ((%s))", params[pos], GetNameWithMask(playerid));
         ProxDetector(20.0, playerid, msg, COLOR_PURPLE);
     }
@@ -31619,8 +31624,15 @@ CMD:gotofc(playerid)
 
 CMD:ss(playerid, params[])
 {
-    if(GetPVarInt(playerid, "SSTextDraw") == 0) PlayerTextDrawShow(playerid, SSTextDraw[playerid]);
-    else PlayerTextDrawHide(playerid, SSTextDraw[playerid]);
+    if(GetPVarInt(playerid, "SSTextDraw") == 0) {
+        PlayerTextDrawShow(playerid, SSTextDraw[playerid]);
+        SetPVarInt(playerid, "SSTextDraw", 1);
+    }
+    else {
+        PlayerTextDrawHide(playerid, SSTextDraw[playerid]);
+        SetPVarInt(playerid, "SSTextDraw", 0);
+    }
+    return 1;
 }
 
 CMD:flush(playerid, params[])
