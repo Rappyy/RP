@@ -35,7 +35,7 @@ native gpci (playerid, serial [], len); // this is the native.
 27 - Trucking job (Dropping).
 28 - Trucking job (Returning).
 -----------------------------------*/
-//#define localhost_mysql
+#define localhost_mysql
 
 //MySQL Information
 new dbHandle;
@@ -43,9 +43,9 @@ new dbHandle;
 #if defined localhost_mysql
 
     #define SQL_HOST "127.0.0.1"
-    #define SQL_USER "root"
-    #define SQL_PASS ""
-    #define SQL_DB "evorp_test"
+    #define SQL_USER "iulian"
+    #define SQL_PASS "0zie88y7"
+    #define SQL_DB "evo_rp_test_server"
 
 #else
 
@@ -9977,7 +9977,7 @@ public OnVehicleDeath(vehicleid, killerid)
             SCM(killerid, COLOR_LIGHTRED, msg);
             format(msg, sizeof(msg), "Mai ai %d asigurari ramase.",VehicleInfo[vehicleid][carInsurances]);
             SCM(killerid, COLOR_LIGHTRED, msg);
-//          ResetVehicleStuff(vehicleid);
+            ResetVehicleStuff(vehicleid);
             PlayerInfo[killerid][pCarKey] = 0;
             VehicleInfo[vehicleid][carOwned] = 0;
             DestoryCar(vehicleid);
@@ -9990,7 +9990,7 @@ public OnVehicleDeath(vehicleid, killerid)
             SCM(killerid, COLOR_LIGHTRED, msg);
             SCM(killerid, COLOR_LIGHTRED, "Nu ai mai avut asigurare asa ca motorul masinii este distrus.");
             VehicleInfo[vehicleid][carBroken] = 1;
-//          ResetVehicleStuff(vehicleid);
+            ResetVehicleStuff(vehicleid);
             PlayerInfo[killerid][pCarKey] = 0;
             VehicleInfo[vehicleid][carOwned] = 0;
             DestoryCar(vehicleid);
@@ -22578,7 +22578,7 @@ CMD:pay(playerid, params[])
     if(!PlayerIsOn(pid)) return NotConnectedMSG(playerid);
     if(isAdminDuty(pid)) return NotNearPlayerMSG(playerid);
     if(amount > GetCash(playerid) || amount <= 0) return NoCashMSG(playerid);
-    if(amount > 1000 && GetLevel(playerid) <= 3) return SCM(playerid, -1, "Playerii sub level 3 nu pot plati mai mult de $1,000!");
+    if(amount > 1000 && GetLevel(playerid) < 3) return SCM(playerid, -1, "Playerii sub level 3 nu pot plati mai mult de $1,000!");
     if(!PlayerNearPlayer(5.0, playerid,pid)) return NotNearPlayerMSG(playerid);
     SetIntVar(playerid, "JustPaid", gettime());
     GiveCash(playerid, -amount);
@@ -25342,9 +25342,9 @@ CMD:vehicle(playerid, params[])
             if(VehicleStatus[playerid][i][carOn] == 1)
             {
                 if(FindVehicleByPlate(VehicleStatus[playerid][i][carPlate]))
-                    SCMEx(playerid, COLOR_OOC, "Vehicul %d: %s, Incuietoare[%d], Alarma[%d], Imobilizare[%d], Asigurari[%d], Distrugeri[%d], Pretul Asigurarii[$%d]", i, VehicleNames[VehicleStatus[playerid][i][carModel]-400],VehicleStatus[playerid][i][carLock],VehicleStatus[playerid][i][carAlarm],VehicleStatus[playerid][i][carImmob],VehicleStatus[playerid][i][carInsurances],VehicleStatus[playerid][i][carDestroyed],GetInsurancePrice2(playerid, i));
+                    SCMEx(playerid, COLOR_OOC, "Vehicul %d: %s, Incuietoare[%d], Alarma[%d], Imobilizare[%d], Asigurari[%d], Distrugeri[%d], Pretul Asigurarii[$%d]", i, VehicleNames[VehicleStatus[playerid][i][carModel]-400],VehicleStatus[playerid][i][carLock],VehicleStatus[playerid][i][carAlarm],VehicleStatus[playerid][i][carImmob],VehicleInfo[playerid][carInsurances],VehicleInfo[playerid][carDestroyed],GetInsurancePrice2(playerid, i));
                 else
-                    SCMEx(playerid, COLOR_GREY, "Vehicul %d: %s, Incuietoare[%d], Alarma[%d], Imobilizare[%d], Asigurari[%d], Distrugeri[%d], Pretul Asigurarii[$%d]", i, VehicleNames[VehicleStatus[playerid][i][carModel]-400],  VehicleStatus[playerid][i][carLock],VehicleStatus[playerid][i][carAlarm],VehicleStatus[playerid][i][carImmob],VehicleStatus[playerid][i][carInsurances],VehicleStatus[playerid][i][carDestroyed],GetInsurancePrice2(playerid, i));
+                    SCMEx(playerid, COLOR_GREY, "Vehicul %d: %s, Incuietoare[%d], Alarma[%d], Imobilizare[%d], Asigurari[%d], Distrugeri[%d], Pretul Asigurarii[$%d]", i, VehicleNames[VehicleStatus[playerid][i][carModel]-400],  VehicleStatus[playerid][i][carLock],VehicleStatus[playerid][i][carAlarm],VehicleStatus[playerid][i][carImmob],VehicleInfo[playerid][carInsurances],VehicleInfo[playerid][carDestroyed],GetInsurancePrice2(playerid, i));
             }
         }
         return 1;
