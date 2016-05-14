@@ -37050,6 +37050,15 @@ CMD:spraytag(playerid, params[])
 }
 //SPRAYTAG SYSTEM - END
 
+//DISTANCE BETWEEN POINTS
+
+stock GetDistance(Float:x1, Float:y1, Float:z1, Float:x2, Float:y2, Float:z2)
+{
+	return floatround( floatsqroot( ( ( x1 - x2 ) * ( x1 - x2 ) ) + ( ( y1 - y2 ) * ( y1 - y2 ) ) + ( ( z1 - z2 ) * ( z1 - z2 ) ) ) );
+}
+
+//DISTANCE BETWEEN POINTS - END
+
 //TRAILER SYSTEM CMD
 stock FindNearbyTrailer(id, idtype)
 {
@@ -37132,10 +37141,6 @@ CMD:exittrailer(playerid, params[])
 
 // CarJacker 
 
-stock Float:GetDistanceBetweenPoints3D(Float:x1,Float:y1,Float:z1,Float:x2,Float:y2,Float:z2){
-    return VectorSize(x1-x2,y1-y2,z1-z2);
-} 
-
 function FindCarJackVeh()
 {
     new a[300], ac=0, carz;
@@ -37162,9 +37167,9 @@ function DistPlayerToCarJack(playerid, car)
         if(VehicleInfo[i][carOn] == 1 && VehicleInfo[i][carModel] == car)
         {
             GetVehiclePos(VehicleInfo[i][carID], cX, cY, cZ);
-            if(GetDistanceBetweenPoints3D(plX, plY, plZ, cX, cY, cZ) > dist) 
+            if(GetDistance(plX, plY, plZ, cX, cY, cZ) < dist) 
             {
-                dist = GetDistanceBetweenPoints3D(plX, plY, plZ, cX, cY, cZ);
+                dist = GetDistance(plX, plY, plZ, cX, cY, cZ);
             }
         }
     }
@@ -37214,7 +37219,7 @@ function DestroyCarJack(playerid, vehicleid)
     new Float:health; 
     GetVehicleHealth(vehicleid, health);
     new vhealth = floatround(1000.0-health, floatround_round);
-    moneycarjack = moneycarjack - (vhealth/100);
+    moneycarjack = moneycarjack - (vhealth);
     if(moneycarjack == 2000) SCM(playerid, COLOR_GREEN, "Felicitari! Nu ai lovit masina si ai primit 2000$.");
     else if(moneycarjack <= 2000) SCMEx(playerid, COLOR_GREEN, "Din nefericire ai lovit masina si ai primit doar %d$.", moneycarjack);
     GiveCash(playerid, moneycarjack);
@@ -37222,7 +37227,8 @@ function DestroyCarJack(playerid, vehicleid)
     RemoveVar(playerid, "CarJackDrop");
     VehicleInfo[vehicleid][carDestroyed]++;
     VehicleInfo[vehicleid][carInsurances]--;
-    if(IsPlayerConnected(VehicleInfo[vehicleid][carOwner])) SCMEx(VehicleInfo[vehicleid][carOwner], COLOR_GREY, "Masina ta %s a fost distrusa ((carjacked)). Acum ai %d asigurari si %d distrugeri.", VehicleNames[GetVehicleModel(vehicleid)-400], VehicleInfo[vehicleid][carDestroyed], VehicleInfo[vehicleid][carDestroyed]);
+    if(IsPlayerConnected(VehicleInfo[vehicleid][carOwner]))
+		SCMEx(VehicleInfo[vehicleid][carOwner], COLOR_GREY, "Masina ta %s a fost distrusa ((carjacked)). Acum ai %d asigurari si %d distrugeri.", VehicleNames[GetVehicleModel(vehicleid)-400], VehicleInfo[vehicleid][carDestroyed], VehicleInfo[vehicleid][carDestroyed]);
 }
 
 //End Of CarJacker
