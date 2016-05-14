@@ -333,6 +333,7 @@ new FJArea;
 
 new CarJackActor;
 new carjack_veh[MAX_PLAYERS];
+new carjack_timer[MAX_PLAYERS];
 //anti cheat
 new cheatID[MAX_PLAYERS];
 new cheatImmune[MAX_PLAYERS];
@@ -25488,6 +25489,7 @@ CMD:vehicle(playerid, params[])
         SaveVehicle(veh);
         VehicleInfo[veh][carSpawned] = 0;
         VehicleInfo[veh][carOwned] = 0;
+        VehicleInfo[veh][carOn] = 0;
         StopCarBoomBox(veh);
         format(msg, sizeof(msg), "Masina ta a fost parcata. (%s)", VehicleNames[VehicleInfo[veh][carModel]-400]);
         SCM(playerid, COLOR_GREEN2, msg);
@@ -37178,6 +37180,7 @@ function DistPlayerToCarJack(playerid, car)
 
 CMD:carjack(playerid, params[])
 {
+    if(GetPVar(playerid, "CarJacking") == 1) return ErrorMsg(playerid, "Deja esti intr-o misiune de car jacking.");
     if(!PlayerToPoint(2.0, playerid, 2443.5447,-1979.5172,13.5469))
     {
         SetCheckPoint(playerid, 0, 2443.5447,-1979.5172,13.5469, 0.5);
@@ -37186,13 +37189,15 @@ CMD:carjack(playerid, params[])
         return 1;
     }
     carjack_veh[playerid] = FindCarJackVeh();
+    SetPVarInt(playerid, "CarJacking", 1);
     if(carjack_veh[playerid] == -1) return SCM(playerid, COLOR_LIGHTRED, "Momentan nu este nici o masina personala spawnata pe server! Te rugam sa incerci mai incolo.");
     SCM(playerid, COLOR_WHITE, "Mike spune: Hei, vrei sa faci niste bani? Am o misiune pentru tine.");
     SCMEx(playerid, COLOR_WHITE, "Mike spune: Am nevoie de o masina, model {5B5B5B}%s{FFFFFF}. Daca imi aduci masina in urmatoarele 10 minute, te voi plati foarte bine!", VehicleNames[carjack_veh[playerid]-400]);
     SCMEx(playerid, COLOR_WHITE, "Mike spune: Am vazut masina cam la {5B5B5B}%d{FFFFFF} metri de aici, dar nu imi mai amintesc directia. Te rog sa o cauti!", DistPlayerToCarJack(playerid, carjack_veh[playerid]));
     SCM(playerid, COLOR_LIGHTRED, "HINT: Vei fi platit in functie de starea vehiculului atunci cand i-l duci lui Mike.");
     SCM(playerid, COLOR_LIGHTRED, "HINT: Tasteaza '/carjackdrop' dupa ce ai gasit vehiculul de care are Mike nevoie.");
-    SetTimerEx("CarJackExpire", 600000, false, "i", playerid);
+    SCM(playerid, COLOR_LIGHTRED, "HINT: Tasteaza '/carjackpos' daca vrei sa vezi distanta pana la cel mai apropiat vehicul (O poti folosi de 3 ori).");
+    carjack_timer[playerid] = SetTimerEx("CarJackExpire", 600000, false, "i", playerid);
     return 1;
 }
 
@@ -37204,6 +37209,14 @@ CMD:carjackdrop(playerid, params[])
     SetPVarInt(playerid, "CarJackDrop", 1);
     SCM(playerid, COLOR_GREY, "Intoarce-te la Mike pentru a-i returna vehiculul.");
     return 1;
+}
+
+CMD:cancelcarjack(playerid, params[])
+{
+    carjack_veh[playerid] = -1;
+    SetPVarInt(playerid, "CarJacking", 0);
+    KillTImer(carjack_timer[playerid]);
+    InfoMSG(playerid, "Ai anulat misiunea de ~r~car jacking~w~.");
 }
 
 function CarJackExpire(playerid)
