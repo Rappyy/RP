@@ -10661,9 +10661,10 @@ public OnPlayerEnterCheckpoint(playerid)
         }
         SetPVarInt(playerid, "CarJacking", 1);
         SCM(playerid, COLOR_WHITE, "Mike spune: Hei, vrei sa faci niste bani? Am o misiune pentru tine.");
-        SCMEx(playerid, COLOR_WHITE, "Mike spune: Am nevoie de o masina, model {FF0000}%s{FFFFFF}. Daca imi aduci masina in urmatoarele 10 minute, te voi plati foarte bine!", VehicleNames[carjack_veh[playerid]-400]);
+        SCMEx(playerid, COLOR_WHITE, "Mike spune: Am nevoie de o masina, model {FF0000}%s{FFFFFF}. Daca imi aduci masina in urmatoarele {FF0000}20 minute{FFFFFF}, te voi plati foarte bine!", VehicleNames[carjack_veh[playerid]-400]);
         SCMEx(playerid, COLOR_WHITE, "Mike spune: Am vazut masina cam la {FF0000}%d{FFFFFF} metri de aici, dar nu imi mai amintesc directia. Te rog sa o cauti!", DistPlayerToCarJack(playerid, carjack_veh[playerid]));
-        InfoMSG(playerid, "~r~HINT~w~: Vei fi platit in functie de starea vehiculului atunci cand i-l duci lui Mike.~n~~r~HINT~w~: Tasteaza '/carjack drop' dupa ce ai gasit vehiculul de care are Mike nevoie.~n~~r~HINT~w~: Tasteaza '/carjack pos' daca vrei sa vezi distanta pana la cel mai apropiat vehicul (O poti folosi de 3 ori).", 10);
+        ShowDialog(playerid, Show:<Login>, DIALOG_STYLE_MSGBOX, "{FFFFFF}CarJacking - {FF0000}Hints", "{FF0000}HINT{FFFFFF}: Vei fi platit in functie de starea vehiculului atunci cand i-l duci lui Mike.\n{FF0000}HINT{FFFFFF}: Tasteaza {FF0000}/carjack{FFFFFF} drop dupa ce ai gasit vehiculul de care are Mike nevoie.\n{FF0000}HINT{FFFFFF}: Tasteaza {FF0000}/carjack pos{FFFFFF} daca vrei sa vezi distanta pana la cel mai apropiat vehicul (O poti folosi de {FF0000}3 ori{FFFFFF}).", "Ok", "");
+
         SetPVarInt(playerid, "CarJackPos", 0);
         carjack_timer[playerid] = SetTimerEx("CarJackExpire", 600000, false, "i", playerid);
         return 1;
@@ -21679,7 +21680,7 @@ CMD:engine(playerid, params[])
         if(JackingEngine[playerid] != 0) return SCM(playerid, COLOR_INFO, "Deja spargi o masina, floseste /stop pentru a te opri.");
         if(engineOn{vehicleid}) return 1;
         FreezePlayer(playerid);
-        format(msg, sizeof(msg), ", incearca sa porneasca motorul vehiculului %s.", VehicleNames[GetVehicleModel(vehicleid)-400]);
+        format(msg, sizeof(msg), "incearca sa porneasca motorul vehiculului %s.", VehicleNames[GetVehicleModel(vehicleid)-400]);
         ActionMessage(playerid, 20.0, msg);
         new vZone[MAX_ZONE_NAME];
         GetVehicleZone(vehicleid, vZone, MAX_ZONE_NAME);
@@ -21751,6 +21752,30 @@ CMD:engine(playerid, params[])
         else if(VehicleInfo[vehicleid][carImmob] == 5)
         {
             JackingEngine[playerid] = 360;
+        }
+        if(VehicleInfo[vehicleid][carLock] == 0)
+        {
+            JackingEngine[playerid] += 60;
+        }
+        else if(VehicleInfo[vehicleid][carLock] == 1)
+        {
+            JackingEngine[playerid] += 120;
+        }
+        else if(VehicleInfo[vehicleid][carLock] == 2)
+        {
+            JackingEngine[playerid] += 180;
+        }
+        else if(VehicleInfo[vehicleid][carLock] == 3)
+        {
+            JackingEngine[playerid] += 240;
+        }
+        else if(VehicleInfo[vehicleid][carLock] == 4)
+        {
+            JackingEngine[playerid] += 300;
+        }
+        else if(VehicleInfo[vehicleid][carLock] == 5)
+        {
+            JackingEngine[playerid] += 360;
         }
     }
     return 1;
@@ -37291,7 +37316,7 @@ function DestroyCarJack(playerid, vehicleid)
     GetVehicleHealth(vehicleid, health);
     new vhealth = floatround(1000.0-health, floatround_round);
     moneycarjack = moneycarjack - (vhealth);
-    if(moneycarjack == 1000) SCM(playerid, COLOR_GREEN, "Felicitari! Nu ai lovit masina si ai primit 2000$.");
+    if(moneycarjack == 1000) SCM(playerid, COLOR_GREEN, "Felicitari! Nu ai lovit masina si ai primit 1000$.");
     else if(moneycarjack <= 1000) SCMEx(playerid, COLOR_GREEN, "Din nefericire ai lovit masina si ai primit doar %d$.", moneycarjack);
     GiveCash(playerid, moneycarjack);
     RemoveCheckPoint(playerid);
