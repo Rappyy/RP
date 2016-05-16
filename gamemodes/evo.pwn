@@ -35,7 +35,7 @@ native gpci (playerid, serial [], len); // this is the native.
 27 - Trucking job (Dropping).
 28 - Trucking job (Returning).
 -----------------------------------*/
-//#define localhost_mysql
+#define localhost_mysql
 
 //MySQL Information
 new dbHandle;
@@ -43,9 +43,9 @@ new dbHandle;
 #if defined localhost_mysql
 
     #define SQL_HOST "127.0.0.1"
-    #define SQL_USER "root"
-    #define SQL_PASS ""
-    #define SQL_DB "evorp_test"
+    #define SQL_USER "iulian"
+    #define SQL_PASS "0zie88y7"
+    #define SQL_DB "evo_rp_test_server"
 
 #else
 
@@ -331,6 +331,9 @@ new Menu:FoodStallMenu;
 new FJArea;
 // Farmer job
 
+new CarJackActor;
+new carjack_veh[MAX_PLAYERS];
+new carjack_timer[MAX_PLAYERS];
 //anti cheat
 new cheatID[MAX_PLAYERS];
 new cheatImmune[MAX_PLAYERS];
@@ -1104,6 +1107,12 @@ public OnGameModeInit()
     mysql_function_query(dbHandle, query, false, "", "");
     //Reseting player vehicle key & slot
 	
+    //Actor for CarJacking
+    CarJackActor = CreateActor(28, 2442.5383,-1979.9324,13.5469,298.1593); //  bmydrug in Willowfield
+    ApplyActorAnimation(CarJackActor, "DEALER", "DEALER_IDLE", 4.1, 1, 0, 0, 0, 0); // DealStance Anim
+    SetActorInvulnerable(CarJackActor, true);
+    Create3DTextLabel("Mike", 0xFFFFFFFF, 2442.5383,-1979.9324, 14.7469, 10.0, 0, 0);
+
     //TEXTRAW1649.8198,-2239.6956,13.5105
     infopickup = CreatePickup(2894, 1, 1649.8198,-2239.6956,13.5105, -1);
     return 1;
@@ -1452,6 +1461,10 @@ public OnPlayerConnect(playerid)
     AttachWep[playerid][wepType] = -1;
     AttachWep[playerid][wepASlot] = -1;
     togglehud[playerid] = 1;
+
+    carjack_veh[playerid] = -1;
+    SetPVarInt(playerid, "CarJackPos", 0);
+    SetPVarInt(playerid, "CarJacking", 0);
     return 1;
 }
 
@@ -5700,7 +5713,7 @@ stock CreateAllTextDraws(playerid)
     TextDrawSetProportional(hospital_timeleft[playerid],1);
     TextDrawSetShadow(hospital_timeleft[playerid],1);
 
-    infotxt[playerid] = TextDrawCreate(145.000000,145.000000,"Incarcare...");
+    infotxt[playerid] = TextDrawCreate(145.000000,180.000000,"Incarcare...");
     TextDrawUseBox(infotxt[playerid],1);
     TextDrawBoxColor(infotxt[playerid],0x00000066);
     TextDrawTextSize(infotxt[playerid],0.000000,252.000000);
@@ -9175,6 +9188,15 @@ stock PlayerCallTo(playerid, number)
         SCM(playerid, COLOR_GREEN2, "Bine ai venit la San News.");
         SCM(playerid, COLOR_YELLOWG, "Spune-ne pe scurt ce stire ai pentru noi:");
     }
+    else if(number == 666)
+    {
+        SetIntVar(playerid, "CallWith", 666); //caller connecting
+        SetIntVar(playerid, "OnCall", 1); //player is on call
+        SetIntVar(playerid, "ServiceCall", 0); //Player is on service call
+        SCM(playerid, COLOR_WHITE, "HINT: Apasa T pentru a vorbi iar daca vrei sa inchei, scrie /hangup.");
+        SCM(playerid, COLOR_GREEN2, "Mike: Salut, am nevoie de un .");
+        SCM(playerid, COLOR_YELLOWG, "Spune-ne pe scurt ce stire ai pentru noi:");
+    }
     else
     {
         foreach(new i : Player)
@@ -10214,7 +10236,12 @@ public OnPlayerCommandText(playerid, cmdtext[])
 }
 
 public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
-{    
+{      
+
+    if(GetPVarInt(playerid, "CarJacking") == 1)
+    {
+        SetTimerEx("SetDropCPCarJack", 10000, false, "ii", playerid, vehicleid);
+    }  
     if(IsBike(vehicleid))
     {
         GetVehicleParamsEx(vehicleid,engine,lights,alarm,doors,bonnet,boot,objective);
@@ -10623,6 +10650,37 @@ public OnPlayerStateChange(playerid, newstate, oldstate)
 
 public OnPlayerEnterCheckpoint(playerid)
 {
+    if(GetPVarInt(playerid, "MikeCP") == 1 && PlayerToPoint(2.0, playerid, 2443.4609,-1979.4357,13.5469))       
+    {
+        RemoveCheckPoint(playerid);
+        carjack_veh[playerid] = FindCarJackVeh();        
+        if(carjack_veh[playerid] == -1)
+        {
+            SCM(playerid, COLOR_LIGHTRED, "Momentan nu este nici o masina personala spawnata pe server! Te rugam sa incerci mai incolo.");
+            return 1;
+        }
+        SetPVarInt(playerid, "CarJacking", 1);
+        SCM(playerid, COLOR_WHITE, "Mike spune: Hei, vrei sa faci niste bani? Am o misiune pentru tine.");
+        SCMEx(playerid, COLOR_WHITE, "Mike spune: Am nevoie de o masina, model {FF0000}%s{FFFFFF}. Daca imi aduci masina in urmatoarele {FF0000}20 minute{FFFFFF}, te voi plati foarte bine!", VehicleNames[carjack_veh[playerid]-400]);
+        SCMEx(playerid, COLOR_WHITE, "Mike spune: Am vazut masina cam la {FF0000}%d{FFFFFF} metri de aici, dar nu imi mai amintesc directia. Te rog sa o cauti!", DistPlayerToCarJack(playerid, carjack_veh[playerid]));
+        ShowDialog(playerid, Show:<Login>, DIALOG_STYLE_MSGBOX, "{FFFFFF}CarJacking - {FF0000}Hints", "{FF0000}HINT{FFFFFF}: Vei fi platit in functie de starea vehiculului atunci cand i-l duci lui Mike.\n{FF0000}HINT{FFFFFF}: Tasteaza {FF0000}/carjack{FFFFFF} drop dupa ce ai gasit vehiculul de care are Mike nevoie.\n{FF0000}HINT{FFFFFF}: Tasteaza {FF0000}/carjack pos{FFFFFF} daca vrei sa vezi distanta pana la cel mai apropiat vehicul (O poti folosi de {FF0000}3 ori{FFFFFF}).", "Ok", "");
+
+        SetPVarInt(playerid, "CarJackPos", 0);
+        carjack_timer[playerid] = SetTimerEx("CarJackExpire", 600000, false, "i", playerid);
+        return 1;
+    }
+
+    if(GetPVarInt(playerid, "CarJackDrop") == 1)
+    {
+        if(!IsPlayerInAnyVehicle(playerid)) return ErrorMsg(playerid, "Trebuie sa fii intr-un vehicul!");
+        new vehicleid = GetPlayerVehicleID(playerid);
+        if(GetVehicleModel(vehicleid) != carjack_veh[playerid]) return ErrorMsg(playerid, "Acesta nu este vehiculul pe care il cauta Mike!");
+        SetTimerEx("DestroyCarJack", 10000, false, "ii", playerid, vehicleid);
+        InfoMSG(playerid, "~w~Masina este in curs de distrugere.~n~Dureaza ~r~10 ~w~secunde!", 1);
+        SetTimerEx("CarJackDestroyTimer", 1000, false, "ii", 1, playerid);
+        FreezePlayer(playerid);
+    }
+
     if(GetPVarInt(playerid, "GarbageFull") == 1 && GetVehicleModel(GetPlayerVehicleID(playerid)) == 408)
     {
         if(PlayerToPoint(5.0, playerid, 2402.4753,90.8707,27.1285))
@@ -11963,6 +12021,9 @@ public RemoteJackKick(playerid)
 
 public SetPlayerSpawn(playerid)
 {
+    carjack_veh[playerid] = -1;
+    SetPVarInt(playerid, "CarJackPos", 0);
+    SetPVarInt(playerid, "CarJacking", 0);
     StopPlayerSpec(playerid);
     SetSpawnInfo(playerid, 0, PlayerInfo[playerid][pSkin], 1686.7380,-2242.9150,-2.6913, 1.0, -1, -1, -1, -1, -1, -1);
     SpawnPlayer(playerid);
@@ -16497,7 +16558,8 @@ public BinTimer()
 }
 
 public OneMinuteTimer()
-{
+{    
+    SetActorPos(CarJackActor, 2442.5383,-1979.9324,13.5469);
     //=============================================================================
     new string[64];
     new tmphour;
@@ -21618,7 +21680,7 @@ CMD:engine(playerid, params[])
         if(JackingEngine[playerid] != 0) return SCM(playerid, COLOR_INFO, "Deja spargi o masina, floseste /stop pentru a te opri.");
         if(engineOn{vehicleid}) return 1;
         FreezePlayer(playerid);
-        format(msg, sizeof(msg), ", incearca sa porneasca motorul vehiculului %s.", VehicleNames[GetVehicleModel(vehicleid)-400]);
+        format(msg, sizeof(msg), "incearca sa porneasca motorul vehiculului %s.", VehicleNames[GetVehicleModel(vehicleid)-400]);
         ActionMessage(playerid, 20.0, msg);
         new vZone[MAX_ZONE_NAME];
         GetVehicleZone(vehicleid, vZone, MAX_ZONE_NAME);
@@ -21690,6 +21752,30 @@ CMD:engine(playerid, params[])
         else if(VehicleInfo[vehicleid][carImmob] == 5)
         {
             JackingEngine[playerid] = 360;
+        }
+        if(VehicleInfo[vehicleid][carLock] == 0)
+        {
+            JackingEngine[playerid] += 60;
+        }
+        else if(VehicleInfo[vehicleid][carLock] == 1)
+        {
+            JackingEngine[playerid] += 120;
+        }
+        else if(VehicleInfo[vehicleid][carLock] == 2)
+        {
+            JackingEngine[playerid] += 180;
+        }
+        else if(VehicleInfo[vehicleid][carLock] == 3)
+        {
+            JackingEngine[playerid] += 240;
+        }
+        else if(VehicleInfo[vehicleid][carLock] == 4)
+        {
+            JackingEngine[playerid] += 300;
+        }
+        else if(VehicleInfo[vehicleid][carLock] == 5)
+        {
+            JackingEngine[playerid] += 360;
         }
     }
     return 1;
@@ -22588,7 +22674,7 @@ CMD:pay(playerid, params[])
     if(!PlayerIsOn(pid)) return NotConnectedMSG(playerid);
     if(isAdminDuty(pid)) return NotNearPlayerMSG(playerid);
     if(amount > GetCash(playerid) || amount <= 0) return NoCashMSG(playerid);
-    if(amount > 1000 && GetLevel(playerid) <= 3) return SCM(playerid, -1, "Playerii sub level 3 nu pot plati mai mult de $1,000!");
+    if(amount > 1000 && GetLevel(playerid) < 3) return SCM(playerid, -1, "Playerii sub level 3 nu pot plati mai mult de $1,000!");
     if(!PlayerNearPlayer(5.0, playerid,pid)) return NotNearPlayerMSG(playerid);
     SetIntVar(playerid, "JustPaid", gettime());
     GiveCash(playerid, -amount);
@@ -25329,7 +25415,7 @@ CMD:v(playerid, params[]) return cmd_vehicle(playerid, params);
 CMD:vehicle(playerid, params[])
 {
     new option[24], secoption, thirdoption, fourthoption;
-    if(gettime() - GetIntVar(playerid, "VehicleDelay") < 3) return SCM(playerid, COLOR_INFO, "Te rog asteapta 3 secunde dupa fiecare comanda.");
+    if(gettime() - GetIntVar(playerid, "VehicleDelay") < 5) return SCM(playerid, COLOR_INFO, "Te rog asteapta 3 secunde dupa fiecare comanda.");
     SetIntVar(playerid, "VehicleDelay", gettime());
     if(sscanf(params, "s[24]D(-1)D(-1)D(-1)", option, secoption, thirdoption, fourthoption))
     {
@@ -25461,6 +25547,7 @@ CMD:vehicle(playerid, params[])
         SaveVehicle(veh);
         VehicleInfo[veh][carSpawned] = 0;
         VehicleInfo[veh][carOwned] = 0;
+        VehicleInfo[veh][carOn] = 0;
         StopCarBoomBox(veh);
         format(msg, sizeof(msg), "Masina ta a fost parcata. (%s)", VehicleNames[VehicleInfo[veh][carModel]-400]);
         SCM(playerid, COLOR_GREEN2, msg);
@@ -34172,6 +34259,7 @@ CMD:apark(playerid, params[])
     SaveVehicle(veh);
     VehicleInfo[veh][carSpawned] = 0;
     VehicleInfo[veh][carOwned] = 0;
+    VehicleInfo[veh][carOn] = 0;
     StopCarBoomBox(veh);
     DestoryCar(veh);
     if(p==-1) SCM(playerid, COLOR_GREEN, "Ai despawnat masina unui jucator neconectat.");
@@ -37022,6 +37110,15 @@ CMD:spraytag(playerid, params[])
 }
 //SPRAYTAG SYSTEM - END
 
+//DISTANCE BETWEEN POINTS
+
+stock GetDistance(Float:x1, Float:y1, Float:z1, Float:x2, Float:y2, Float:z2)
+{
+	return floatround( floatsqroot( ( ( x1 - x2 ) * ( x1 - x2 ) ) + ( ( y1 - y2 ) * ( y1 - y2 ) ) + ( ( z1 - z2 ) * ( z1 - z2 ) ) ) );
+}
+
+//DISTANCE BETWEEN POINTS - END
+
 //TRAILER SYSTEM CMD
 stock FindNearbyTrailer(id, idtype)
 {
@@ -37100,3 +37197,179 @@ CMD:exittrailer(playerid, params[])
 
 
 ///////////////////////// Miner Job //////////////////////////////
+
+
+// CarJacker 
+
+function FindCarJackVeh()
+{
+    new a[300], ac=0, carz;
+    for(new i = 1; i<=GetVehiclePoolSize(); i++)
+    {
+        if(VehicleInfo[i][carOn] == 1)
+        {
+            ac++;
+            a[ac] = VehicleInfo[i][carModel];
+        }
+    }
+    if(ac == 0) return -1;    
+    else if(ac==1) return a[1];
+    if(ac>1) carz = randomEx(1, ac);
+    return a[carz];
+}
+
+stock Float:GetDistanceBetweenPoints(Float:x1,Float:y1,Float:z1,Float:x2,Float:y2,Float:z2) //By Gabriel "Larcius" Cordes
+{
+    return floatadd(floatadd(floatsqroot(floatpower(floatsub(x1,x2),2)),floatsqroot(floatpower(floatsub(y1,y2),2))),floatsqroot(floatpower(floatsub(z1,z2),2)));
+}
+
+stock Float:GetDistanceToPoint(playerid,Float:x1,Float:y1,Float:z1) //By Gabriel "Larcius" Cordes
+{
+    new Float:x2,Float:y2,Float:z2;
+    GetPlayerPos(playerid,x2,y2,z2);
+    return GetDistanceBetweenPoints(x1,y1,z1,x2,y2,z2);
+}
+
+stock Float:GetDistanceToVehicle(playerid,vehicleid) //By Darkrealm (Edited by Sacky and Gabriel "Larcius" Cordes)
+{
+    new Float:x1,Float:y1,Float:z1;
+    GetVehiclePos(vehicleid,x1,y1,z1);
+    return GetDistanceToPoint(playerid,x1,y1,z1);
+}
+
+
+function DistPlayerToCarJack(playerid, car)
+{
+    new Float:plX, Float:plY, Float:plZ, Float:cX, Float:cY, Float:cZ, Float:dist = 10000.0, result;
+    new Float:distbtw;
+    GetPlayerPos(playerid, plX, plY, plZ);
+    for(new i = 1; i<=GetVehiclePoolSize(); i++)
+    {
+        if(VehicleInfo[i][carOn] == 1 && VehicleInfo[i][carModel] == car)
+        {
+            GetVehiclePos(VehicleInfo[i][carID], cX, cY, cZ);            
+            distbtw = GetDistanceToVehicle(playerid, i);
+            if(distbtw < dist) dist = distbtw;
+        }
+    }
+    result = floatround(dist, floatround_round);
+    return result;
+}
+
+CMD:carjack(playerid, params[])
+{
+    if(CompareStrings(params, "start"))
+    {
+        if(GetPVarInt(playerid, "CarJacking") == 1) return ErrorMsg(playerid, "Deja esti intr-o misiune de car jacking.");        
+        SetCheckPoint(playerid, 0, 2443.4609,-1979.4357,13.5469, 0.6);
+        SetPVarInt(playerid, "MikeCP", 1);
+        InfoMSG(playerid, "Ti-a fost setat pe harta un checkpoint, acolo se afla ~r~Mike~w~. ~n~Iti va spune el ce trebuie sa faci mai departe.", 5);
+        return 1;
+    }
+    else if(CompareStrings(params, "drop"))
+    {
+        if(!IsPlayerInAnyVehicle(playerid)) return ErrorMsg(playerid, "Trebuie sa fii intr-un vehicul!");
+        if(GetVehicleModel(GetPlayerVehicleID(playerid)) != carjack_veh[playerid]) return ErrorMsg(playerid, "Acesta nu este vehiculul pe care il cauta Mike!");
+        SetCheckPoint(playerid, 0, 2448.3398,-1979.1071,13.5402, 1);
+        SetPVarInt(playerid, "CarJackDrop", 1);
+        SCM(playerid, COLOR_GREY, "Intoarce-te la Mike pentru a-i vinde vehiculul.");
+        return 1;
+    }
+    else if(CompareStrings(params, "pos"))
+    {
+        if(GetPVarInt(playerid, "CarJackPos") >= 3) return InfoMSG(playerid, "~r~Ai folosit deja de 3 ori aceasta comanda.~n~O poti folosi la misiunea urmatoare.", 10);
+        if(carjack_veh[playerid] == -1 && GetPVarInt(playerid, "CarJacking") != 1) return ErrorMsg(playerid, "Nu ai inceput o misiune de car jacking.");
+        new cjpos;
+        cjpos = GetPVarInt(playerid, "CarJackPos");
+        cjpos++;
+        SetPVarInt(playerid, "CarJackPos", cjpos);
+        SCMEx(playerid, COLOR_WHITE, "Masina cautata de Mike este la aproximativ {FF0000}%d{FFFFFF} metri.", DistPlayerToCarJack(playerid, carjack_veh[playerid]));
+        return 1;
+    }
+    else if(CompareStrings(params, "stop"))
+    {
+        if(carjack_veh[playerid] != -1 && GetPVarInt(playerid, "CarJacking") == 1)
+        carjack_veh[playerid] = -1;
+        SetPVarInt(playerid, "CarJacking", 0);
+        KillTimer(carjack_timer[playerid]);
+        InfoMSG(playerid, "Ai anulat misiunea de ~r~car jacking~w~.", 5);
+        return 1;
+    }
+    else SyntaxMSG(playerid, "/carjack start/stop/drop/pos");
+    return 1;
+}
+
+function CarJackExpire(playerid)
+{
+    carjack_veh[playerid] = -1;
+    SetPVarInt(playerid, "CarJackPos", 0);
+    SetPVarInt(playerid, "CarJacking", 0);
+    KillTimer(carjack_timer[playerid]);
+    InfoMSG(playerid, "~r~Din pacate a expirat oferta lui Mike! Dute inapoi la el pentru a prelua o noua misiune.", 5);
+    return 1;
+}
+
+function DestroyCarJack(playerid, vehicleid)
+{
+    new moneycarjack = 1000;
+    new Float:health; 
+    GetVehicleHealth(vehicleid, health);
+    new vhealth = floatround(1000.0-health, floatround_round);
+    moneycarjack = moneycarjack - (vhealth);
+    if(moneycarjack == 1000) SCM(playerid, COLOR_GREEN, "Felicitari! Nu ai lovit masina si ai primit 1000$.");
+    else if(moneycarjack <= 1000) SCMEx(playerid, COLOR_GREEN, "Din nefericire ai lovit masina si ai primit doar %d$.", moneycarjack);
+    GiveCash(playerid, moneycarjack);
+    RemoveCheckPoint(playerid);
+    RemoveVar(playerid, "CarJackDrop");
+    SetPVarInt(playerid, "CarJackPos", 0);    
+    SetPVarInt(playerid, "CarJacking", 0);
+    VehicleInfo[vehicleid][carDestroyed]++;
+    VehicleInfo[vehicleid][carInsurances]--;
+    foreach(new i : Player)
+    {
+        if(PlayerInfo[i][pCarKey] == vehicleid)
+        {
+            SCMEx(i, COLOR_GREY, "Masina ta %s a fost distrusa ((carjacked)). Acum ai %d asigurari si %d distrugeri.", VehicleNames[GetVehicleModel(vehicleid)-400], VehicleInfo[vehicleid][carInsurances], VehicleInfo[vehicleid][carDestroyed]);
+            PlayerInfo[i][pCarKey] = 0;
+            PlayerInfo[i][pVehSlot] = 0;
+            break;
+        }
+    }
+    SaveVehicle(vehicleid);
+    VehicleInfo[vehicleid][carSpawned] = 0;
+    VehicleInfo[vehicleid][carOwned] = 0;
+    VehicleInfo[vehicleid][carOn] = 0;
+    StopCarBoomBox(vehicleid);
+    DestoryCar(vehicleid);
+    UnFreezePlayer(playerid);   
+    TextDrawHideForPlayer(playerid, infotxt[playerid]); 
+    return 1;   
+}
+
+function CarJackDestroyTimer(i, playerid)
+{
+    new str[128]; 
+    if(i>=10) 
+    {
+        TextDrawHideForPlayer(playerid, infotxt[i]);
+        return 1;
+    }  
+    else if(i<=10) 
+    {
+        FreezePlayer(playerid);
+        format(str, sizeof(str), "~w~Masina este in curs de distrugere.~n~Dureaza ~r~%d ~w~secunde!", 10-i);
+        InfoMSG(playerid, str, 1);
+        SetTimerEx("CarJackDestroyTimer", 1000, false, "ii", i+1, playerid);
+    }
+    return 1;
+}
+
+function SetDropCPCarJack(playerid, vehicleid)
+{
+    if(GetVehicleModel(GetPlayerVehicleID(playerid)) != carjack_veh[playerid]) return ErrorMsg(playerid, "Acesta nu este vehiculul pe care il cauta Mike!");
+    SetCheckPoint(playerid, 0, 2448.3398,-1979.1071,13.5402, 2);
+    SetPVarInt(playerid, "CarJackDrop", 1);
+    InfoMSG(playerid, "Intoarce-te la ~r~Mike ~w~pentru a-i returna vehiculul.", 5); 
+    return 1;
+}
+//End Of CarJacker
