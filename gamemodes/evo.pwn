@@ -10648,6 +10648,12 @@ public OnPlayerStateChange(playerid, newstate, oldstate)
     return 1;
 }
 
+Dialog:CarjackDialog(playerid, response, listitem, inputtext[])
+{
+    if(response) return 1;
+    else return 1;
+}
+
 public OnPlayerEnterCheckpoint(playerid)
 {
     if(GetPVarInt(playerid, "MikeCP") == 1 && PlayerToPoint(2.0, playerid, 2443.4609,-1979.4357,13.5469))       
@@ -10661,9 +10667,10 @@ public OnPlayerEnterCheckpoint(playerid)
         }
         SetPVarInt(playerid, "CarJacking", 1);
         SCM(playerid, COLOR_WHITE, "Mike spune: Hei, vrei sa faci niste bani? Am o misiune pentru tine.");
-        SCMEx(playerid, COLOR_WHITE, "Mike spune: Am nevoie de o masina, model {FF0000}%s{FFFFFF}. Daca imi aduci masina in urmatoarele {FF0000}20 minute{FFFFFF}, te voi plati foarte bine!", VehicleNames[carjack_veh[playerid]-400]);
+        SCMEx(playerid, COLOR_WHITE, "Mike spune: Am nevoie de o masina, model {FF0000}%s{FFFFFF}.", VehicleNames[carjack_veh[playerid]-400]);
+        SCMEx(playerid, COLOR_WHITE, "Mike spune: Daca imi aduci masina in urmatoarele {FF0000}20 de minute{FFFFFF}, te voi plati foarte bine!");
         SCMEx(playerid, COLOR_WHITE, "Mike spune: Am vazut masina cam la {FF0000}%d{FFFFFF} metri de aici, dar nu imi mai amintesc directia. Te rog sa o cauti!", DistPlayerToCarJack(playerid, carjack_veh[playerid]));
-        ShowDialog(playerid, Show:<Login>, DIALOG_STYLE_MSGBOX, "{FFFFFF}CarJacking - {FF0000}Hints", "{FF0000}HINT{FFFFFF}: Vei fi platit in functie de starea vehiculului atunci cand i-l duci lui Mike.\n{FF0000}HINT{FFFFFF}: Tasteaza {FF0000}/carjack{FFFFFF} drop dupa ce ai gasit vehiculul de care are Mike nevoie.\n{FF0000}HINT{FFFFFF}: Tasteaza {FF0000}/carjack pos{FFFFFF} daca vrei sa vezi distanta pana la cel mai apropiat vehicul (O poti folosi de {FF0000}3 ori{FFFFFF}).", "Ok", "");
+        ShowDialog(playerid, Show:<CarjackDialog>, DIALOG_STYLE_MSGBOX, "{FFFFFF}CarJacking - {FF0000}Hints", "{FF0000}HINT{FFFFFF}: Vei fi platit in functie de starea vehiculului atunci cand i-l duci lui Mike.\n{FF0000}HINT{FFFFFF}: Tasteaza {FF0000}/carjack drop{FFFFFF} dupa ce ai gasit vehiculul de care are Mike nevoie.\n{FF0000}HINT{FFFFFF}: Tasteaza {FF0000}/carjack pos{FFFFFF} daca vrei sa vezi distanta pana la cel mai apropiat vehicul (O poti folosi de {FF0000}3 ori{FFFFFF}).", "Ok", "");
 
         SetPVarInt(playerid, "CarJackPos", 0);
         carjack_timer[playerid] = SetTimerEx("CarJackExpire", 600000, false, "i", playerid);
@@ -37252,7 +37259,8 @@ function DistPlayerToCarJack(playerid, car)
             if(distbtw < dist) dist = distbtw;
         }
     }
-    result = floatround(dist, floatround_round);
+    result = floatround(dist, floatround_floor);
+    result = result/2;
     return result;
 }
 
