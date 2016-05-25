@@ -10242,7 +10242,7 @@ public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
     {
         SetTimerEx("SetDropCPCarJack", 10000, false, "ii", playerid, vehicleid);
     }  
-    if(IsBike(vehicleid))
+    if(IsBike(vehicleid) || IsABiker(vehicleid))
     {
         GetVehicleParamsEx(vehicleid,engine,lights,alarm,doors,bonnet,boot,objective);
         if(engine != VEHICLE_PARAMS_ON) { SetVehicleParamsEx(vehicleid,VEHICLE_PARAMS_ON,lights,alarm,doors,bonnet,boot,objective); }
@@ -10378,9 +10378,12 @@ public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
     }
     if(vLocked{vehicleid} && ispassenger)
     {
-        SCM(playerid, COLOR_LIGHTRED, "Vehiculul este inchis.");
-        PutPlayer(playerid, PlayerPosX(playerid), PlayerPosY(playerid), PlayerPosZ(playerid));
-        return 1;
+        if(!IsABiker(result) && !IsBike(result))
+        {
+            SCM(playerid, COLOR_LIGHTRED, "Vehiculul este inchis.");
+            PutPlayer(playerid, PlayerPosX(playerid), PlayerPosY(playerid), PlayerPosZ(playerid));
+            return 1;
+        }
     }
     if(IsAPlane(vehicleid) && !IsADMVHeli(vehicleid) && !ispassenger || !IsADMVHeli(vehicleid) && IsAHelicopter(vehicleid) && !ispassenger)
     {
@@ -21217,6 +21220,7 @@ CMD:lock(playerid, params[])
             counter++;
         }
     }
+    if(IsABiker(result) || IsBike(result)) return 1;
     switch(counter)
     {
         case 1:
