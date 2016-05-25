@@ -1,0 +1,147 @@
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[18:16:53] password = ""  (string)
+[18:16:53] filterscripts = ""  (string)
+[18:16:53] 
+[18:16:53] Server Plugins
+[18:16:53] --------------
+[18:16:53]  Loading plugin: crashdetect
+[18:16:54]   CrashDetect v4.15.1 is OK.
+[18:16:54]   Loaded.
+[18:16:54]  Loading plugin: mysql
+[18:16:55]  >> plugin.mysql: R39-5 successfully loaded.
+[18:16:55]   Loaded.
+[18:16:55]  Loading plugin: streamer
+[18:16:55] 
+
+*** Streamer Plugin v2.8 by Incognito loaded ***
+
+[18:16:55]   Loaded.
+[18:16:55]  Loading plugin: sscanf
+[18:16:55] 
+
+[18:16:55]  ===============================
+
+[18:16:55]       sscanf plugin loaded.     
+
+[18:16:55]          Version:  2.8.2        
+
+[18:16:55]    (c) 2012 Alex "Y_Less" Cole  
+
+[18:16:55]  ===============================
+
+[18:16:55]   Loaded.
+[18:16:55]  Loading plugin: nativechecker
+[18:16:55]   Loaded.
+[18:16:55]  Loaded 5 plugins.
+
+[18:16:55] 
+[18:16:55] Ban list
+[18:16:55] --------
+[18:16:55]  Loaded: samp.ban
+[18:16:55] 
+[18:16:55] 
+[18:16:55] Filterscripts
+[18:16:55] ---------------
+[18:16:55]   Loaded 0 filterscripts.
+
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[18:17:11] password = ""  (string)
+[18:17:11] filterscripts = ""  (string)
+[18:17:11] 
+[18:17:11] Server Plugins
+[18:17:11] --------------
+[18:17:11]  Loading plugin: crashdetect
+[18:17:11]   CrashDetect v4.15.1 is OK.
+[18:17:11]   Loaded.
+[18:17:11]  Loading plugin: mysql
+[18:17:11]  >> plugin.mysql: R39-5 successfully loaded.
+[18:17:11]   Loaded.
+[18:17:11]  Loading plugin: streamer
+[18:17:11] 
+
+*** Streamer Plugin v2.8 by Incognito loaded ***
+
+[18:17:11]   Loaded.
+[18:17:11]  Loading plugin: sscanf
+[18:17:11] 
+
+[18:17:11]  ===============================
+
+[18:17:11]       sscanf plugin loaded.     
+
+[18:17:11]          Version:  2.8.2        
+
+[18:17:11]    (c) 2012 Alex "Y_Less" Cole  
+
+[18:17:11]  ===============================
+
+[18:17:11]   Loaded.
+[18:17:11]  Loading plugin: nativechecker
+[18:17:11]   Loaded.
+[18:17:11]  Loaded 5 plugins.
+
+[18:17:11] 
+[18:17:11] Ban list
+[18:17:11] --------
+[18:17:11]  Loaded: samp.ban
+[18:17:11] 
+[18:17:11] 
+[18:17:11] Filterscripts
+[18:17:11] ---------------
+[18:17:11]   Loaded 0 filterscripts.
+
+[18:17:12]  
+[18:17:12]  
+[18:17:12]  
+[18:17:12]  ======================================= 
+[18:17:12]  |                                     | 
+[18:17:12]  |        YSI version 3.09.0684        | 
+[18:17:12]  |        By Alex "Y_Less" Cole        | 
+[18:17:12]  |                                     | 
+[18:17:12]  ======================================= 
+[18:17:12]  
+[18:17:12] Number of vehicle models: 0
+[18:17:12] Au fost incarcate 30 labels din baza de date MySQL.
+[18:17:12] Loaded 29 doors from MySQL.
+[18:17:12] Loaded 9 faction doors from MySQL.
+[18:17:12] Loaded 2 dynamic gates from MySQL.
+[18:17:12] Loaded 8 ATM's from MySQL.
+[18:17:12] Loaded 41 admin teleports from MySQL.
+[18:17:12] Loaded 0 dynamic objects from MySQL.
+[18:17:12] Loaded 2 dynamic infos from MySQL.
+[18:17:12] Loaded 8 dynamic gas stations from MySQL.
+[18:17:12] Loaded 1 dynamic banks from MySQL.
+[18:17:12] Loaded 108 dynamic vehicles from MySQL.
+[18:17:13] Loaded 601 dynamic houses from MySQL.
+[18:17:13] Loaded 21 dynamic businesses from MySQL.
+[18:17:13] Loaded 0 dynamic food stands from MySQL.
+[18:17:13] Loaded 0 dynamic park meters from MySQL.
+[18:17:13] Loaded 2 APB's from MySQL.
+[18:17:13] Loaded 8 dynamic factions from MySQL.
+[18:17:13] [debug] Run time error 4: "Array index out of bounds"
+[18:17:13] [debug]  Accessing element at index 11 past array upper bound 9
+[18:17:13] [debug] AMX backtrace:
+[18:17:13] [debug] #0 0035be54 in public LoadDynamicJobs () at evo.pwn:14969
+[18:17:13] Loaded 14 dynamic movable doors from MySQL.
+[18:17:13] Loaded 0 dynamic CCTV's from MySQL.
+[18:17:13] Loaded 1 dynamic dealerships from MySQL.
+[18:17:13] Loaded 1 player radios from MySQL.
+[18:17:13] Loaded 0 plants from MySQL.
+[18:17:13] Au fost incarcate 57 cosuri de gunoi din MySQL.
+[18:17:13] Au fost incarcate 7 locatii GPS din MySQL.

@@ -35,7 +35,7 @@ native gpci (playerid, serial [], len); // this is the native.
 27 - Trucking job (Dropping).
 28 - Trucking job (Returning).
 -----------------------------------*/
-#define localhost_mysql
+//#define localhost_mysql
 
 //MySQL Information
 new dbHandle;
@@ -50,9 +50,9 @@ new dbHandle;
 #else
 
     #define SQL_HOST "127.0.0.1"
-    #define SQL_USER "iulian"
-    #define SQL_PASS "0zie88y7"
-    #define SQL_DB "evo_rp"
+    #define SQL_USER "root"
+    #define SQL_PASS ""
+    #define SQL_DB "evorp"
 
 #endif
 
@@ -10378,7 +10378,7 @@ public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
     }
     if(vLocked{vehicleid} && ispassenger)
     {
-        if(!IsABiker(result) && !IsBike(result))
+        if(!IsABiker(vehicleid) && !IsBike(vehicleid))
         {
             SCM(playerid, COLOR_LIGHTRED, "Vehiculul este inchis.");
             PutPlayer(playerid, PlayerPosX(playerid), PlayerPosY(playerid), PlayerPosZ(playerid));
