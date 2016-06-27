@@ -35,7 +35,7 @@ native gpci (playerid, serial [], len); // this is the native.
 27 - Trucking job (Dropping).
 28 - Trucking job (Returning).
 -----------------------------------*/
-#define localhost_mysql
+//#define localhost_mysql
 
 //MySQL Information
 new dbHandle;
@@ -50,9 +50,9 @@ new dbHandle;
 #else
 
     #define SQL_HOST "127.0.0.1"
-    #define SQL_USER "iulian"
-    #define SQL_PASS "0zie88y7"
-    #define SQL_DB "evo_rp"
+    #define SQL_USER "root"
+    #define SQL_PASS ""
+    #define SQL_DB "evorp"
 
 #endif
 
@@ -9999,7 +9999,12 @@ public OnVehicleDeath(vehicleid, killerid)
             SCM(killerid, COLOR_LIGHTRED, msg);
             format(msg, sizeof(msg), "Mai ai %d asigurari ramase.",VehicleInfo[vehicleid][carInsurances]);
             SCM(killerid, COLOR_LIGHTRED, msg);
+<<<<<<< HEAD
             ResetVehicleStuff(vehicleid);
+=======
+            UpdateVehicleStatus(killerid, vehicleid);
+//          ResetVehicleStuff(vehicleid);
+>>>>>>> origin/master
             PlayerInfo[killerid][pCarKey] = 0;
             VehicleInfo[vehicleid][carOwned] = 0;
             DestoryCar(vehicleid);
@@ -10012,7 +10017,12 @@ public OnVehicleDeath(vehicleid, killerid)
             SCM(killerid, COLOR_LIGHTRED, msg);
             SCM(killerid, COLOR_LIGHTRED, "Nu ai mai avut asigurare asa ca motorul masinii este distrus.");
             VehicleInfo[vehicleid][carBroken] = 1;
+<<<<<<< HEAD
             ResetVehicleStuff(vehicleid);
+=======
+            UpdateVehicleStatus(killerid, vehicleid);
+//          ResetVehicleStuff(vehicleid);
+>>>>>>> origin/master
             PlayerInfo[killerid][pCarKey] = 0;
             VehicleInfo[vehicleid][carOwned] = 0;
             DestoryCar(vehicleid);
@@ -10038,8 +10048,9 @@ public OnVehicleDeath(vehicleid, killerid)
                     CheckOwnedVehicles(GetIDByName(VehicleInfo[vehicleid][carOwner]));
                 }
                 VehicleInfo[vehicleid][carOwned] = 0;
+                UpdateVehicleStatus(killerid, vehicleid);
                 ResetVehicleStuff(vehicleid);
-                DestoryCar(vehicleid);
+                DestoryCar(vehicleid);            
             }
             else
             {
@@ -10054,8 +10065,10 @@ public OnVehicleDeath(vehicleid, killerid)
                 }
                 VehicleInfo[vehicleid][carBroken] = 1;
                 VehicleInfo[vehicleid][carOwned] = 0;
+                UpdateVehicleStatus(killerid, vehicleid);
                 ResetVehicleStuff(vehicleid);
                 DestoryCar(vehicleid);
+
             }
         }
     }
@@ -10231,7 +10244,7 @@ public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
     {
         SetTimerEx("SetDropCPCarJack", 10000, false, "ii", playerid, vehicleid);
     }  
-    if(IsBike(vehicleid))
+    if(IsBike(vehicleid) && !IsABiker(vehicleid))
     {
         GetVehicleParamsEx(vehicleid,engine,lights,alarm,doors,bonnet,boot,objective);
         if(engine != VEHICLE_PARAMS_ON) { SetVehicleParamsEx(vehicleid,VEHICLE_PARAMS_ON,lights,alarm,doors,bonnet,boot,objective); }
@@ -10640,6 +10653,12 @@ public OnPlayerStateChange(playerid, newstate, oldstate)
     return 1;
 }
 
+Dialog:CarjackDialog(playerid, response, listitem, inputtext[])
+{
+    if(response) return 1;
+    else return 1;
+}
+
 public OnPlayerEnterCheckpoint(playerid)
 {
     if(GetPVarInt(playerid, "MikeCP") == 1 && PlayerToPoint(2.0, playerid, 2443.4609,-1979.4357,13.5469))       
@@ -10653,9 +10672,10 @@ public OnPlayerEnterCheckpoint(playerid)
         }
         SetPVarInt(playerid, "CarJacking", 1);
         SCM(playerid, COLOR_WHITE, "Mike spune: Hei, vrei sa faci niste bani? Am o misiune pentru tine.");
-        SCMEx(playerid, COLOR_WHITE, "Mike spune: Am nevoie de o masina, model {FF0000}%s{FFFFFF}. Daca imi aduci masina in urmatoarele {FF0000}20 minute{FFFFFF}, te voi plati foarte bine!", VehicleNames[carjack_veh[playerid]-400]);
+        SCMEx(playerid, COLOR_WHITE, "Mike spune: Am nevoie de o masina, model {FF0000}%s{FFFFFF}.", VehicleNames[carjack_veh[playerid]-400]);
+        SCMEx(playerid, COLOR_WHITE, "Mike spune: Daca imi aduci masina in urmatoarele {FF0000}20 de minute{FFFFFF}, te voi plati foarte bine!");
         SCMEx(playerid, COLOR_WHITE, "Mike spune: Am vazut masina cam la {FF0000}%d{FFFFFF} metri de aici, dar nu imi mai amintesc directia. Te rog sa o cauti!", DistPlayerToCarJack(playerid, carjack_veh[playerid]));
-        ShowDialog(playerid, Show:<Login>, DIALOG_STYLE_MSGBOX, "{FFFFFF}CarJacking - {FF0000}Hints", "{FF0000}HINT{FFFFFF}: Vei fi platit in functie de starea vehiculului atunci cand i-l duci lui Mike.\n{FF0000}HINT{FFFFFF}: Tasteaza {FF0000}/carjack{FFFFFF} drop dupa ce ai gasit vehiculul de care are Mike nevoie.\n{FF0000}HINT{FFFFFF}: Tasteaza {FF0000}/carjack pos{FFFFFF} daca vrei sa vezi distanta pana la cel mai apropiat vehicul (O poti folosi de {FF0000}3 ori{FFFFFF}).", "Ok", "");
+        ShowDialog(playerid, Show:<CarjackDialog>, DIALOG_STYLE_MSGBOX, "{FFFFFF}CarJacking - {FF0000}Hints", "{FF0000}HINT{FFFFFF}: Vei fi platit in functie de starea vehiculului atunci cand i-l duci lui Mike.\n{FF0000}HINT{FFFFFF}: Tasteaza {FF0000}/carjack drop{FFFFFF} dupa ce ai gasit vehiculul de care are Mike nevoie.\n{FF0000}HINT{FFFFFF}: Tasteaza {FF0000}/carjack pos{FFFFFF} daca vrei sa vezi distanta pana la cel mai apropiat vehicul (O poti folosi de {FF0000}3 ori{FFFFFF}).", "Ok", "");
 
         SetPVarInt(playerid, "CarJackPos", 0);
         carjack_timer[playerid] = SetTimerEx("CarJackExpire", 600000, false, "i", playerid);
@@ -20902,7 +20922,7 @@ CMD:help(playerid, params[])
     SCM(playerid, COLOR_GREY,"** GENERAL ** /place /takegun /check /charity /report /greet /acceptshake /ad /cad /mask /buyclothes /dropkey /servertime");
     SCM(playerid, COLOR_GREY,"** GENERAL **  /parkmeter /stop /smoke /dropsmoke (/v)ehicle /accept /setstyle /animlist /buydrink /meal /removecp /fine");
     SCM(playerid, COLOR_GREY,"** GENERAL ** /notehelp /fishhelp /bankhelp /cellhelp /househelp /bizhelp /gps /boomboxhelp /radiohelp /factionhelp /drughelp");
-    SCM(playerid, COLOR_GREY,"** GENERAL ** /handbrake /speedlimit /givemats /mymats /toggle /fixchar");
+    SCM(playerid, COLOR_GREY,"** GENERAL ** /handbrake /speedlimit /givemats /mymats /toggle /fixchar /nametags");
     SCM(playerid, COLOR_GREY,"** CHAT ** /ame /me /do (/l)ocal /t (/s)hout /b /low (/w)hisper /cw /ooc /pm ");
     if(PlayerInfo[playerid][pHelper] > 0) SCM(playerid, COLOR_GREY, "** MODERATOR ** /mcmds");
     if(CheckAdmin(playerid, ADMIN_LEVEL_1)) SCM(playerid, COLOR_GREY, "** ADMIN ** /acmds");
@@ -21203,7 +21223,11 @@ CMD:lock(playerid, params[])
             counter++;
         }
     }
+<<<<<<< HEAD
     if(IsABiker(result) || IsBike(result)) return 1;
+=======
+    if(IsBike(result) || IsABiker(result)) return ErrorMsg(playerid, "Nu poti folosi aceasta comanda pe o bicicleta/motocicleta!");
+>>>>>>> origin/master
     switch(counter)
     {
         case 1:
@@ -25071,6 +25095,23 @@ CMD:rlow(playerid, params[])
     return 1;
 }
 
+CMD:nametags(playerid, params[])
+{
+	if(GetPVarInt(playerid, "HideNameTags") == 1)
+	{
+		for(new i=0;i<=GetPlayerPoolSize();i++) ShowPlayerNameTagForPlayer(playerid, i, true);
+		InfoMSG(playerid, "Au fost afisate toate nametagurile.", 3);
+		SetPVarInt(playerid, "HideNameTags", 0);
+	}
+	else if(GetPVarInt(playerid, "HideNameTags") == 0)
+	{
+		for(new i=0;i<=GetPlayerPoolSize();i++) ShowPlayerNameTagForPlayer(playerid, i, false);
+		InfoMSG(playerid, "Au fost ascunse toate nametagurile.", 3);
+		SetPVarInt(playerid, "HideNameTags", 1);
+	}
+	return 1;	
+}
+
 CMD:mask(playerid, params[])
 {
     if(PlayerInfo[playerid][pMask] != 1 && !Mask{playerid} && !CopDuty{playerid}) return SCM(playerid, COLOR_FADE5, "Nu ai o masca.");
@@ -25291,7 +25332,7 @@ CMD:donatecarlist(playerid, params[])
     new i;
     for(i=0;i<sizeof(DonateCarsList);i++)
     {
-        SCMEx(playerid, COLOR_WHITE, "%d) '%s' - %d euro", i, DonateCarsList[i][dName], DonateCarsList[i][dPrice]);
+        SCMEx(playerid, COLOR_WHITE, "%d) %s", i, DonateCarsList[i][dName]);
     }
     return 1;
 }
@@ -25932,6 +25973,7 @@ CMD:vehicle(playerid, params[])
     }
     if(!strcmp(option, "lock", true))
     {
+    	if(IsBike(PlayerInfo[playerid][pCarKey]) || IsABiker(PlayerInfo[playerid][pCarKey])) return ErrorMsg(playerid, "Nu poti folosi aceasta comanda pe o bicicleta/motocicleta!");
         if(PlayerNearVehicle(3.0, playerid, PlayerInfo[playerid][pCarKey]))
         {
             if(vLocked{PlayerInfo[playerid][pCarKey]})
@@ -37122,7 +37164,8 @@ function DistPlayerToCarJack(playerid, car)
             if(distbtw < dist) dist = distbtw;
         }
     }
-    result = floatround(dist, floatround_round);
+    result = floatround(dist, floatround_floor);
+    result = result/2;
     return result;
 }
 
@@ -37202,6 +37245,7 @@ function DestroyCarJack(playerid, vehicleid)
             SCMEx(i, COLOR_GREY, "Masina ta %s a fost distrusa ((carjacked)). Acum ai %d asigurari si %d distrugeri.", VehicleNames[GetVehicleModel(vehicleid)-400], VehicleInfo[vehicleid][carInsurances], VehicleInfo[vehicleid][carDestroyed]);
             PlayerInfo[i][pCarKey] = 0;
             PlayerInfo[i][pVehSlot] = 0;
+            UpdateVehicleStatus(playerid, vehicleid);
             break;
         }
     }

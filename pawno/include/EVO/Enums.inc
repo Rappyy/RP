@@ -1483,12 +1483,12 @@ new StoreSkins[276] = {
 272,273,289,290,291,292,293,294,295,296,297,298,299
 };
 
-new LSPDSkins[12] = {
-282,283,284,288,287,309,310,311,302,303,304,305
+new LSPDSkins[32] = {
+71,265,300,301,304,305,306,307,266,267,280,281,284,285,286,233,191,186,120,121,91,93,119,21,28,23,59,60,163,164,165,166
 };
 
-new LSFDSkins[7] = {
-70,274,275,276,277,279,308
+new LSFDSkins[10] = {
+70,274,275,276,277,278,279,308,305,169
 };
 
 new NEWSSkins[5] = {
@@ -1865,18 +1865,16 @@ new CarsPrices[][DEALERSHIP_VEHICLES] = {
 enum DonateInfo{
 	dName[64],
 	dModel,
-	dPrice
 };
 
 new DonateCarsList[][DonateInfo] = {
-{"Sandking", 495, 10}, 
-{"Shamal", 519, 10}, 
-{"Hotknife", 434, 7}, 
-{"Jetmax", 493, 7},
-{"FCR-900", 521, 6},
-{"Patriot", 470, 5}, 
-{"BFInjection", 424, 5},
-{"Kart", 571, 3}
+{"Infernus", 411}, 
+{"Banshee", 429}, 
+{"Hotknife", 434}, 
+{"Turismo", 451},
+{"Patriot", 470}, 
+{"Shamal", 519},
+{"FCR-900", 521}
 };
 
 enum GPSEnums

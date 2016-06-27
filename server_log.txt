@@ -1306,4 +1306,7 @@ Console input: gmx
 [14:13:06] [join] Bjarn_Peer has joined the server (1:79.112.113.252)
 [14:13:33] [part] Anthony_Woods has left the server (0:1)
 [14:15:36] [part] Bjarn_Peer has left the server (1:1)
+<<<<<<< HEAD
 [14:31:18] --- Server Shutting Down.
+=======
+>>>>>>> origin/master
