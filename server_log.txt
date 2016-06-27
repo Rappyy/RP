@@ -1150,3 +1150,159 @@ v0.3.7-R2, (C)2005-2015 SA-MP Team
 [09:41:57] Loaded 0 plants from MySQL.
 [09:41:57] Au fost incarcate 57 cosuri de gunoi din MySQL.
 [09:41:58] Au fost incarcate 7 locatii GPS din MySQL.
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[10:56:26] filterscripts = ""  (string)
+[10:56:26] 
+[10:56:26] Server Plugins
+[10:56:26] --------------
+[10:56:26]  Loading plugin: crashdetect
+[10:56:26]   CrashDetect v4.15.1 is OK.
+[10:56:26]   Loaded.
+[10:56:26]  Loading plugin: mysql
+[10:56:26]  >> plugin.mysql: R39-5 successfully loaded.
+[10:56:26]   Loaded.
+[10:56:26]  Loading plugin: streamer
+[10:56:26] 
+
+*** Streamer Plugin v2.8 by Incognito loaded ***
+
+[10:56:26]   Loaded.
+[10:56:26]  Loading plugin: sscanf
+[10:56:26] 
+
+[10:56:26]  ===============================
+
+[10:56:26]       sscanf plugin loaded.     
+
+[10:56:26]          Version:  2.8.2        
+
+[10:56:26]    (c) 2012 Alex "Y_Less" Cole  
+
+[10:56:26]  ===============================
+
+[10:56:26]   Loaded.
+[10:56:26]  Loading plugin: nativechecker
+[10:56:26]   Loaded.
+[10:56:26]  Loaded 5 plugins.
+
+[10:56:26] 
+[10:56:26] Ban list
+[10:56:26] --------
+[10:56:26]  Loaded: samp.ban
+[10:56:26] 
+[10:56:26] 
+[10:56:26] Filterscripts
+[10:56:26] ---------------
+[10:56:26]   Loaded 0 filterscripts.
+
+[10:56:28]  
+[10:56:28]  
+[10:56:28]  
+[10:56:28]  ======================================= 
+[10:56:28]  |                                     | 
+[10:56:28]  |        YSI version 3.09.0684        | 
+[10:56:28]  |        By Alex "Y_Less" Cole        | 
+[10:56:28]  |                                     | 
+[10:56:28]  ======================================= 
+[10:56:28]  
+[10:56:28] Number of vehicle models: 0
+[10:56:28] Au fost incarcate 30 labels din baza de date MySQL.
+[10:56:28] Loaded 29 doors from MySQL.
+[10:56:28] Loaded 9 faction doors from MySQL.
+[10:56:28] Loaded 2 dynamic gates from MySQL.
+[10:56:28] Loaded 8 ATM's from MySQL.
+[10:56:28] Loaded 41 admin teleports from MySQL.
+[10:56:28] Loaded 0 dynamic objects from MySQL.
+[10:56:28] Loaded 2 dynamic infos from MySQL.
+[10:56:28] Loaded 8 dynamic gas stations from MySQL.
+[10:56:28] Loaded 1 dynamic banks from MySQL.
+[10:56:29] Loaded 108 dynamic vehicles from MySQL.
+[10:56:29] Loaded 601 dynamic houses from MySQL.
+[10:56:29] Loaded 23 dynamic businesses from MySQL.
+[10:56:29] Loaded 0 dynamic food stands from MySQL.
+[10:56:29] Loaded 0 dynamic park meters from MySQL.
+[10:56:29] Loaded 2 APB's from MySQL.
+[10:56:29] Loaded 8 dynamic factions from MySQL.
+[10:56:29] [debug] Run time error 4: "Array index out of bounds"
+[10:56:29] [debug]  Accessing element at index 11 past array upper bound 9
+[10:56:29] [debug] AMX backtrace:
+[10:56:29] [debug] #0 0035be54 in public LoadDynamicJobs () at evo.pwn:14969
+[10:56:29] Loaded 14 dynamic movable doors from MySQL.
+[10:56:29] Loaded 0 dynamic CCTV's from MySQL.
+[10:56:29] Loaded 1 dynamic dealerships from MySQL.
+[10:56:29] Loaded 1 player radios from MySQL.
+[10:56:29] Loaded 0 plants from MySQL.
+[10:56:29] Au fost incarcate 57 cosuri de gunoi din MySQL.
+[10:56:29] Au fost incarcate 7 locatii GPS din MySQL.
+[12:16:21] [connection] 86.123.47.48:1315 requests connection cookie.
+[12:16:22] [connection] incoming connection: 86.123.47.48:1315 id: 0
+[12:16:22] [join] Lucian_Vladimirescu has joined the server (0:86.123.47.48)
+[12:24:08] [connection] 79.118.81.147:59076 requests connection cookie.
+[12:24:09] [connection] incoming connection: 79.118.81.147:59076 id: 1
+[12:24:10] [join] Anthony_Woods has joined the server (1:79.118.81.147)
+[12:36:32] [part] Anthony_Woods has left the server (1:0)
+[12:49:44] [part] Lucian_Vladimirescu has left the server (0:1)
+[13:35:01] [connection] 86.123.47.48:1673 requests connection cookie.
+[13:35:02] [connection] incoming connection: 86.123.47.48:1673 id: 0
+[13:35:03] [join] Lucian_Vladimirescu has joined the server (0:86.123.47.48)
+[13:35:09] [connection] 46.214.213.166:2256 requests connection cookie.
+[13:35:10] [connection] incoming connection: 46.214.213.166:2256 id: 1
+[13:35:10] [join] Jesen_Cleave has joined the server (1:46.214.213.166)
+[13:42:58] [part] Lucian_Vladimirescu has left the server (0:1)
+Console input: gmx
+[13:58:56]  
+[13:58:56]  
+[13:58:56]  
+[13:58:56]  ======================================= 
+[13:58:56]  |                                     | 
+[13:58:56]  |        YSI version 3.09.0684        | 
+[13:58:56]  |        By Alex "Y_Less" Cole        | 
+[13:58:56]  |                                     | 
+[13:58:56]  ======================================= 
+[13:58:56]  
+[13:58:56] Number of vehicle models: 0
+[13:58:56] Au fost incarcate 30 labels din baza de date MySQL.
+[13:58:56] Loaded 29 doors from MySQL.
+[13:58:56] Loaded 9 faction doors from MySQL.
+[13:58:56] Loaded 2 dynamic gates from MySQL.
+[13:58:56] Loaded 8 ATM's from MySQL.
+[13:58:56] Loaded 41 admin teleports from MySQL.
+[13:58:56] Loaded 0 dynamic objects from MySQL.
+[13:58:56] Loaded 2 dynamic infos from MySQL.
+[13:58:56] Loaded 8 dynamic gas stations from MySQL.
+[13:58:56] Loaded 1 dynamic banks from MySQL.
+[13:58:56] Loaded 108 dynamic vehicles from MySQL.
+[13:58:56] Loaded 601 dynamic houses from MySQL.
+[13:58:56] Loaded 23 dynamic businesses from MySQL.
+[13:58:56] Loaded 0 dynamic food stands from MySQL.
+[13:58:56] Loaded 0 dynamic park meters from MySQL.
+[13:58:56] Loaded 2 APB's from MySQL.
+[13:58:56] Loaded 8 dynamic factions from MySQL.
+[13:58:56] [debug] Run time error 4: "Array index out of bounds"
+[13:58:56] [debug]  Accessing element at index 11 past array upper bound 9
+[13:58:56] [debug] AMX backtrace:
+[13:58:56] [debug] #0 0035be58 in public LoadDynamicJobs () at evo.pwn:14969
+[13:58:56] Loaded 14 dynamic movable doors from MySQL.
+[13:58:56] Loaded 0 dynamic CCTV's from MySQL.
+[13:58:56] Loaded 1 dynamic dealerships from MySQL.
+[13:58:56] Loaded 1 player radios from MySQL.
+[13:58:56] Loaded 0 plants from MySQL.
+[13:58:56] Au fost incarcate 57 cosuri de gunoi din MySQL.
+[13:58:56] Au fost incarcate 7 locatii GPS din MySQL.
+[13:59:57] [connection] 79.118.81.147:55704 requests connection cookie.
+[13:59:58] [connection] incoming connection: 79.118.81.147:55704 id: 0
+[13:59:58] [join] Anthony_Woods has joined the server (0:79.118.81.147)
+[14:03:32] [part] Jesen_Cleave has left the server (1:1)
+[14:13:04] [connection] 79.112.113.252:52024 requests connection cookie.
+[14:13:05] [connection] incoming connection: 79.112.113.252:52024 id: 1
+[14:13:06] [join] Bjarn_Peer has joined the server (1:79.112.113.252)
+[14:13:33] [part] Anthony_Woods has left the server (0:1)
+[14:15:36] [part] Bjarn_Peer has left the server (1:1)
