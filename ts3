@@ -1,0 +1,11 @@
+5mVu2XyY4sZl3F0t9W
+
+rootpas123 / rootpass123
+loginname= "serveradmin", password= "1YioHdUq"
+token=nB8e46IkenbC+ALhb56U0wbRxRKD+ABpi1N5bf0v
+
+servercreate virtualserver_name=EvoRP2 virtualserver_port=9988 virtualserver_maxclients=50
+sid=2 virtualserver_port=9988 token=ddqCmka21sXaE+0zjnFHFQsqMJ832Boc6SSdECXe
+
+
+servergroupaddclient sgid=9 cldbid=VMQ5K6vK5wVaCDCPFHPkWuD75xI=
