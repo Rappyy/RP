@@ -19,6 +19,7 @@
 #include <vehicleFunctions>
 #include "../include/gl_common.inc"
 #pragma dynamic 20000
+//RAPPY
 main() { }
 //Global Variables for querys & format messages
 new msg[256], query[650], loginMsg[200], playerserial[256];
