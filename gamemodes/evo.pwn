@@ -19,7 +19,6 @@
 #include <vehicleFunctions>
 #include "../include/gl_common.inc"
 #pragma dynamic 20000
-//RAPPY123
 main() { }
 //Global Variables for querys & format messages
 new msg[256], query[650], loginMsg[200], playerserial[256];
@@ -37,7 +36,7 @@ native gpci (playerid, serial [], len); // this is the native.
 27 - Trucking job (Dropping).
 28 - Trucking job (Returning).
 -----------------------------------*/
-#define localhost_mysql
+//#define localhost_mysql
 
 //MySQL Information
 new dbHandle;
@@ -582,7 +581,7 @@ new RepairOffer[MAX_PLAYERS],
 //Taxi variables
 
 //Trailer Variables
-	new InTrailer[MAX_PLAYERS];
+    new InTrailer[MAX_PLAYERS];
 //Trailer Variables
 
 new
@@ -1084,9 +1083,9 @@ static const gSAZones[][SAZONE_MAIN] = {
 
 stock ConnectMySQL()
 {
-	mysql_option(LOG_TRUNCATE_DATA, false);
+    mysql_option(LOG_TRUNCATE_DATA, false);
     mysql_log(LOG_ERROR | LOG_DEBUG | LOG_WARNING, LOG_TYPE_HTML);
-	//mysql_log(LOG_ERROR, LOG_TYPE_TEXT);
+    //mysql_log(LOG_ERROR, LOG_TYPE_TEXT);
     dbHandle = mysql_connect(SQL_HOST, SQL_USER, SQL_DB, SQL_PASS);
     return 1;
 }
@@ -1124,8 +1123,8 @@ public OnGameModeInit()
     AddTolls();
     AddPlants();
     LoadFarmStuff();
-	AddBinsFromFile();
-	LoadSpray();
+    AddBinsFromFile();
+    LoadSpray();
     LoadGPSMySQL();
     QueryLoadGarages();
     DisableInteriorEnterExits();
@@ -1159,11 +1158,11 @@ public OnGameModeInit()
     onemintimer = SetTimer("OneMinuteTimer", 60000, 1);
     globalsaving = SetTimer("GlobalSaving", 600000, 1);
     checkstatus = SetTimer("CheckStatus", 1000, 1);
-	cheatTimer = SetTimer("CheatTimer", 5000, 1);
+    cheatTimer = SetTimer("CheatTimer", 5000, 1);
     resettimers = SetTimer("resettimers", 1800000, 1);
     truckertimer = SetTimer("TruckerTimer", 1000, 1);
-	checkbintimer = SetTimer("CheckBins", 30000, 1);
-	trashbintimer = SetTimer("BinTimer", 240000, 1);
+    checkbintimer = SetTimer("CheckBins", 30000, 1);
+    trashbintimer = SetTimer("BinTimer", 240000, 1);
     antiafk = SetTimer("AntiAFK", 60000, 1);
     speedtimer = SetTimer("SpeedTimer", 300, 1);
     for(new c = 0; c < MAX_VEHICLES; c++)
@@ -1179,7 +1178,7 @@ public OnGameModeInit()
     format(query, sizeof(query), "UPDATE `users` SET `carkey` = '0', `vehslot` = '0'");
     mysql_function_query(dbHandle, query, false, "", "");
     //Reseting player vehicle key & slot
-	
+    
     //Actor for Weapon Dealer
     new GovernmentActors[1];
     GovernmentActors[0] = CreateActor(265, 1543.2919, -1621.3621, 13.5613, 180); // LSPD - Bariera
@@ -1223,119 +1222,119 @@ public OnGameModeInit()
 //======================== Farmer Job functions ===============================//
 function LoadFarmStuff()
 {
-	FJArea = CreateDynamicRectangle(FJAreaPos);
-	CreateDynamic3DTextLabel("Cara sacii aici si apasa 'H' ca sa-i vinzi!",-1,FJPosTransport,5.0);
-	//CreateDynamic3DTextLabel("Press 'Y' to rent a farm vehicle.",-1,FJPosHireVehicle,5.0);
-	CreateDynamic3DTextLabel("Apasa 'Y' ca sa iei un sac cu seminte.",-1,FJPosGetPaddySack,5.0);
-	//CreateDynamicPickup(1318,1,FJPosHireVehicle);
-	CreateDynamicPickup(1318,1,FJPosGetPaddySack);
-	CreateDynamicPickup(1318,1,FJPosTransport);
-	return 1;
+    FJArea = CreateDynamicRectangle(FJAreaPos);
+    CreateDynamic3DTextLabel("Cara sacii aici si apasa 'H' ca sa-i vinzi!",-1,FJPosTransport,5.0);
+    //CreateDynamic3DTextLabel("Press 'Y' to rent a farm vehicle.",-1,FJPosHireVehicle,5.0);
+    CreateDynamic3DTextLabel("Apasa 'Y' ca sa iei un sac cu seminte.",-1,FJPosGetPaddySack,5.0);
+    //CreateDynamicPickup(1318,1,FJPosHireVehicle);
+    CreateDynamicPickup(1318,1,FJPosGetPaddySack);
+    CreateDynamicPickup(1318,1,FJPosTransport);
+    return 1;
 }
 
 function AddPaddyObjectToVehicle(playerid)
 {
-	switch(FarmInfo[playerid][pPaddyHarvestInVehicle])	
-	{
-	    case 1:
-	    {
-			FarmInfo[playerid][pPaddyHarvestInVehicleObject][0] = CreateObject(2060,0,0,-1000,0,0,0,100);
-			AttachObjectToVehicle(FarmInfo[playerid][pPaddyHarvestInVehicleObject][0],FarmInfo[playerid][pVehicleHire], -0.375000,-1.275000,0.150000,0.000000,0.000000,0.000000);
-		}
-		case 2:
-		{
-			FarmInfo[playerid][pPaddyHarvestInVehicleObject][1] = CreateObject(2060,0,0,-1000,0,0,0,100);
-			AttachObjectToVehicle(FarmInfo[playerid][pPaddyHarvestInVehicleObject][1],FarmInfo[playerid][pVehicleHire], -0.375000,-1.725000,0.150000,0.000000,0.000000,0.000000);
-		}
-		case 3:
-		{
-			FarmInfo[playerid][pPaddyHarvestInVehicleObject][2] = CreateObject(2060,0,0,-1000,0,0,0,100);
-			AttachObjectToVehicle(FarmInfo[playerid][pPaddyHarvestInVehicleObject][2],FarmInfo[playerid][pVehicleHire], -0.375000,-2.250000,0.150000,0.000000,0.000000,0.000000);
-		}
-		case 4:
-		{
-			FarmInfo[playerid][pPaddyHarvestInVehicleObject][3] = CreateObject(2060,0,0,-1000,0,0,0,100);
-			AttachObjectToVehicle(FarmInfo[playerid][pPaddyHarvestInVehicleObject][3],FarmInfo[playerid][pVehicleHire], 0.524999,-1.875000,0.150000,0.000000,0.000000,89.099983);
-		}
-		case 5:
-		{
-			FarmInfo[playerid][pPaddyHarvestInVehicleObject][4] = CreateObject(2060,0,0,-1000,0,0,0,100);
-			AttachObjectToVehicle(FarmInfo[playerid][pPaddyHarvestInVehicleObject][4],FarmInfo[playerid][pVehicleHire], 0.149999,-1.875000,0.375000,0.000000,0.000000,89.099990);
-		}
-		case 6:
-		{
-			FarmInfo[playerid][pPaddyHarvestInVehicleObject][5] = CreateObject(2060,0,0,-1000,0,0,0,100);
-			AttachObjectToVehicle(FarmInfo[playerid][pPaddyHarvestInVehicleObject][4],FarmInfo[playerid][pVehicleHire], 0.149999,-1.875000,0.375000,0.000000,0.000000,89.099990);
-		}
-		case 7:
-		{
-			FarmInfo[playerid][pPaddyHarvestInVehicleObject][6] = CreateObject(2060,0,0,-1000,0,0,0,100);
-			AttachObjectToVehicle(FarmInfo[playerid][pPaddyHarvestInVehicleObject][4],FarmInfo[playerid][pVehicleHire], 0.149999,-1.875000,0.375000,0.000000,0.000000,89.099990);
-		}
-		case 8:
-		{
-			FarmInfo[playerid][pPaddyHarvestInVehicleObject][7] = CreateObject(2060,0,0,-1000,0,0,0,100);
-			AttachObjectToVehicle(FarmInfo[playerid][pPaddyHarvestInVehicleObject][4],FarmInfo[playerid][pVehicleHire], 0.149999,-1.875000,0.375000,0.000000,0.000000,89.099990);
-		}
-		case 9:
-		{
-			FarmInfo[playerid][pPaddyHarvestInVehicleObject][8] = CreateObject(2060,0,0,-1000,0,0,0,100);
-			AttachObjectToVehicle(FarmInfo[playerid][pPaddyHarvestInVehicleObject][4],FarmInfo[playerid][pVehicleHire], 0.149999,-1.875000,0.375000,0.000000,0.000000,89.099990);
-		}
-		case 10:
-		{
-			FarmInfo[playerid][pPaddyHarvestInVehicleObject][9] = CreateObject(2060,0,0,-1000,0,0,0,100);
-			AttachObjectToVehicle(FarmInfo[playerid][pPaddyHarvestInVehicleObject][4],FarmInfo[playerid][pVehicleHire], 0.149999,-1.875000,0.375000,0.000000,0.000000,89.099990);
-		}
-	}
-	return 1;
+    switch(FarmInfo[playerid][pPaddyHarvestInVehicle])  
+    {
+        case 1:
+        {
+            FarmInfo[playerid][pPaddyHarvestInVehicleObject][0] = CreateObject(2060,0,0,-1000,0,0,0,100);
+            AttachObjectToVehicle(FarmInfo[playerid][pPaddyHarvestInVehicleObject][0],FarmInfo[playerid][pVehicleHire], -0.375000,-1.275000,0.150000,0.000000,0.000000,0.000000);
+        }
+        case 2:
+        {
+            FarmInfo[playerid][pPaddyHarvestInVehicleObject][1] = CreateObject(2060,0,0,-1000,0,0,0,100);
+            AttachObjectToVehicle(FarmInfo[playerid][pPaddyHarvestInVehicleObject][1],FarmInfo[playerid][pVehicleHire], -0.375000,-1.725000,0.150000,0.000000,0.000000,0.000000);
+        }
+        case 3:
+        {
+            FarmInfo[playerid][pPaddyHarvestInVehicleObject][2] = CreateObject(2060,0,0,-1000,0,0,0,100);
+            AttachObjectToVehicle(FarmInfo[playerid][pPaddyHarvestInVehicleObject][2],FarmInfo[playerid][pVehicleHire], -0.375000,-2.250000,0.150000,0.000000,0.000000,0.000000);
+        }
+        case 4:
+        {
+            FarmInfo[playerid][pPaddyHarvestInVehicleObject][3] = CreateObject(2060,0,0,-1000,0,0,0,100);
+            AttachObjectToVehicle(FarmInfo[playerid][pPaddyHarvestInVehicleObject][3],FarmInfo[playerid][pVehicleHire], 0.524999,-1.875000,0.150000,0.000000,0.000000,89.099983);
+        }
+        case 5:
+        {
+            FarmInfo[playerid][pPaddyHarvestInVehicleObject][4] = CreateObject(2060,0,0,-1000,0,0,0,100);
+            AttachObjectToVehicle(FarmInfo[playerid][pPaddyHarvestInVehicleObject][4],FarmInfo[playerid][pVehicleHire], 0.149999,-1.875000,0.375000,0.000000,0.000000,89.099990);
+        }
+        case 6:
+        {
+            FarmInfo[playerid][pPaddyHarvestInVehicleObject][5] = CreateObject(2060,0,0,-1000,0,0,0,100);
+            AttachObjectToVehicle(FarmInfo[playerid][pPaddyHarvestInVehicleObject][4],FarmInfo[playerid][pVehicleHire], 0.149999,-1.875000,0.375000,0.000000,0.000000,89.099990);
+        }
+        case 7:
+        {
+            FarmInfo[playerid][pPaddyHarvestInVehicleObject][6] = CreateObject(2060,0,0,-1000,0,0,0,100);
+            AttachObjectToVehicle(FarmInfo[playerid][pPaddyHarvestInVehicleObject][4],FarmInfo[playerid][pVehicleHire], 0.149999,-1.875000,0.375000,0.000000,0.000000,89.099990);
+        }
+        case 8:
+        {
+            FarmInfo[playerid][pPaddyHarvestInVehicleObject][7] = CreateObject(2060,0,0,-1000,0,0,0,100);
+            AttachObjectToVehicle(FarmInfo[playerid][pPaddyHarvestInVehicleObject][4],FarmInfo[playerid][pVehicleHire], 0.149999,-1.875000,0.375000,0.000000,0.000000,89.099990);
+        }
+        case 9:
+        {
+            FarmInfo[playerid][pPaddyHarvestInVehicleObject][8] = CreateObject(2060,0,0,-1000,0,0,0,100);
+            AttachObjectToVehicle(FarmInfo[playerid][pPaddyHarvestInVehicleObject][4],FarmInfo[playerid][pVehicleHire], 0.149999,-1.875000,0.375000,0.000000,0.000000,89.099990);
+        }
+        case 10:
+        {
+            FarmInfo[playerid][pPaddyHarvestInVehicleObject][9] = CreateObject(2060,0,0,-1000,0,0,0,100);
+            AttachObjectToVehicle(FarmInfo[playerid][pPaddyHarvestInVehicleObject][4],FarmInfo[playerid][pVehicleHire], 0.149999,-1.875000,0.375000,0.000000,0.000000,89.099990);
+        }
+    }
+    return 1;
 }
 
 function UpdatePaddy(playerid)
 {
-	for(new i =0;i<MAX_PADDYS;i++)
-	{
-	    if(FarmInfo[playerid][pPaddyUsed][i] == 1)
-	    {
-	        if(FarmInfo[playerid][pPaddyProgress][i] < 220)
-			{
-			    FarmInfo[playerid][pPaddyProgress][i]++;
-				if(FarmInfo[playerid][pPaddyProgress][i] == 50)
-				{
-					new Float:x,Float:y,Float:z;
-					GetDynamicObjectPos(FarmInfo[playerid][pPaddyObject][i],x,y,z);
-					MoveDynamicObject(FarmInfo[playerid][pPaddyObject][i],x,y,z+0.6,2);
-					DestroyDynamic3DTextLabel(FarmInfo[playerid][pPaddyText][i]);
-					FarmInfo[playerid][pPaddyText][i]=CreateDynamic3DTextLabel("",-1,x,y,z+2,5.0);
-				}
-				new string[128];
-			    format(string,sizeof(string),"Proprietar: %s\nSlot: %d\nProgres: {00f6ff}%d",GetName(playerid),i,FarmInfo[playerid][pPaddyProgress][i]);
-			    UpdateDynamic3DTextLabelText(FarmInfo[playerid][pPaddyText][i],-1,string);
-			    if(FarmInfo[playerid][pPaddyProgress][i] > 100 && FarmInfo[playerid][pPaddyProgress][i] < 200)
-				{
-					format(string,sizeof(string),"GATA DE RECOLTAT\nProprietar: %s\nSlot: %d\nProgres: {00f6ff}%d",GetName(playerid),i,FarmInfo[playerid][pPaddyProgress][i]);
-					UpdateDynamic3DTextLabelText(FarmInfo[playerid][pPaddyText][i],-1,string);
-				}
-				if(FarmInfo[playerid][pPaddyProgress][i] > 200 && FarmInfo[playerid][pPaddyProgress][i] < 220)
-				{
-					format(string,sizeof(string),"PLANTA S-A OFILIT! \nProprietar: %s\nSlot: %d\nProgres: {00f6ff}%d",GetName(playerid),i,FarmInfo[playerid][pPaddyProgress][i]);
-					UpdateDynamic3DTextLabelText(FarmInfo[playerid][pPaddyText][i],-1,string);
-					FarmInfo[playerid][pPaddyWithered][i] = 1;
-				}
-				if(FarmInfo[playerid][pPaddyProgress][i] == 220)
-				{
-					DestroyPaddy(playerid, i);
-				}
-			}
-			
-	    }
-	}
-	return 1;
+    for(new i =0;i<MAX_PADDYS;i++)
+    {
+        if(FarmInfo[playerid][pPaddyUsed][i] == 1)
+        {
+            if(FarmInfo[playerid][pPaddyProgress][i] < 220)
+            {
+                FarmInfo[playerid][pPaddyProgress][i]++;
+                if(FarmInfo[playerid][pPaddyProgress][i] == 50)
+                {
+                    new Float:x,Float:y,Float:z;
+                    GetDynamicObjectPos(FarmInfo[playerid][pPaddyObject][i],x,y,z);
+                    MoveDynamicObject(FarmInfo[playerid][pPaddyObject][i],x,y,z+0.6,2);
+                    DestroyDynamic3DTextLabel(FarmInfo[playerid][pPaddyText][i]);
+                    FarmInfo[playerid][pPaddyText][i]=CreateDynamic3DTextLabel("",-1,x,y,z+2,5.0);
+                }
+                new string[128];
+                format(string,sizeof(string),"Proprietar: %s\nSlot: %d\nProgres: {00f6ff}%d",GetName(playerid),i,FarmInfo[playerid][pPaddyProgress][i]);
+                UpdateDynamic3DTextLabelText(FarmInfo[playerid][pPaddyText][i],-1,string);
+                if(FarmInfo[playerid][pPaddyProgress][i] > 100 && FarmInfo[playerid][pPaddyProgress][i] < 200)
+                {
+                    format(string,sizeof(string),"GATA DE RECOLTAT\nProprietar: %s\nSlot: %d\nProgres: {00f6ff}%d",GetName(playerid),i,FarmInfo[playerid][pPaddyProgress][i]);
+                    UpdateDynamic3DTextLabelText(FarmInfo[playerid][pPaddyText][i],-1,string);
+                }
+                if(FarmInfo[playerid][pPaddyProgress][i] > 200 && FarmInfo[playerid][pPaddyProgress][i] < 220)
+                {
+                    format(string,sizeof(string),"PLANTA S-A OFILIT! \nProprietar: %s\nSlot: %d\nProgres: {00f6ff}%d",GetName(playerid),i,FarmInfo[playerid][pPaddyProgress][i]);
+                    UpdateDynamic3DTextLabelText(FarmInfo[playerid][pPaddyText][i],-1,string);
+                    FarmInfo[playerid][pPaddyWithered][i] = 1;
+                }
+                if(FarmInfo[playerid][pPaddyProgress][i] == 220)
+                {
+                    DestroyPaddy(playerid, i);
+                }
+            }
+            
+        }
+    }
+    return 1;
 }
 
 function CarrySack(playerid)
 {
-	ApplyAnimation(playerid, "CARRY", "CRRY_PRTIAL", 4.0, 0, 0, 0, 1, 200); // dangrinh
+    ApplyAnimation(playerid, "CARRY", "CRRY_PRTIAL", 4.0, 0, 0, 0, 1, 200); // dangrinh
     return 1;
 }
 function AttachTrailer(vehicleid,trailerid)
@@ -1369,8 +1368,8 @@ function CheckPaddyFreeSlot(playerid,type)
 }
 function CreatePaddyHarvest(playerid,id,Float:x,Float:y,Float:z)
 {
-	if(FarmInfo[playerid][pPaddyHarvestUsed][id] == 1) return 1;
-	FarmInfo[playerid][pPaddyHarvestUsed][id] = 1;
+    if(FarmInfo[playerid][pPaddyHarvestUsed][id] == 1) return 1;
+    FarmInfo[playerid][pPaddyHarvestUsed][id] = 1;
     FarmInfo[playerid][pPaddyHarvestPosX][id] = x;
     FarmInfo[playerid][pPaddyHarvestPosY][id] = y;
     FarmInfo[playerid][pPaddyHarvestPosZ][id] = z;
@@ -1378,7 +1377,7 @@ function CreatePaddyHarvest(playerid,id,Float:x,Float:y,Float:z)
     new string[128];
     format(string,sizeof(string),"{fff600}Sac de orez - Proprietar: %s\nSlot %d\n{ffffff}Apasa 'N' ca sa-l ridici.",GetName(playerid),id);
     FarmInfo[playerid][pPaddyHarvestText][id] = CreateDynamic3DTextLabel(string,-1,x,y,z,5.0);
-	return 1;
+    return 1;
 }
 function DestroyPaddyHarvest(playerid,id)
 {
@@ -1489,15 +1488,15 @@ public OnGameModeExit()
     KillTimer(onemintimer);
     KillTimer(globalsaving);
     KillTimer(checkstatus);
-	KillTimer(cheatTimer);
+    KillTimer(cheatTimer);
     KillTimer(truckertimer);
     KillTimer(resettimers);
     KillTimer(antiafk);
 //  KillTimer(offersent);
-	KillTimer(trashbintimer);
-	KillTimer(checkbintimer);
+    KillTimer(trashbintimer);
+    KillTimer(checkbintimer);
 #if defined debugOn 
-	printf(query);
+    printf(query);
 #endif
     mysql_close(dbHandle);
     return 1;
@@ -1520,31 +1519,31 @@ public OnPlayerConnect(playerid)
     gPlayerUsingLoopingAnim[playerid] = 0;
     gPlayerAnimLibsPreloaded[playerid] = 0; 
     PreloadAnims(playerid);
-	/////////////////////////
-	new connecting_ip[32+1];
-	GetPlayerIp(playerid,connecting_ip,32);
-	/////////////////////////
-	new playerip[16];
-	GetPlayerIp(playerid, playerip, sizeof(playerip));
-	////////////////////////
-	if(IsPlayerNPC(playerid) && strcmp("127.0.0.1", playerip) != 0)
-	{
-		format(msg, sizeof(msg), "[ANTI-NPC]: %s a primit kick pentru ca este NPC.", GetName(playerid));
-		KickWithMSG(playerid, msg); //kick all npcs not connecting from localhost
-	}
-	///////////////////////
+    /////////////////////////
+    new connecting_ip[32+1];
+    GetPlayerIp(playerid,connecting_ip,32);
+    /////////////////////////
+    new playerip[16];
+    GetPlayerIp(playerid, playerip, sizeof(playerip));
+    ////////////////////////
+    if(IsPlayerNPC(playerid) && strcmp("127.0.0.1", playerip) != 0)
+    {
+        format(msg, sizeof(msg), "[ANTI-NPC]: %s a primit kick pentru ca este NPC.", GetName(playerid));
+        KickWithMSG(playerid, msg); //kick all npcs not connecting from localhost
+    }
+    ///////////////////////
     CheckBan(playerid);
     CheckUserBan(playerid);
     CheckSerial(playerid); // Checking if the player is ban evading
-	new num_players_on_ip = GetNumberOfPlayersOnThisIP(connecting_ip);
-	if(num_players_on_ip > MAX_CONNECTIONS_FROM_IP) 
-	{
-		format(msg, sizeof(msg), "IP-ul cu care te-ai conectat este deja in folosinta pe server!");
-		printf("MAXIPs: Connecting player(%d) exceeded %d IP connections from %s.", playerid, MAX_CONNECTIONS_FROM_IP, connecting_ip);
-	    SCM(playerid, COLOR_LIGHTRED, msg);
-		SetTimerEx("KickPlayer",100,0,"d",playerid);
-	    return 1;
-	}
+    new num_players_on_ip = GetNumberOfPlayersOnThisIP(connecting_ip);
+    if(num_players_on_ip > MAX_CONNECTIONS_FROM_IP) 
+    {
+        format(msg, sizeof(msg), "IP-ul cu care te-ai conectat este deja in folosinta pe server!");
+        printf("MAXIPs: Connecting player(%d) exceeded %d IP connections from %s.", playerid, MAX_CONNECTIONS_FROM_IP, connecting_ip);
+        SCM(playerid, COLOR_LIGHTRED, msg);
+        SetTimerEx("KickPlayer",100,0,"d",playerid);
+        return 1;
+    }
     if(!IsValidName(playerid))
     {
         KickEx2(playerid, "Te rog sa iti schimbi numele intr-unul roleplay, exemplu: Vincent_Leighton");
@@ -1592,42 +1591,42 @@ public OnPlayerDisconnect(playerid, reason)
         case 2: format(msg,sizeof msg,"** %s (Kick/Ban)",GetNameEx(playerid));
     }
     // Farmer job
-	KillTimer(FarmInfo[playerid][pUpdateTime]);
-	if(IsValidVehicle(FarmInfo[playerid][pVehicleHire]))
-	{
-		SetVehicleToRespawn(FarmInfo[playerid][pVehicleHire]);
-		FarmInfo[playerid][pHasHireVehicle] = 0;
-	}
+    KillTimer(FarmInfo[playerid][pUpdateTime]);
+    if(IsValidVehicle(FarmInfo[playerid][pVehicleHire]))
+    {
+        SetVehicleToRespawn(FarmInfo[playerid][pVehicleHire]);
+        FarmInfo[playerid][pHasHireVehicle] = 0;
+    }
     new vehiclez = FarmInfo[playerid][pTrailerVehicleHire];
-//	if(IsValidVehicle(FarmInfo[playerid][pTrailerVehicleHire])) DestroyVehicle(FarmInfo[playerid][pTrailerVehicleHire]);
+//  if(IsValidVehicle(FarmInfo[playerid][pTrailerVehicleHire])) DestroyVehicle(FarmInfo[playerid][pTrailerVehicleHire]);
     if(IsValidVehicle(vehiclez))
     {
         FarmInfo[playerid][pPaddyInTrailer] = 0;
         SetVehiclePos(vehiclez, CityVehicles[vehiclez][vPosX], CityVehicles[vehiclez][vPosY], CityVehicles[vehiclez][vPosZ]);
         SetVehicleZAngle(vehiclez, CityVehicles[vehiclez][vPosA]);
     }
-	if(IsValidDynamic3DTextLabel(FarmInfo[playerid][pTrailerText])) DestroyDynamic3DTextLabel(FarmInfo[playerid][pTrailerText]);
-	for(new i=0;i<MAX_PADDYS;i++)
-	{
-	    if(FarmInfo[playerid][pPaddyUsed][i] == 1)
-	    {
-			DestroyPaddy(playerid,i);
-	    }
+    if(IsValidDynamic3DTextLabel(FarmInfo[playerid][pTrailerText])) DestroyDynamic3DTextLabel(FarmInfo[playerid][pTrailerText]);
+    for(new i=0;i<MAX_PADDYS;i++)
+    {
+        if(FarmInfo[playerid][pPaddyUsed][i] == 1)
+        {
+            DestroyPaddy(playerid,i);
+        }
         if(FarmInfo[playerid][pPaddyHarvestUsed][i] == 1)
         {
-			DestroyPaddyHarvest(playerid,i);
+            DestroyPaddyHarvest(playerid,i);
         }
-	}
+    }
     for(new i=0;i<10;i++)
     {
-    	if(IsValidObject(FarmInfo[playerid][pPaddyHarvestInVehicleObject][i]))
-     	{
-     		DestroyObject(FarmInfo[playerid][pPaddyHarvestInVehicleObject][i]);
-			FarmInfo[playerid][pPaddyHarvestInVehicle] = 0;
-      	}
+        if(IsValidObject(FarmInfo[playerid][pPaddyHarvestInVehicleObject][i]))
+        {
+            DestroyObject(FarmInfo[playerid][pPaddyHarvestInVehicleObject][i]);
+            FarmInfo[playerid][pPaddyHarvestInVehicle] = 0;
+        }
     }
-	// Farmer job
-	ProxDetectorP(30.0, playerid, msg, COLOR_WHITE, COLOR_WHITE, COLOR_WHITE, COLOR_WHITE, COLOR_WHITE);
+    // Farmer job
+    ProxDetectorP(30.0, playerid, msg, COLOR_WHITE, COLOR_WHITE, COLOR_WHITE, COLOR_WHITE, COLOR_WHITE);
     KillTimer(LoginTimer{playerid});
     dmv_bike[playerid] = 0;
     dmv_bikestage[playerid] = -1;
@@ -1709,15 +1708,6 @@ public OnPlayerDisconnect(playerid, reason)
                 PlayerInfo[playerid][pCarKey] = 0;
                 PlayerInfo[playerid][pVehSlot] = 0;
             }
-            if(PlayerInfo[playerid][pCarKey2] != 0)
-            {
-                SaveVehicle(PlayerInfo[playerid][pCarKey2]);
-            }
-            else
-            {
-                PlayerInfo[playerid][pCarKey2] = 0;
-                PlayerInfo[playerid][pVehSlot] = 0;
-            }
             RemovePlayerBoomBox(playerid);
             CheckPMBlockList(playerid);
             //========================================
@@ -1744,10 +1734,10 @@ public OnPlayerDisconnect(playerid, reason)
             }
             format(query, sizeof(query), "UPDATE `users` SET `isOnline` = '0' WHERE `name` = '%s'", GetName(playerid));
             mysql_function_query(dbHandle, query, false, "", "");
-			#if defined debugOn
-				print("OnPlDisconnect - IsOnline");
-				printf(query);
-			#endif
+            #if defined debugOn
+                print("OnPlDisconnect - IsOnline");
+                printf(query);
+            #endif
             //========================================
             SavePlayerStats(playerid);
             //========================================
@@ -1764,30 +1754,30 @@ stock IsPlayerInWater(playerid)
         if(Z < 0.7) switch(GetPlayerAnimationIndex(playerid)) { case 1543,1538,1539: return 1; }
         if(GetPlayerDistanceFromPoint(playerid,-965,2438,42) <= 700 && Z < 45)return 1;
         static Float:water_places[20][4] =
-		{
-			{30.0,                        2313.0,                -1417.0,        23.0},
-			{15.0,                        1280.0,                -773.0,                1083.0},
-			{25.0,                        2583.0,                2385.0,                15.0},
-			{20.0,                        225.0,                -1187.0,        74.0},
-			{50.0,                        1973.0,                -1198.0,        17.0},
-			{180.0,                        1937.0,         1589.0,                9.0},
-			{55.0,                        2142.0,                1285.0,         8.0},
-			{45.0,                        2150.0,                1132.0,                8.0},
-			{55.0,                        2089.0,                1915.0,                10.0},
-			{32.0,                        2531.0,                1567.0,                9.0},
-			{21.0,                        2582.0,                2385.0,                17.0},
-			{33.0,                        1768.0,                2853.0,                10.0},
-			{47.0,                        -2721.0,        -466.0,                3.0},
-			{210.0,                        -671.0,                -1898.0,        6.0},
-			{45.0,                        1240.0,                -2381.0,        9.0},
-			{50.0,                        1969.0,                -1200.0,        18.0},
-			{10.0,                        513.0,                -1105.0,        79.0},
-			{20.0,                        193.0,                -1230.0,        77.0},
-			{30.0,                        1094.0,                -672.0,                113.0},
-			{20.0,                        1278.0,                -805.0,                87.0}
-		};
+        {
+            {30.0,                        2313.0,                -1417.0,        23.0},
+            {15.0,                        1280.0,                -773.0,                1083.0},
+            {25.0,                        2583.0,                2385.0,                15.0},
+            {20.0,                        225.0,                -1187.0,        74.0},
+            {50.0,                        1973.0,                -1198.0,        17.0},
+            {180.0,                        1937.0,         1589.0,                9.0},
+            {55.0,                        2142.0,                1285.0,         8.0},
+            {45.0,                        2150.0,                1132.0,                8.0},
+            {55.0,                        2089.0,                1915.0,                10.0},
+            {32.0,                        2531.0,                1567.0,                9.0},
+            {21.0,                        2582.0,                2385.0,                17.0},
+            {33.0,                        1768.0,                2853.0,                10.0},
+            {47.0,                        -2721.0,        -466.0,                3.0},
+            {210.0,                        -671.0,                -1898.0,        6.0},
+            {45.0,                        1240.0,                -2381.0,        9.0},
+            {50.0,                        1969.0,                -1200.0,        18.0},
+            {10.0,                        513.0,                -1105.0,        79.0},
+            {20.0,                        193.0,                -1230.0,        77.0},
+            {30.0,                        1094.0,                -672.0,                113.0},
+            {20.0,                        1278.0,                -805.0,                87.0}
+        };
         for(new t=0; t < sizeof water_places; t++)
-			if(GetPlayerDistanceFromPoint(playerid,water_places[t][1],water_places[t][2],water_places[t][3]) <= water_places[t][0]) return 1;
+            if(GetPlayerDistanceFromPoint(playerid,water_places[t][1],water_places[t][2],water_places[t][3]) <= water_places[t][0]) return 1;
         return 0;
 }
 
@@ -1985,9 +1975,9 @@ stock CheckAccount(playerid)
 {
     format(query, sizeof(query), "SELECT `id` AND `password` FROM `users` WHERE `name` = '%s'", GetName(playerid));
     mysql_function_query(dbHandle, query, true, "OnAccountCheck", "d", playerid);
-	#if defined debugOn
-		printf(query);
-	#endif
+    #if defined debugOn
+        printf(query);
+    #endif
     return 1;
 }
 
@@ -2024,10 +2014,10 @@ stock InsertPlayerSecretWord(playerid, email[])
 {
     format(query, sizeof(query), "UPDATE `users` SET `secret` = '%s' WHERE `name` = '%s'", email, GetName(playerid));
     mysql_function_query(dbHandle, query, true, "ContinueRegisterSex", "i", playerid);
-	#if defined debugOn
-		print("InsterPlayerSecret Word");
-		printf(query);
-	#endif
+    #if defined debugOn
+        print("InsterPlayerSecret Word");
+        printf(query);
+    #endif
     return 1;
 }
 
@@ -2204,30 +2194,30 @@ stock GetFancyCash(playerid)
 forward ResetBins();
 public ResetBins()
 {
-	for(new i = 0; i < MAX_TRASHBINS; i++)
-	{
-		if(BinInfo[i][TrashPicked] == 1)
-		{
-			BinInfo[i][TrashPicked] = 0;
-		}
-	}
-	return 1;
+    for(new i = 0; i < MAX_TRASHBINS; i++)
+    {
+        if(BinInfo[i][TrashPicked] == 1)
+        {
+            BinInfo[i][TrashPicked] = 0;
+        }
+    }
+    return 1;
 }
 
 forward CheckBins();
 public CheckBins()
 {
-	for(new i = 0; i < MAX_TRASHBINS; i++)
-	{
-		if(BinInfo[i][TrashPicked] == 1)
-		{
-			UpdateDynamic3DTextLabelText(Text3D:BinInfo[i][binLabel] , -1, "GOL");
-		}
-		else
-		{
-			UpdateDynamic3DTextLabelText(Text3D:BinInfo[i][binLabel] , -1, "FULL");
-		}
-	}
+    for(new i = 0; i < MAX_TRASHBINS; i++)
+    {
+        if(BinInfo[i][TrashPicked] == 1)
+        {
+            UpdateDynamic3DTextLabelText(Text3D:BinInfo[i][binLabel] , -1, "GOL");
+        }
+        else
+        {
+            UpdateDynamic3DTextLabelText(Text3D:BinInfo[i][binLabel] , -1, "FULL");
+        }
+    }
 }
 //Garbage Job
 stock strvalEx( const string[] ) // fix for strval-bug with > 50 letters.
@@ -2260,7 +2250,6 @@ stock ShowStats(playerid, id)
     new bizkey = PlayerInfo[id][pBizKey];
 //  new Float:shealth = PlayerInfo[id][pSHealth];
     new vehkey = PlayerInfo[id][pCarKey];
-	new vehkey2 = PlayerInfo[id][pCarKey2];
     new sparekey = PlayerInfo[id][pSpareKey];
     new workkey = PlayerInfo[id][pWorkOn];
     new faction = PlayerInfo[id][pFaction];
@@ -2316,15 +2305,13 @@ stock ShowStats(playerid, id)
     } else {
     format(rents, sizeof(rents), "%d", GetIntVar(id, "RentVehKey"));
     }
-	
-	//WIP
+
     new vehs[11];
     if(vehkey == 0) {
     vehs = "Fara";
     } else {
     format(vehs, sizeof(vehs), "%d", vehkey);
     }
-	//WIP END
 
     new works[64];
     if(workkey == -1) {
@@ -2736,16 +2723,16 @@ stock AddMoveDoorsFromFile()
     format(query, sizeof(query), "SELECT * FROM `movedoors`");
     mysql_function_query(dbHandle, query, true, "LoadMoveDoors", "");
 #if defined debugOn 
-	printf(query);
+    printf(query);
 #endif
     return 1;
 }
 //Garbage Job
 stock AddBinsFromFile()
 {
-	format(query, sizeof(query), "SELECT * FROM `trashbins`");
-	mysql_function_query(dbHandle, query, true, "LoadDynamicBins", "");
-	return 1;
+    format(query, sizeof(query), "SELECT * FROM `trashbins`");
+    mysql_function_query(dbHandle, query, true, "LoadDynamicBins", "");
+    return 1;
 }
 // Garbage Job
 stock AddATMFromFile()
@@ -3215,11 +3202,6 @@ stock ShowLicenses(playerid, targetid)
     if(IsVehicleSpawned(PlayerInfo[playerid][pCarKey]))
     {
         format(msg, sizeof(msg), "Numar inmatriculare: {00FF00}%s{FFFFFF}.", VehicleInfo[PlayerInfo[playerid][pCarKey]][carPlate]);
-        SCM(targetid, COLOR_WHITE, msg);
-    }
-    if(IsVehicleSpawned(PlayerInfo[playerid][pCarKey2]))
-    {
-        format(msg, sizeof(msg), "Numar inmatriculare: {00FF00}%s{FFFFFF}.", VehicleInfo[PlayerInfo[playerid][pCarKey2]][carPlate]);
         SCM(targetid, COLOR_WHITE, msg);
     }
     SCM(targetid, COLOR_GREEN2, "_________________________________");
@@ -4156,16 +4138,16 @@ stock IsPrimaryWeapon(weaponid)
 {
     if(weaponid >= 22 && weaponid <= 24)
     {
-		#if defined debugOn 
-			printf("primary true %d", weaponid);
-		#endif
+        #if defined debugOn 
+            printf("primary true %d", weaponid);
+        #endif
         return true;
     }
     else
     {
-		#if defined debugOn 
-			printf("primary false %d", weaponid);
-		#endif
+        #if defined debugOn 
+            printf("primary false %d", weaponid);
+        #endif
         return false;
     }
 }
@@ -4175,16 +4157,16 @@ stock IsSecondaryWeapon(weaponid)
 {
     if(weaponid == 25 || weaponid == 26 || weaponid == 34 || weaponid >= 28 && weaponid <= 32)
     {
-		#if defined debugOn 
-			printf("secondary true %d", weaponid);
-		#endif
+        #if defined debugOn 
+            printf("secondary true %d", weaponid);
+        #endif
         return true;
     }
     else
     {
-		#if defined debugOn 
-			printf("secondary false %d", weaponid);
-		#endif
+        #if defined debugOn 
+            printf("secondary false %d", weaponid);
+        #endif
         return false;
     }
 }
@@ -4255,10 +4237,10 @@ stock UpdatePlayerToy(playerid, toyslot, bone, Float:X, Float:Y, Float:Z, Float:
     format(query, sizeof(query), "UPDATE `playertoys` SET `bone` = %d, `offestx` = %f, `offesty` = %f, `offestz` = %f, `rotx` = %f, `roty` = %f, `rotz` = %f, `scalex` = %f, `scaley` = %f, `scalez` = %f WHERE `id` = %d AND `player` = '%s'",
     bone, X, Y, Z, RX, RY, RZ, SC, SY, SZ, PlayerToys[playerid][toyslot][ptID], GetName(playerid));
     mysql_function_query(dbHandle, query, false, "", "");
-	#if defined debugOn
-		print("UpdatePlayerToy");
-		printf(query);
-	#endif
+    #if defined debugOn
+        print("UpdatePlayerToy");
+        printf(query);
+    #endif
     return 1;
 }
 
@@ -5174,9 +5156,9 @@ stock OnApbCreate(number, charge[], suspect[], name[])
 {
     mysql_format(dbHandle, query, sizeof(query), "INSERT INTO `apbs` (id, charge, suspect, officer) VALUES (%d, '%s', '%s', '%s')", number, charge, suspect, name);
     mysql_tquery(dbHandle, query);
-	#if defined debugOn 
-		printf(query);
-	#endif
+    #if defined debugOn 
+        printf(query);
+    #endif
     return 1;
 }
 
@@ -5230,9 +5212,9 @@ stock OnPlayerSellFurniture(houseid, furnitureslot)
     UpdateHouseInfo(houseid);
     format(query, sizeof(query), "DELETE FROM `furnitures` WHERE `id` = %d", FurnitureInfo[houseid][furnitureslot][fID]); // initial query
     mysql_function_query(dbHandle, query, false, "", "");
-	#if defined debugOn 
-		printf(query);
-	#endif
+    #if defined debugOn 
+        printf(query);
+    #endif
     return 1;
 }
 
@@ -5510,9 +5492,9 @@ stock LoadSerials()
         gpci(i, playerSerial, sizeof(playerSerial));
         format(query, sizeof (query), "SELECT * FROM `bans` WHERE `playerSerial` = '%s'", playerSerial);
         mysql_function_query(dbHandle, query, true, "LoadPlayerSerials", "s", playerSerial);
-		#if defined debugOn 
-			printf(query);
-		#endif
+        #if defined debugOn 
+            printf(query);
+        #endif
     }
     return 1;
 }
@@ -5556,9 +5538,9 @@ stock SetPlayerToLogin(playerid)
     sscanf(playerip3, "p<.>ii{ii}", Split_Ip[0], Split_Ip[1]);
     format(query, sizeof (query), "SELECT * FROM `bans` WHERE `playerSerial` = '%s' AND `playerIP` LIKE '%i.%i.%%' LIMIT 1", playerserial, Split_Ip[0], Split_Ip[1]);
     mysql_function_query(dbHandle, query, true, "OnPlayerAttemptLogin", "i", playerid);
-	#if defined debugOn
-		printf(query);
-	#endif
+    #if defined debugOn
+        printf(query);
+    #endif
     return 1;
 }
 
@@ -5690,7 +5672,6 @@ stock ResetPlayerVariables(playerid)
     PlayerInfo[playerid][pMask] = 0;
     PlayerInfo[playerid][pBMX] = 0;
     PlayerInfo[playerid][pCarKey] = 0;
-    PlayerInfo[playerid][pCarKey2] = 0;
     PlayerInfo[playerid][pVehicles] = 0;
     PlayerInfo[playerid][pVehSlot] = 0;
     PlayerInfo[playerid][pSpareKey] = 0;
@@ -6102,8 +6083,6 @@ stock PlayerOwnVehicle(playerid, vehicleid)
 {
     if(PlayerInfo[playerid][pCarKey] == vehicleid && !strcmp(GetName(playerid), VehicleInfo[vehicleid][carOwner], true))
         return true;
-    else if(PlayerInfo[playerid][pCarKey2] == vehicleid && !strcmp(GetName(playerid), VehicleInfo[vehicleid][carOwner], true))
-        return true;
     else
         return false;
 }
@@ -6283,6 +6262,7 @@ stock SaveVehicle(vehicleid)
         FormatVehicleTickets(vehicleid, tickets);
         FormatVehicleWeapons(vehicleid, weapons);
         FormatVehicleDrugs(vehicleid, drugs);
+        VehicleInfo[vehicleid][carVW] = GetVehicleVirtualWorld(vehicleid);
         //=====================================================================================
         format(query, sizeof(query), "UPDATE `ownedvehicles` SET `color1` = %d, `color2` = %d, `parkx` = %f, `parky` = %f, `parkz` = %f, `parka` = %f WHERE `owner` = '%s' AND `id` = %d",
         VehicleInfo[vehicleid][carColor1],
@@ -6348,11 +6328,12 @@ stock SaveVehicle(vehicleid)
         VehicleInfo[vehicleid][carID]);
         mysql_function_query(dbHandle, query, false, "", "");
         //=====================================================================================
-        format(query, sizeof(query), "UPDATE `ownedvehicles` SET `radio` = %d, `tickets` = '%s', `dupkey` = %d, `comps` = %d WHERE `owner` = '%s' AND `id` = %d",
+        format(query, sizeof(query), "UPDATE `ownedvehicles` SET `radio` = %d, `tickets` = '%s', `dupkey` = %d, `comps` = %d, `vw` = %d WHERE `owner` = '%s' AND `id` = %d",
         VehicleInfo[vehicleid][carRadio],
         tickets,
         VehicleInfo[vehicleid][carDupKey],
         VehicleInfo[vehicleid][carComps],
+        VehicleInfo[vehicleid][carVW],
         VehicleInfo[vehicleid][carOwner],
         VehicleInfo[vehicleid][carID]);
         mysql_function_query(dbHandle, query, false, "", "");
@@ -6370,9 +6351,9 @@ stock SaveVehicle(vehicleid)
         VehicleInfo[vehicleid][carID]);
         mysql_function_query(dbHandle, query, false, "", "");
         //=====================================================================================
-		#if defined debugOn
-			printf(query);
-		#endif
+        #if defined debugOn
+            printf(query);
+        #endif
 
     }
     return 1;
@@ -8869,8 +8850,8 @@ stock FormatPlayerContacts(playerid, string[])
 forward CheckGarbageCar(vehicleid);
 public CheckGarbageCar(vehicleid)
 {
-	if(CityVehicles[vehicleid][vType] == GARBAGE_CAR) { return true; }
-	else { return false; }
+    if(CityVehicles[vehicleid][vType] == GARBAGE_CAR) { return true; }
+    else { return false; }
 }
 
 //===========================Garbage Job================================//
@@ -9132,11 +9113,11 @@ stock AddSeedToFile(plant, planter[], Float:x, Float:y, Float:z)
 // Garbage Job
 stock SaveBins()
 {
-	for(new i = 0; i < MAX_TRASHBINS; i++)
-	{
-		format(query, sizeof(query), "UPDATE `trashbins` SET `picked` = %d WHERE `id` = %d", BinInfo[i][TrashPicked], BinInfo[i][objectID]);
-		mysql_function_query(dbHandle, query, false, "", "");
-	}
+    for(new i = 0; i < MAX_TRASHBINS; i++)
+    {
+        format(query, sizeof(query), "UPDATE `trashbins` SET `picked` = %d WHERE `id` = %d", BinInfo[i][TrashPicked], BinInfo[i][objectID]);
+        mysql_function_query(dbHandle, query, false, "", "");
+    }
 }
 // Garbage Job
 stock SavePlants()
@@ -9192,9 +9173,9 @@ stock ReAssignPlayerVehicles(playerid)
             mysql_format(dbHandle, query, sizeof(query), "UPDATE `ownedvehicles` SET `slot` = '%i' WHERE `owner` = '%e' AND `slot` > '%i' LIMIT 1", i, GetName(playerid), i - 1);
             mysql_tquery(dbHandle, query);
             mysql_function_query(dbHandle, query, false, "", "");
-			#if defined debugOn
-				printf(query);
-			#endif
+            #if defined debugOn
+                printf(query);
+            #endif
         }
     }
     return 1;
@@ -9993,21 +9974,21 @@ stock SaveNote(playerid, slot)
 
 stock GetNumberOfPlayersOnThisIP(test_ip[])
 {
-	new against_ip[32+1];
-	new ip_count = 0;
-	foreach(new x : Player) 
-	{ 
-		GetPlayerIp(x,against_ip,32);
-		if(!strcmp(against_ip,test_ip)) ip_count++;
-	}
-	return ip_count;
+    new against_ip[32+1];
+    new ip_count = 0;
+    foreach(new x : Player) 
+    { 
+        GetPlayerIp(x,against_ip,32);
+        if(!strcmp(against_ip,test_ip)) ip_count++;
+    }
+    return ip_count;
 }
 
 /* =================== Stocks =================== */
 
 public OnPlayerSpawn(playerid)
 {
-	new job = PlayerInfo[playerid][pJob];
+    new job = PlayerInfo[playerid][pJob];
 /*    if(IsPlayerNPC(playerid)) //Checks if the player that just spawned is an NPC.
     {
         if(CompareStrings(GetName(playerid), "Gigel_Tren")) //Checking if the NPC's name is MyFirstNPC
@@ -10021,19 +10002,19 @@ public OnPlayerSpawn(playerid)
         PutPlayerInVehicle(playerid, 1, 0);
         return 1;
     }*/
-	// farmer job
+    // farmer job
     if(job == FARMER)
-	{
-		FarmInfo[playerid][pUpdateTime] = SetTimerEx("UpdatePaddy",TIME_UPDATEPADDY,1,"i",playerid);
-		return 1;
-	}
-	// farmer job
+    {
+        FarmInfo[playerid][pUpdateTime] = SetTimerEx("UpdatePaddy",TIME_UPDATEPADDY,1,"i",playerid);
+        return 1;
+    }
+    // farmer job
     if(!PlayerLogged(playerid))
     {
         KickEx2(playerid, "[SERVER]: Trebuie sa te loghezi inainte de a te spawna!");
         return 1;
     }
-	SetIntVar(playerid, "OldAdminPM", -1);	
+    SetIntVar(playerid, "OldAdminPM", -1);  
     if(!PlayerInfo[playerid][pJailed])
     {
         LoadPlayerToys(playerid);
@@ -10063,12 +10044,12 @@ public OnPlayerDeath(playerid, killerid, reason)
     ResetVariables(playerid);
     CheckPlayerCurrentCall(playerid);
     if(PlayerInfo[playerid][pJailed] == 1)
-	{
-		format(msg, sizeof(msg), "%s a murit in admin jail.", GetName(playerid));
-		AMSG(COLOR_YELLOWG, msg);
-		SetPlayerPos(playerid,  2576.7861,2712.2004,22.9507);
-	}
-	else if(!isAdminDuty(playerid))
+    {
+        format(msg, sizeof(msg), "%s a murit in admin jail.", GetName(playerid));
+        AMSG(COLOR_YELLOWG, msg);
+        SetPlayerPos(playerid,  2576.7861,2712.2004,22.9507);
+    }
+    else if(!isAdminDuty(playerid))
     {
         MakePlayerWounded(playerid);
         new weapname[28];
@@ -10077,7 +10058,7 @@ public OnPlayerDeath(playerid, killerid, reason)
         SetPlayerChatBubble(playerid, msg, COLOR_LIGHTRED, 10.0, 180000);
     }
     else SCM(playerid, COLOR_GREY, "Ai fost scos automat din DeadTimer deoarece esti Admin-Duty.");
-	
+    
     return 1;
 }
 
@@ -10146,10 +10127,8 @@ public OnVehicleDeath(vehicleid, killerid)
             SCM(killerid, COLOR_LIGHTRED, msg);
             ResetVehicleStuff(vehicleid);
             UpdateVehicleStatus(killerid, vehicleid);
-			if(PlayerInfo[killerid][pCarKey] == vehicleid)
-				PlayerInfo[killerid][pCarKey] = 0;
-			else
-				PlayerInfo[killerid][pCarKey2] = 0;
+//          ResetVehicleStuff(vehicleid);
+            PlayerInfo[killerid][pCarKey] = 0;
             VehicleInfo[vehicleid][carOwned] = 0;
             DestoryCar(vehicleid);
             CheckOwnedVehicles(killerid);
@@ -10163,10 +10142,8 @@ public OnVehicleDeath(vehicleid, killerid)
             VehicleInfo[vehicleid][carBroken] = 1;
             ResetVehicleStuff(vehicleid);
             UpdateVehicleStatus(killerid, vehicleid);
-            if(PlayerInfo[killerid][pCarKey] == vehicleid)
-				PlayerInfo[killerid][pCarKey] = 0;
-			else
-				PlayerInfo[killerid][pCarKey2] = 0;
+//          ResetVehicleStuff(vehicleid);
+            PlayerInfo[killerid][pCarKey] = 0;
             VehicleInfo[vehicleid][carOwned] = 0;
             DestoryCar(vehicleid);
             CheckOwnedVehicles(killerid);
@@ -10187,10 +10164,7 @@ public OnVehicleDeath(vehicleid, killerid)
                     SCM(GetIDByName(VehicleInfo[vehicleid][carOwner]), COLOR_LIGHTRED, msg);
                     format(msg, sizeof(msg), "Mai ai %d asigurari ramase.",VehicleInfo[vehicleid][carInsurances]);
                     SCM(GetIDByName(VehicleInfo[vehicleid][carOwner]), COLOR_LIGHTRED, msg);
-					if(PlayerInfo[GetIDByName(VehicleInfo[vehicleid][carOwner])][pCarKey] == vehicleid)
-						PlayerInfo[GetIDByName(VehicleInfo[vehicleid][carOwner])][pCarKey] = 0;
-					else
-						PlayerInfo[GetIDByName(VehicleInfo[vehicleid][carOwner])][pCarKey2] = 0;
+                    PlayerInfo[GetIDByName(VehicleInfo[vehicleid][carOwner])][pCarKey] = 0;
                     CheckOwnedVehicles(GetIDByName(VehicleInfo[vehicleid][carOwner]));
                 }
                 VehicleInfo[vehicleid][carOwned] = 0;
@@ -10206,10 +10180,7 @@ public OnVehicleDeath(vehicleid, killerid)
                     format(msg, sizeof(msg), "Masina : %s a fost distrusa de cineva,distrugeri %d.",VehicleNames[GetVehicleModel(vehicleid)-400],VehicleInfo[vehicleid][carDestroyed]);
                     SCM(GetIDByName(VehicleInfo[vehicleid][carOwner]), COLOR_LIGHTRED, msg);
                     SCM(GetIDByName(VehicleInfo[vehicleid][carOwner]), COLOR_LIGHTRED, "Nu ai mai avut asigurare asa ca motorul masinii este distrus.");
-                    if(PlayerInfo[GetIDByName(VehicleInfo[vehicleid][carOwner])][pCarKey] == vehicleid)
-						PlayerInfo[GetIDByName(VehicleInfo[vehicleid][carOwner])][pCarKey] = 0;
-					else
-						PlayerInfo[GetIDByName(VehicleInfo[vehicleid][carOwner])][pCarKey2] = 0;
+                    PlayerInfo[GetIDByName(VehicleInfo[vehicleid][carOwner])][pCarKey] = 0;
                     CheckOwnedVehicles(GetIDByName(VehicleInfo[vehicleid][carOwner]));
                 }
                 VehicleInfo[vehicleid][carBroken] = 1;
@@ -10415,99 +10386,99 @@ public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
     // -
     OldVehicle[playerid] = vehicleid;
     ///////////// trucker job //////////////////////////
-	if(IsATruckJob(vehicleid) && VehicleInfo[vehicleid][carOwned] == 0)
-	{
-		if(!TruckCompatible(playerid, vehicleid))
-		{
-			PutPlayer(playerid, PlayerPosX(playerid), PlayerPosY(playerid), PlayerPosZ(playerid)+0.1);
-			SCMEx(playerid, COLOR_GREY, "Acest camion este pentru %s.", GetJobRankName(PlayerInfo[playerid][pJob], GetTruckRank(vehicleid)));
-		}
-		else
-		{
-			SCMEx(playerid, COLOR_GRAD2, "Bine ai venit,{FFFFFF}%s %s in camionul tau.", GetJobRank(playerid), GetNameEx(playerid));
-			SCM(playerid, COLOR_GRAD2, "Tine minte,fiecare camion are propriile misiuni.");
-			SCM(playerid, COLOR_GREY, "-------------------------------");
-			SCM(playerid, COLOR_WHITE, "{FF4646}Misiune:{FFFFFF}Incarca produse de la destinatii..");
-			SCM(playerid, COLOR_WHITE, "..si livreaza-le la magazinele respective.");
-			SCM(playerid, COLOR_GREY, "-------------------------------");
-			SCM(playerid, COLOR_GREY, "/truckermission pentru a incepe.");
-		}
-	}
-	/////////////////////// trucker job ///////////////////////
-	// farmer job
-	if(GetPVarInt(playerid,"HasPickupPaddy") == 1 || GetPVarInt(playerid,"HasGetPaddySack") == 1)
+    if(IsATruckJob(vehicleid) && VehicleInfo[vehicleid][carOwned] == 0)
+    {
+        if(!TruckCompatible(playerid, vehicleid))
+        {
+            PutPlayer(playerid, PlayerPosX(playerid), PlayerPosY(playerid), PlayerPosZ(playerid)+0.1);
+            SCMEx(playerid, COLOR_GREY, "Acest camion este pentru %s.", GetJobRankName(PlayerInfo[playerid][pJob], GetTruckRank(vehicleid)));
+        }
+        else
+        {
+            SCMEx(playerid, COLOR_GRAD2, "Bine ai venit,{FFFFFF}%s %s in camionul tau.", GetJobRank(playerid), GetNameEx(playerid));
+            SCM(playerid, COLOR_GRAD2, "Tine minte,fiecare camion are propriile misiuni.");
+            SCM(playerid, COLOR_GREY, "-------------------------------");
+            SCM(playerid, COLOR_WHITE, "{FF4646}Misiune:{FFFFFF}Incarca produse de la destinatii..");
+            SCM(playerid, COLOR_WHITE, "..si livreaza-le la magazinele respective.");
+            SCM(playerid, COLOR_GREY, "-------------------------------");
+            SCM(playerid, COLOR_GREY, "/truckermission pentru a incepe.");
+        }
+    }
+    /////////////////////// trucker job ///////////////////////
+    // farmer job
+    if(GetPVarInt(playerid,"HasPickupPaddy") == 1 || GetPVarInt(playerid,"HasGetPaddySack") == 1)
     {
         SCM(playerid, -1, "Nu poti urca in masina cu un sac in mana!");
         PutPlayer(playerid, PlayerPosX(playerid), PlayerPosY(playerid), PlayerPosZ(playerid)+0.1);
     }
-	if(CityVehicles[vehicleid][vType] == FARMER_CAR && PlayerInfo[playerid][pJob] != FARMER)
-	{
-		SCM(playerid, -1, "[SERVER]: Acest vehicul este doar pentru fermieri!");
-		PutPlayer(playerid, PlayerPosX(playerid), PlayerPosY(playerid), PlayerPosZ(playerid));
-		return 1;
-	}
-	if(CityVehicles[vehicleid][vType] == FARMER_CAR && PlayerInfo[playerid][pJob] == FARMER && GetVehicleModel(vehicleid) == 531)
-	{
-		if(GetIntVar(playerid, "Transporting") == 1)
-		{
-			SCM(playerid, -1, "[FarmerJob]: Trebuie sa folosesti /endtransport inainte de a putea folosi iar Tractorul!");
-			PutPlayer(playerid, PlayerPosX(playerid), PlayerPosY(playerid), PlayerPosZ(playerid));
-		}
-		return 1;
-	}
-	if(CityVehicles[vehicleid][vType] == FARMER_CAR && PlayerInfo[playerid][pJob] == FARMER && GetVehicleModel(vehicleid) == 532)
-	{
-		if(GetIntVar(playerid, "Sowing") == 0)
-		{
-			FarmInfo[playerid][pVehicleHire] = vehicleid;
-			SetPVarInt(playerid, "Harvesting", 1);
-			SCM(playerid, -1, "[FarmerJob]: Apasa 'ALT' pentru a recolta plantele.");
-			SCM(playerid, -1, "[FarmerJob]: Nu uita sa parchezi Combina la loc cand ai terminat!");
-		}
-		else
-		{
-			SCM(playerid, -1, "[FarmerJob]: Trebuie sa folosesti /stopsow inainte de a putea folosi Combina!");
-			PutPlayer(playerid, PlayerPosX(playerid), PlayerPosY(playerid), PlayerPosZ(playerid));
-		}
-		return 1;
-	}
-	if(CityVehicles[vehicleid][vType] == FARMER_CAR && PlayerInfo[playerid][pJob] == FARMER && GetVehicleModel(vehicleid) == 478)
-	{
-		if(GetIntVar(playerid, "Harvesting") == 0)
-		{
-			FarmInfo[playerid][pVehicleHire] = vehicleid;
-			SCM(playerid, -1, "[FarmerJob]: Cu acest vehicul poti transporta cerealele recoltate.");
-			SCM(playerid, -1, "[FarmerJob]: Apasa 'N' ca sa ridici un sac si 'H' ca sa-l pui in Walton.");
-		}
-		else
-		{
-			SCM(playerid, -1, "[FarmerJob]: Trebuie sa folosesti /stopharvest inainte de a putea folosi Walton-ul!");
-			PutPlayer(playerid, PlayerPosX(playerid), PlayerPosY(playerid), PlayerPosZ(playerid));
-		}
-		return 1;
-	}
-	// farmer job
-	// Garbage Job/////////////////////////
-	if(CheckGarbageCar(vehicleid))
-	{
-	    if(PlayerInfo[playerid][pJob] != GARBAGE)
-		{
-			SCM(playerid, COLOR_GREY, "Trebuie sa ai jobul de gunoier!");
-			PutPlayer(playerid, PlayerPosX(playerid), PlayerPosY(playerid), PlayerPosZ(playerid)+0.1);
-		}
+    if(CityVehicles[vehicleid][vType] == FARMER_CAR && PlayerInfo[playerid][pJob] != FARMER)
+    {
+        SCM(playerid, -1, "[SERVER]: Acest vehicul este doar pentru fermieri!");
+        PutPlayer(playerid, PlayerPosX(playerid), PlayerPosY(playerid), PlayerPosZ(playerid));
+        return 1;
+    }
+    if(CityVehicles[vehicleid][vType] == FARMER_CAR && PlayerInfo[playerid][pJob] == FARMER && GetVehicleModel(vehicleid) == 531)
+    {
+        if(GetIntVar(playerid, "Transporting") == 1)
+        {
+            SCM(playerid, -1, "[FarmerJob]: Trebuie sa folosesti /endtransport inainte de a putea folosi iar Tractorul!");
+            PutPlayer(playerid, PlayerPosX(playerid), PlayerPosY(playerid), PlayerPosZ(playerid));
+        }
+        return 1;
+    }
+    if(CityVehicles[vehicleid][vType] == FARMER_CAR && PlayerInfo[playerid][pJob] == FARMER && GetVehicleModel(vehicleid) == 532)
+    {
+        if(GetIntVar(playerid, "Sowing") == 0)
+        {
+            FarmInfo[playerid][pVehicleHire] = vehicleid;
+            SetPVarInt(playerid, "Harvesting", 1);
+            SCM(playerid, -1, "[FarmerJob]: Apasa 'ALT' pentru a recolta plantele.");
+            SCM(playerid, -1, "[FarmerJob]: Nu uita sa parchezi Combina la loc cand ai terminat!");
+        }
+        else
+        {
+            SCM(playerid, -1, "[FarmerJob]: Trebuie sa folosesti /stopsow inainte de a putea folosi Combina!");
+            PutPlayer(playerid, PlayerPosX(playerid), PlayerPosY(playerid), PlayerPosZ(playerid));
+        }
+        return 1;
+    }
+    if(CityVehicles[vehicleid][vType] == FARMER_CAR && PlayerInfo[playerid][pJob] == FARMER && GetVehicleModel(vehicleid) == 478)
+    {
+        if(GetIntVar(playerid, "Harvesting") == 0)
+        {
+            FarmInfo[playerid][pVehicleHire] = vehicleid;
+            SCM(playerid, -1, "[FarmerJob]: Cu acest vehicul poti transporta cerealele recoltate.");
+            SCM(playerid, -1, "[FarmerJob]: Apasa 'N' ca sa ridici un sac si 'H' ca sa-l pui in Walton.");
+        }
+        else
+        {
+            SCM(playerid, -1, "[FarmerJob]: Trebuie sa folosesti /stopharvest inainte de a putea folosi Walton-ul!");
+            PutPlayer(playerid, PlayerPosX(playerid), PlayerPosY(playerid), PlayerPosZ(playerid));
+        }
+        return 1;
+    }
+    // farmer job
+    // Garbage Job/////////////////////////
+    if(CheckGarbageCar(vehicleid))
+    {
+        if(PlayerInfo[playerid][pJob] != GARBAGE)
+        {
+            SCM(playerid, COLOR_GREY, "Trebuie sa ai jobul de gunoier!");
+            PutPlayer(playerid, PlayerPosX(playerid), PlayerPosY(playerid), PlayerPosZ(playerid)+0.1);
+        }
         else if(PlayerInfo[playerid][pGarbage] == 2)
         {
             SCM(playerid, COLOR_GREY, "Ai facut deja doua ture de Gunoier!");
             PutPlayer(playerid, PlayerPosX(playerid), PlayerPosY(playerid), PlayerPosZ(playerid)+0.1);
         }
-		else if(GetPVarInt(playerid, "TrashUniform") == 0)
-		{
-			SCM(playerid, COLOR_GREY, "Trebuie sa ai uniforma de gunoier pe tine!");
-			PutPlayer(playerid, PlayerPosX(playerid), PlayerPosY(playerid), PlayerPosZ(playerid)+0.1);
-		}
-	    return 1;
-	}
-	// Garbage Job //////////////////
+        else if(GetPVarInt(playerid, "TrashUniform") == 0)
+        {
+            SCM(playerid, COLOR_GREY, "Trebuie sa ai uniforma de gunoier pe tine!");
+            PutPlayer(playerid, PlayerPosX(playerid), PlayerPosY(playerid), PlayerPosZ(playerid)+0.1);
+        }
+        return 1;
+    }
+    // Garbage Job //////////////////
     if(CityVehicles[vehicleid][vCarOn])
     {
         if(CityVehicles[vehicleid][vFaction] != 0 && PlayerInfo[playerid][pFaction] != CityVehicles[vehicleid][vFaction] && !ispassenger)
@@ -10648,9 +10619,9 @@ public OnPlayerStateChange(playerid, newstate, oldstate)
                 GetPlayerName(playerid,name,24);
                 format(string128,sizeof(string128),"[SERVER][%i]%s a primit kick pentru Car Spam Hack",playerid,name);
                 SendClientMessageToAll(COLOR_LIGHTRED,string128);
-				#if defined debugOn
-					printf(string128);
-				#endif
+                #if defined debugOn
+                    printf(string128);
+                #endif
                 KickWithMSG(playerid, string128);
             }
         }
@@ -10730,7 +10701,7 @@ public OnPlayerStateChange(playerid, newstate, oldstate)
     {
         //if(PlayerHoldingWeapon(playerid, 24)) //Anti Desert Eagle drive-by.
         //{
-		SetPlayerArmedWeapon(playerid, 0);
+        SetPlayerArmedWeapon(playerid, 0);
         //}
     }
     if(newstate == PLAYER_STATE_DRIVER)
@@ -10886,9 +10857,9 @@ public OnPlayerEnterCheckpoint(playerid)
             else if(money <= 200) SCMEx(playerid, COLOR_GREEN, "Din nefericire ai lovit masina si ai primit doar %d$.", money);
             SCM(playerid, COLOR_GREY, "Banii ii vei primi la paycheck.");
             PlayerInfo[playerid][pGarbage]++;
-    		SaveJobProgress(playerid);
+            SaveJobProgress(playerid);
             trash[playerid] = 0;
-    		DisablePlayerCheckpoint(playerid);
+            DisablePlayerCheckpoint(playerid);
             SetVehicleToRespawn(vehicleid);
         }
     }
@@ -11405,62 +11376,62 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
     if(PRESSED(KEY_FIRE))
     {
         //================= Farmer Job =====================//
-		if(IsPlayerInAnyVehicle(playerid) && GetPlayerVehicleID(playerid) == FarmInfo[playerid][pVehicleHire])
-	    {
-			if(job == FARMER)
-			{
-				if(GetVehicleModel(GetPlayerVehicleID(playerid)) == 531 && IsPlayerInDynamicArea(playerid,FJArea,1))
-				{
-					if(FarmInfo[playerid][pPaddyInTrailer] > 0 && CheckPaddyFreeSlot(playerid,1)!= -1)
-					{
-						new Float:x,Float:y,Float:z;
-						GetVehiclePos(FarmInfo[playerid][pTrailerVehicleHire],x,y,z);
-						FarmInfo[playerid][pPaddyInTrailer] -= 1;
-						new string[128];
-						format(string,sizeof(string),"Proprietar: %s\nSeminte :{4cff00}%d",GetName(playerid),FarmInfo[playerid][pPaddyInTrailer]);
-						UpdateDynamic3DTextLabelText(FarmInfo[playerid][pTrailerText],-1,string);
-						CreatePaddy(playerid,CheckPaddyFreeSlot(playerid,1),0,x,y,z-1);
-					}
-					else
-					{
-						SendClientMessage(playerid,-1,"[FarmerJob]: Ai atins limita sau nu mai ai seminte!");
-					}
-				}
-				else if(GetVehicleModel(GetPlayerVehicleID(playerid)) == 532 && IsPlayerInDynamicArea(playerid,FJArea,1))
-				{
-					for(new i =0;i<MAX_PADDYS;i++)
-					{
-						if(FarmInfo[playerid][pPaddyUsed][i] == 1)
-						{
-							new Float:x,Float:y,Float:z;
-							GetDynamicObjectPos(FarmInfo[playerid][pPaddyObject][i],x,y,z);
-							if(IsPlayerInRangeOfPoint(playerid,4,x,y,z))
-							{
-								if(FarmInfo[playerid][pPaddyProgress][i] >= 100 && FarmInfo[playerid][pPaddyProgress][i] < 200)
-								{
-									CreatePaddyHarvest(playerid,CheckPaddyFreeSlot(playerid,2),x,y,z);
-									DestroyPaddy(playerid,i);
-									return 1;
-								}
-								else if(FarmInfo[playerid][pPaddyProgress][i] > 200)
-								{
-									SCM(playerid, -1, "[FarmerJob]: Aceasta planta s-a ofilit si nu mai poate fi recoltata.");
-								}
-								else
-								{
-									SendClientMessage(playerid,-1,"[FarmerJob]: Aceasta planta nu este gata de recoltare!");
-								}
-							}
-						}
-					}
-				}
-			}
-			else
-			{
-				SCM(playerid, -1, "Nu esti fermier!");
-			}
-	    }
-		//============= Farmer Job ==================//
+        if(IsPlayerInAnyVehicle(playerid) && GetPlayerVehicleID(playerid) == FarmInfo[playerid][pVehicleHire])
+        {
+            if(job == FARMER)
+            {
+                if(GetVehicleModel(GetPlayerVehicleID(playerid)) == 531 && IsPlayerInDynamicArea(playerid,FJArea,1))
+                {
+                    if(FarmInfo[playerid][pPaddyInTrailer] > 0 && CheckPaddyFreeSlot(playerid,1)!= -1)
+                    {
+                        new Float:x,Float:y,Float:z;
+                        GetVehiclePos(FarmInfo[playerid][pTrailerVehicleHire],x,y,z);
+                        FarmInfo[playerid][pPaddyInTrailer] -= 1;
+                        new string[128];
+                        format(string,sizeof(string),"Proprietar: %s\nSeminte :{4cff00}%d",GetName(playerid),FarmInfo[playerid][pPaddyInTrailer]);
+                        UpdateDynamic3DTextLabelText(FarmInfo[playerid][pTrailerText],-1,string);
+                        CreatePaddy(playerid,CheckPaddyFreeSlot(playerid,1),0,x,y,z-1);
+                    }
+                    else
+                    {
+                        SendClientMessage(playerid,-1,"[FarmerJob]: Ai atins limita sau nu mai ai seminte!");
+                    }
+                }
+                else if(GetVehicleModel(GetPlayerVehicleID(playerid)) == 532 && IsPlayerInDynamicArea(playerid,FJArea,1))
+                {
+                    for(new i =0;i<MAX_PADDYS;i++)
+                    {
+                        if(FarmInfo[playerid][pPaddyUsed][i] == 1)
+                        {
+                            new Float:x,Float:y,Float:z;
+                            GetDynamicObjectPos(FarmInfo[playerid][pPaddyObject][i],x,y,z);
+                            if(IsPlayerInRangeOfPoint(playerid,4,x,y,z))
+                            {
+                                if(FarmInfo[playerid][pPaddyProgress][i] >= 100 && FarmInfo[playerid][pPaddyProgress][i] < 200)
+                                {
+                                    CreatePaddyHarvest(playerid,CheckPaddyFreeSlot(playerid,2),x,y,z);
+                                    DestroyPaddy(playerid,i);
+                                    return 1;
+                                }
+                                else if(FarmInfo[playerid][pPaddyProgress][i] > 200)
+                                {
+                                    SCM(playerid, -1, "[FarmerJob]: Aceasta planta s-a ofilit si nu mai poate fi recoltata.");
+                                }
+                                else
+                                {
+                                    SendClientMessage(playerid,-1,"[FarmerJob]: Aceasta planta nu este gata de recoltare!");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                SCM(playerid, -1, "Nu esti fermier!");
+            }
+        }
+        //============= Farmer Job ==================//
     }
     if(RELEASED(KEY_FIRE) && !CopDuty{playerid} && !SwatDuty{playerid})
     {
@@ -11693,56 +11664,56 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
         }
         //=================== Farmer Job ===========================//
         if(IsPlayerInRangeOfPoint(playerid,2,FJPosGetPaddySack))
-	    {
-			if(job == FARMER)
-			{
-				if(!IsValidVehicle(FarmInfo[playerid][pVehicleHire]) ||!IsValidVehicle(FarmInfo[playerid][pTrailerVehicleHire])) return SendClientMessage(playerid,-1,"[FarmerJob]: Mai intai ia un Tractor si foloseste /startsow!");
-				if(GetPVarInt(playerid,"HasGetPaddySack") == 1) return SendClientMessage(playerid,-1,"[FarmerJob]: Ai deja un sac.");
-				if(IsPlayerInAnyVehicle(playerid)) return SCM(playerid, -1, "[FarmerJob]: Nu poti ridica saci cand te afli in masina!");
-				if(FarmInfo[playerid][pPaddyInTrailer] != 0) return SendClientMessage(playerid,-1,"[FarmerJob]: Remorca ta deja e incarcata cu seminte!");
-				ApplyAnimation(playerid, "CARRY", "LIFTUP", 4.0, 0, 0, 0, 0,0); // nhatlenkieu1
-				SetPVarInt(playerid,"HasGetPaddySack",1);
-				SetTimerEx("CarrySack",1000,0,"i",playerid);
-				SetPlayerAttachedObject(playerid, 9, 2060, 1, 0.170999, 0.363000, 0.000000, 0.000000, 93.700012, 0.000000, 0.713000, 0.650000, 1.000000, 0, 0);
-			}
-			else
-			{
-				SCM(playerid, -1, "Nu esti fermier!");
-			}
-		}
-		// FARMER JOB
+        {
+            if(job == FARMER)
+            {
+                if(!IsValidVehicle(FarmInfo[playerid][pVehicleHire]) ||!IsValidVehicle(FarmInfo[playerid][pTrailerVehicleHire])) return SendClientMessage(playerid,-1,"[FarmerJob]: Mai intai ia un Tractor si foloseste /startsow!");
+                if(GetPVarInt(playerid,"HasGetPaddySack") == 1) return SendClientMessage(playerid,-1,"[FarmerJob]: Ai deja un sac.");
+                if(IsPlayerInAnyVehicle(playerid)) return SCM(playerid, -1, "[FarmerJob]: Nu poti ridica saci cand te afli in masina!");
+                if(FarmInfo[playerid][pPaddyInTrailer] != 0) return SendClientMessage(playerid,-1,"[FarmerJob]: Remorca ta deja e incarcata cu seminte!");
+                ApplyAnimation(playerid, "CARRY", "LIFTUP", 4.0, 0, 0, 0, 0,0); // nhatlenkieu1
+                SetPVarInt(playerid,"HasGetPaddySack",1);
+                SetTimerEx("CarrySack",1000,0,"i",playerid);
+                SetPlayerAttachedObject(playerid, 9, 2060, 1, 0.170999, 0.363000, 0.000000, 0.000000, 93.700012, 0.000000, 0.713000, 0.650000, 1.000000, 0, 0);
+            }
+            else
+            {
+                SCM(playerid, -1, "Nu esti fermier!");
+            }
+        }
+        // FARMER JOB
     }
     if(PRESSED(KEY_WALK))
     {
         if(IsValidVehicle(FarmInfo[playerid][pTrailerVehicleHire]) && GetPVarInt(playerid,"HasGetPaddySack") == 1)
-		{
-			new Float:x,Float:y,Float:z;
-			GetVehiclePos(FarmInfo[playerid][pTrailerVehicleHire],x,y,z);
-			if(job != FARMER) return SCM(playerid, -1, "Nu esti fermier!");
-			if(IsPlayerInRangeOfPoint(playerid,2,x,y,z))
-			{
-			    if(FarmInfo[playerid][pPaddyInTrailer] == 0)
-			    {
-					ApplyAnimation(playerid, "CARRY", "PUTDWN105", 4.0, 0, 0, 0, 0,0); // datxuongkieu2
-					FarmInfo[playerid][pPaddyInTrailer] = 10;
-					RemovePlayerAttachedObject(playerid,9);
-					SetPVarInt(playerid,"HasGetPaddySack",0);
-					new string[128];
-					format(string,sizeof(string),"Proprietar: %s\nSeminte :{4cff00}%d",GetName(playerid),FarmInfo[playerid][pPaddyInTrailer]);
-					UpdateDynamic3DTextLabelText(FarmInfo[playerid][pTrailerText],-1,string);
-			    }
-			    else
-			    {
-					SendClientMessage(playerid,-1,"[FarmerJob]: Ai nevoie de mai multe seminte ca sa continui!");
-			    }
-			}
-			else
-			{
-				SendClientMessage(playerid,-1,"[FarmerJob]: Esti prea departe de remorca!");
-			}
-		}
-		//===================== Farmer Job =======================//    
-	}
+        {
+            new Float:x,Float:y,Float:z;
+            GetVehiclePos(FarmInfo[playerid][pTrailerVehicleHire],x,y,z);
+            if(job != FARMER) return SCM(playerid, -1, "Nu esti fermier!");
+            if(IsPlayerInRangeOfPoint(playerid,2,x,y,z))
+            {
+                if(FarmInfo[playerid][pPaddyInTrailer] == 0)
+                {
+                    ApplyAnimation(playerid, "CARRY", "PUTDWN105", 4.0, 0, 0, 0, 0,0); // datxuongkieu2
+                    FarmInfo[playerid][pPaddyInTrailer] = 10;
+                    RemovePlayerAttachedObject(playerid,9);
+                    SetPVarInt(playerid,"HasGetPaddySack",0);
+                    new string[128];
+                    format(string,sizeof(string),"Proprietar: %s\nSeminte :{4cff00}%d",GetName(playerid),FarmInfo[playerid][pPaddyInTrailer]);
+                    UpdateDynamic3DTextLabelText(FarmInfo[playerid][pTrailerText],-1,string);
+                }
+                else
+                {
+                    SendClientMessage(playerid,-1,"[FarmerJob]: Ai nevoie de mai multe seminte ca sa continui!");
+                }
+            }
+            else
+            {
+                SendClientMessage(playerid,-1,"[FarmerJob]: Esti prea departe de remorca!");
+            }
+        }
+        //===================== Farmer Job =======================//    
+    }
     if(PRESSED(KEY_NO))
     {
         new vehicle = GetPlayerVehicleID(playerid);
@@ -11829,90 +11800,90 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
         }
         //======================== Farmer Job ===========================//
         if(GetPVarInt(playerid,"HasPickupPaddy") == 0)
-	    {
-			for(new i =0;i<MAX_PADDYS;i++)
-	  		{
-	    		if(FarmInfo[playerid][pPaddyHarvestUsed][i] == 1)
-	   			{
-			    	new Float:x,Float:y,Float:z;
-					GetDynamicObjectPos(FarmInfo[playerid][pPaddyHarvestObject][i],x,y,z);
-					if(IsPlayerInRangeOfPoint(playerid,3,x,y,z))
-					{
-						ApplyAnimation(playerid, "CARRY", "LIFTUP", 4.0, 0, 0, 0, 0,0); // nhatlenkieu1
-						SetPVarInt(playerid,"HasPickupPaddy",1);
-						SetTimerEx("CarrySack",1000,0,"i",playerid);
-						SetPlayerAttachedObject(playerid, 8, 2060, 1, 0.170999, 0.363000, 0.000000, 0.000000, 93.700012, 0.000000, 0.713000, 0.650000, 1.000000, 0, 0);
-						DestroyPaddyHarvest(playerid,i);
-						return 1;
-					}
-	 			}
-	    	}
-    	}
-    	else
-    	{
-    	    new Float:x,Float:y,Float:z;
-    	    GetPlayerPos(playerid,x,y,z);
-    	    ApplyAnimation(playerid, "CARRY", "PUTDWN", 4.0, 0, 0, 0, 0,0); // datxuongkieu1
-    	    RemovePlayerAttachedObject(playerid,8);
-    	    CreatePaddyHarvest(playerid,CheckPaddyFreeSlot(playerid,2),x,y,z-0.8);
-    	    SetPVarInt(playerid,"HasPickupPaddy",0);
-    	    return 1;
-    	}
-		//========================================= Farmer Job =========================//
-	}
+        {
+            for(new i =0;i<MAX_PADDYS;i++)
+            {
+                if(FarmInfo[playerid][pPaddyHarvestUsed][i] == 1)
+                {
+                    new Float:x,Float:y,Float:z;
+                    GetDynamicObjectPos(FarmInfo[playerid][pPaddyHarvestObject][i],x,y,z);
+                    if(IsPlayerInRangeOfPoint(playerid,3,x,y,z))
+                    {
+                        ApplyAnimation(playerid, "CARRY", "LIFTUP", 4.0, 0, 0, 0, 0,0); // nhatlenkieu1
+                        SetPVarInt(playerid,"HasPickupPaddy",1);
+                        SetTimerEx("CarrySack",1000,0,"i",playerid);
+                        SetPlayerAttachedObject(playerid, 8, 2060, 1, 0.170999, 0.363000, 0.000000, 0.000000, 93.700012, 0.000000, 0.713000, 0.650000, 1.000000, 0, 0);
+                        DestroyPaddyHarvest(playerid,i);
+                        return 1;
+                    }
+                }
+            }
+        }
+        else
+        {
+            new Float:x,Float:y,Float:z;
+            GetPlayerPos(playerid,x,y,z);
+            ApplyAnimation(playerid, "CARRY", "PUTDWN", 4.0, 0, 0, 0, 0,0); // datxuongkieu1
+            RemovePlayerAttachedObject(playerid,8);
+            CreatePaddyHarvest(playerid,CheckPaddyFreeSlot(playerid,2),x,y,z-0.8);
+            SetPVarInt(playerid,"HasPickupPaddy",0);
+            return 1;
+        }
+        //========================================= Farmer Job =========================//
+    }
     if(PRESSED(KEY_CTRL_BACK))
     {
         new Float:x,Float:y,Float:z;
-		GetVehiclePos(FarmInfo[playerid][pVehicleHire],x,y,z);
-		if(IsPlayerInRangeOfPoint(playerid,2,FJPosTransport))
-		{
-		    if(GetPVarInt(playerid,"HasPickupPaddy") == 1)
-	    	{
-	    	    SetPVarInt(playerid,"HasPickupPaddy",0);
-	    	    ApplyAnimation(playerid, "CARRY", "PUTDWN", 4.0, 0, 0, 0, 0,0); // datxuongkieu2
-	    	    RemovePlayerAttachedObject(playerid,8);
-	    	    GiveCash(playerid, 15);
-	    	    return 1;
-	    	}
-		}
-		if(GetVehicleModel(FarmInfo[playerid][pVehicleHire]) == 478 && IsPlayerInRangeOfPoint(playerid,4,x,y,z))
-		{
-		    if(GetPVarInt(playerid,"HasPickupPaddy") == 1)
-	    	{
-	    	    if(FarmInfo[playerid][pPaddyHarvestInVehicle] < 10)
-	    	    {
-					SetPVarInt(playerid,"HasPickupPaddy",0);
-					ApplyAnimation(playerid, "CARRY", "PUTDWN105", 4.0, 0, 0, 0, 0,0); // datxuongkieu2
-					RemovePlayerAttachedObject(playerid,8);
-					FarmInfo[playerid][pPaddyHarvestInVehicle]++;
-					AddPaddyObjectToVehicle(playerid);
-					format(msg, sizeof(msg), "Saci: %d/10", FarmInfo[playerid][pPaddyHarvestInVehicle]);
-					InfoMSG(playerid, msg, 4);
-	    	    }
-	    	    else
-	    	    {
-					SendClientMessage(playerid,-1,"[FarmerJob]: Nu mai este loc in acest vehicul!");
-	    	    }
-	    	}
-	    	else
-	    	{
-	    	    if(FarmInfo[playerid][pPaddyHarvestInVehicle] > 0)
-	    	    {
-					DestroyObject(FarmInfo[playerid][pPaddyHarvestInVehicleObject][FarmInfo[playerid][pPaddyHarvestInVehicle]-1]);
-					FarmInfo[playerid][pPaddyHarvestInVehicle]--;
-					format(msg, sizeof(msg), "Saci: %d/10", FarmInfo[playerid][pPaddyHarvestInVehicle]);
-					InfoMSG(playerid, msg, 4);
-					ApplyAnimation(playerid, "CARRY", "LIFTUP105", 4.0, 0, 0, 0, 0,0); // nhatlenkieu2
-					SetPlayerAttachedObject(playerid, 8, 2060, 1, 0.170999, 0.363000, 0.000000, 0.000000, 93.700012, 0.000000, 0.713000, 0.650000, 1.000000, 0, 0);
-					SetPVarInt(playerid,"HasPickupPaddy",1);
-					SetTimerEx("CarrySack",1000,0,"i",playerid);
-	    	    }
-	    	    else
-	    	    {
-					SendClientMessage(playerid,-1,"[FarmerJob]: Nu sunt destui saci in acest vehicul.");
-	    	    }
-	    	}
-		}
+        GetVehiclePos(FarmInfo[playerid][pVehicleHire],x,y,z);
+        if(IsPlayerInRangeOfPoint(playerid,2,FJPosTransport))
+        {
+            if(GetPVarInt(playerid,"HasPickupPaddy") == 1)
+            {
+                SetPVarInt(playerid,"HasPickupPaddy",0);
+                ApplyAnimation(playerid, "CARRY", "PUTDWN", 4.0, 0, 0, 0, 0,0); // datxuongkieu2
+                RemovePlayerAttachedObject(playerid,8);
+                GiveCash(playerid, 15);
+                return 1;
+            }
+        }
+        if(GetVehicleModel(FarmInfo[playerid][pVehicleHire]) == 478 && IsPlayerInRangeOfPoint(playerid,4,x,y,z))
+        {
+            if(GetPVarInt(playerid,"HasPickupPaddy") == 1)
+            {
+                if(FarmInfo[playerid][pPaddyHarvestInVehicle] < 10)
+                {
+                    SetPVarInt(playerid,"HasPickupPaddy",0);
+                    ApplyAnimation(playerid, "CARRY", "PUTDWN105", 4.0, 0, 0, 0, 0,0); // datxuongkieu2
+                    RemovePlayerAttachedObject(playerid,8);
+                    FarmInfo[playerid][pPaddyHarvestInVehicle]++;
+                    AddPaddyObjectToVehicle(playerid);
+                    format(msg, sizeof(msg), "Saci: %d/10", FarmInfo[playerid][pPaddyHarvestInVehicle]);
+                    InfoMSG(playerid, msg, 4);
+                }
+                else
+                {
+                    SendClientMessage(playerid,-1,"[FarmerJob]: Nu mai este loc in acest vehicul!");
+                }
+            }
+            else
+            {
+                if(FarmInfo[playerid][pPaddyHarvestInVehicle] > 0)
+                {
+                    DestroyObject(FarmInfo[playerid][pPaddyHarvestInVehicleObject][FarmInfo[playerid][pPaddyHarvestInVehicle]-1]);
+                    FarmInfo[playerid][pPaddyHarvestInVehicle]--;
+                    format(msg, sizeof(msg), "Saci: %d/10", FarmInfo[playerid][pPaddyHarvestInVehicle]);
+                    InfoMSG(playerid, msg, 4);
+                    ApplyAnimation(playerid, "CARRY", "LIFTUP105", 4.0, 0, 0, 0, 0,0); // nhatlenkieu2
+                    SetPlayerAttachedObject(playerid, 8, 2060, 1, 0.170999, 0.363000, 0.000000, 0.000000, 93.700012, 0.000000, 0.713000, 0.650000, 1.000000, 0, 0);
+                    SetPVarInt(playerid,"HasPickupPaddy",1);
+                    SetTimerEx("CarrySack",1000,0,"i",playerid);
+                }
+                else
+                {
+                    SendClientMessage(playerid,-1,"[FarmerJob]: Nu sunt destui saci in acest vehicul.");
+                }
+            }
+        }
     }
 //========================= Farmer Job ======================================//
     return 1;
@@ -12051,47 +12022,47 @@ public OnPlayerClickPlayer(playerid, clickedplayerid, source)
 /* =================== Publics =================== */
 /*public OnPlayerAirbreak(playerid)
 {
-	format(msg, sizeof(msg), "[ID:%i]%s e posibil sa foloseasca Airbreak, verifica-l!", playerid, GetName(playerid));
-	AMSG(COLOR_LIGHTRED, msg);
+    format(msg, sizeof(msg), "[ID:%i]%s e posibil sa foloseasca Airbreak, verifica-l!", playerid, GetName(playerid));
+    AMSG(COLOR_LIGHTRED, msg);
     return 1;
 }*/
 
 /*public OnQueryError(errorid, error[], callback[], query2[], connectionHandle)
 {
-	switch(errorid)
-	{
-		case CR_SERVER_GONE_ERROR:
-		{
-			printf("Lost connection to server, trying reconnect...");
-			mysql_reconnect(connectionHandle);
-		}
-		case ER_SYNTAX_ERROR:
-		{
-			printf("Something is wrong in your syntax, query: %s", query2);
-		}
-		default: { printf("%s", query2); }
-	}
-	return 1;
+    switch(errorid)
+    {
+        case CR_SERVER_GONE_ERROR:
+        {
+            printf("Lost connection to server, trying reconnect...");
+            mysql_reconnect(connectionHandle);
+        }
+        case ER_SYNTAX_ERROR:
+        {
+            printf("Something is wrong in your syntax, query: %s", query2);
+        }
+        default: { printf("%s", query2); }
+    }
+    return 1;
 }*/
 
 
 forward SaveJobProgress(playerid);
 public SaveJobProgress(playerid)
 {
-	new job = PlayerInfo[playerid][pJob];
-	switch(job)
-	{
-		case GARBAGE:
-		{
-			format(query, sizeof(query), "UPDATE `users` SET `garbage` = %d WHERE `name` = '%s'", PlayerInfo[playerid][pGarbage], GetName(playerid));
-			mysql_function_query(dbHandle, query, false, "", "");
-			#if defined debugOn
-				print("savejobprogress chemat / garbage");
-				printf(query);
-			#endif
-		}
-	}
-	return 1;
+    new job = PlayerInfo[playerid][pJob];
+    switch(job)
+    {
+        case GARBAGE:
+        {
+            format(query, sizeof(query), "UPDATE `users` SET `garbage` = %d WHERE `name` = '%s'", PlayerInfo[playerid][pGarbage], GetName(playerid));
+            mysql_function_query(dbHandle, query, false, "", "");
+            #if defined debugOn
+                print("savejobprogress chemat / garbage");
+                printf(query);
+            #endif
+        }
+    }
+    return 1;
 }
 
 forward GameModeRehash();
@@ -12139,49 +12110,49 @@ public GameModeRehash()
 forward AntiCheatBan(playerid);
 public AntiCheatBan(playerid)
 {
-	new cheat = cheatID[playerid];
-	new gName[256], IP[100];
+    new cheat = cheatID[playerid];
+    new gName[256], IP[100];
     FreezePlayer(playerid);
     gpci(playerid,playerserial,sizeof(playerserial));
     GetWeaponName(GetPlayerWeapon(playerid),gName,sizeof(gName));
     GetPlayerIp(playerid, IP, sizeof(IP));
-	switch(cheat)
-	{
-		case 1: // Weaponhack ban
-		{
-			format(msg, sizeof(msg), "AdmCmd: %s a fost banat de sistem, Motiv: Weapon Hacks (s0beit), A spawnat %s.", GetName(playerid), gName);
-			PlayerInfo[playerid][pBanned] = 1;
-			BanWithMSG(playerid, msg);
-			format(msg, sizeof(msg), "<Weapon Hacks-Spawned %s>", gName);
-			format(query, sizeof(query), "INSERT INTO `bans` (name, reason, playerIP, playerSerial, admin, date) VALUES ('%s', '%s', '%s', '%s', 'Sistem', '%s')", GetName(playerid),msg,IP, playerserial, GetFullDate());
-			mysql_function_query(dbHandle, query, false, "", "");
-		}
-		case 2: // Flyhack ban(swim)
-		{
-			format(msg, sizeof(msg), "AdmCmd: %s a fost banat de sistem, Motiv: Fly Hacks (s0beit)", GetName(playerid));
-			PlayerInfo[playerid][pBanned] = 1;
-			BanWithMSG(playerid, msg);
-			format(query, sizeof(query), "INSERT INTO `bans` (name, reason, playerIP, playerSerial, admin, date) VALUES ('%s', '<Fly Hacks>', '%s', '%s', 'Sistem', '%s')", GetName(playerid),IP, playerserial, GetFullDate());
-			mysql_function_query(dbHandle, query, false, "", "");
-		}
-		case 3: // Money hack ban
-		{
-			format(msg, sizeof(msg), "AdmCmd: %s a fost banat de la Sistem, Motiv: Money Hacks (s0beit)", GetName(playerid));
-			PlayerInfo[playerid][pBanned] = 1;
-			BanWithMSG(playerid, msg);
-			format(query, sizeof(query), "INSERT INTO `bans` (name, reason, playerIP, playerSerial) VALUES ('%s', '%s', '%s', '%s')", GetName(playerid),"<$$ Money hacks $$>",IP, playerserial);
-			mysql_function_query(dbHandle, query, false, "", "");
-		}
-		case 4: // jetpack hack ban
-		{
-			format(msg, sizeof(msg), "AdmCmd: %s a fost banat de SYSTEM. Motiv: A spawnat un JetPack.", GetName(playerid));
-			PlayerInfo[playerid][pBanned] = 1;
-			BanWithMSG(playerid, msg);
-			format(query, sizeof(query), "INSERT INTO `bans` (name, reason, playerIP, playerSerial, admin, date) VALUES ('%s', 'A spawnat JetPack', '%s', '%s', 'SYSTEM', '%s')", GetName(playerid), GetPlayerIP(playerid), playerserial, GetFullDate());
-			mysql_function_query(dbHandle, query, false, "", "");
-		}
-	}
-	return 1;
+    switch(cheat)
+    {
+        case 1: // Weaponhack ban
+        {
+            format(msg, sizeof(msg), "AdmCmd: %s a fost banat de sistem, Motiv: Weapon Hacks (s0beit), A spawnat %s.", GetName(playerid), gName);
+            PlayerInfo[playerid][pBanned] = 1;
+            BanWithMSG(playerid, msg);
+            format(msg, sizeof(msg), "<Weapon Hacks-Spawned %s>", gName);
+            format(query, sizeof(query), "INSERT INTO `bans` (name, reason, playerIP, playerSerial, admin, date) VALUES ('%s', '%s', '%s', '%s', 'Sistem', '%s')", GetName(playerid),msg,IP, playerserial, GetFullDate());
+            mysql_function_query(dbHandle, query, false, "", "");
+        }
+        case 2: // Flyhack ban(swim)
+        {
+            format(msg, sizeof(msg), "AdmCmd: %s a fost banat de sistem, Motiv: Fly Hacks (s0beit)", GetName(playerid));
+            PlayerInfo[playerid][pBanned] = 1;
+            BanWithMSG(playerid, msg);
+            format(query, sizeof(query), "INSERT INTO `bans` (name, reason, playerIP, playerSerial, admin, date) VALUES ('%s', '<Fly Hacks>', '%s', '%s', 'Sistem', '%s')", GetName(playerid),IP, playerserial, GetFullDate());
+            mysql_function_query(dbHandle, query, false, "", "");
+        }
+        case 3: // Money hack ban
+        {
+            format(msg, sizeof(msg), "AdmCmd: %s a fost banat de la Sistem, Motiv: Money Hacks (s0beit)", GetName(playerid));
+            PlayerInfo[playerid][pBanned] = 1;
+            BanWithMSG(playerid, msg);
+            format(query, sizeof(query), "INSERT INTO `bans` (name, reason, playerIP, playerSerial) VALUES ('%s', '%s', '%s', '%s')", GetName(playerid),"<$$ Money hacks $$>",IP, playerserial);
+            mysql_function_query(dbHandle, query, false, "", "");
+        }
+        case 4: // jetpack hack ban
+        {
+            format(msg, sizeof(msg), "AdmCmd: %s a fost banat de SYSTEM. Motiv: A spawnat un JetPack.", GetName(playerid));
+            PlayerInfo[playerid][pBanned] = 1;
+            BanWithMSG(playerid, msg);
+            format(query, sizeof(query), "INSERT INTO `bans` (name, reason, playerIP, playerSerial, admin, date) VALUES ('%s', 'A spawnat JetPack', '%s', '%s', 'SYSTEM', '%s')", GetName(playerid), GetPlayerIP(playerid), playerserial, GetFullDate());
+            mysql_function_query(dbHandle, query, false, "", "");
+        }
+    }
+    return 1;
 }
 
 /*
@@ -12244,10 +12215,10 @@ public SetPlayerSpawn(playerid)
     {
         format(query, sizeof(query), "UPDATE `users` SET `justregister` = '0' WHERE `name` = '%s'", GetName(playerid));
         mysql_function_query(dbHandle, query, false, "", "");
-		#if defined debugOn
-			print("SetPlayerSpawn");
-			printf(query);
-		#endif
+        #if defined debugOn
+            print("SetPlayerSpawn");
+            printf(query);
+        #endif
         ShowHudTextDraws(playerid, 1);
         StopAudioStreamForPlayer(playerid);
         StopPlayerSpec(playerid);
@@ -13196,8 +13167,8 @@ public LoadPlayerSerials()
     cache_get_data(rows, fields, dbHandle);
     if(rows)
     {   
-		#if defined debugOn
-			printf("%d randuri gasite.", rows);
+        #if defined debugOn
+            printf("%d randuri gasite.", rows);
         #endif
         for(new CurrentRow = 0; CurrentRow < rows; CurrentRow++) 
         {
@@ -13307,18 +13278,18 @@ public OnAccountCheck(playerid)
         ServerMSG(playerid, "Te rog introdu parola cu care te-ai inregistrat.");
         format(query, sizeof(query), "SELECT `justregister` FROM `users` WHERE `name` = '%s'", GetName(playerid));
         mysql_function_query(dbHandle, query, true, "LoginZZ", "i", playerid);
-		#if defined debugOn
-			print("OnAccountCheck 1");
-			printf(query);
-		#endif
+        #if defined debugOn
+            print("OnAccountCheck 1");
+            printf(query);
+        #endif
         new IP[256];
         GetPlayerIp(playerid, IP, sizeof(IP));
         gpci(playerid,playerserial,sizeof(playerserial));
         format(query, sizeof(query), "UPDATE `users` SET `playerSerial` = '%s' WHERE `name` = '%s'", playerserial, GetName(playerid));
-		#if defined debugOn
-			print("OnAccountCheck 2");
-			printf(query);
-		#endif
+        #if defined debugOn
+            print("OnAccountCheck 2");
+            printf(query);
+        #endif
         mysql_function_query(dbHandle, query, false, "", "");
 //      SetPlayerToLogin(playerid);
     }
@@ -13399,16 +13370,16 @@ public LoginPlayer(playerid)
             gpci(playerid,playerserial,sizeof(playerserial));
             format(query, sizeof(query), "UPDATE `users` SET `playerSerial` = '%s' WHERE `name` = '%s'", playerserial, GetName(playerid));
             mysql_function_query(dbHandle, query, false, "", "");
-			#if defined debugOn
-				print("LoginPlayer 1");
-				printf(query);
-			#endif
+            #if defined debugOn
+                print("LoginPlayer 1");
+                printf(query);
+            #endif
             format(query, sizeof(query), "UPDATE `users` SET `isOnline` = '1' WHERE `name` = '%s'", GetName(playerid));
             mysql_function_query(dbHandle, query, false, "", "");
-			#if defined debugOn
-				print("LoginPlayer 2");
-				printf(query);
-			#endif
+            #if defined debugOn
+                print("LoginPlayer 2");
+                printf(query);
+            #endif
             KillTimer(LoginTimer{playerid});
             format(msg, sizeof(msg), "Esti logat sub numele de %s.", GetNameEx(playerid));
             ServerMSG(playerid, msg);
@@ -13467,10 +13438,10 @@ public CheckSecretWord(playerid)
         GetPlayerIp(playerid, IP, sizeof(IP));
         format(query, sizeof(query), "UPDATE `users` SET `playerIP` = '%s' WHERE `name` = '%s'", IP, GetName(playerid));
         mysql_function_query(dbHandle, query, false, "", "");
-		#if defined debugOn
-			print("CheckSecretWord");
-			printf(query);
-		#endif
+        #if defined debugOn
+            print("CheckSecretWord");
+            printf(query);
+        #endif
         SCM(playerid, COLOR_YELLOWG, "Ai confirmat codul secret, te rog logheaza-te!");
         format(msg, sizeof(msg), ""EMBED_WHITE"Bine ai venit, "EMBED_GRAY"%s\n"EMBED_WHITE"\nAi 60 de secunde sa te loghezi\n\nIntrodu parola", GetName(playerid));
         ShowDialog(playerid, Show:<Login>, DIALOG_STYLE_PASSWORD, ""EMBED_WHITE"Evolution Roleplay - Logare"EMBED_WHITE"", msg, "Logare", "Iesire");
@@ -13921,7 +13892,7 @@ public GlobalSaving()
     }
     //-------------------------------------------------
     SavePlants();
-	SaveBins();
+    SaveBins();
     return 1;
 }
 
@@ -13954,10 +13925,10 @@ public SavePlayerStats(playerid)
         PlayerInfo[playerid][pWorld],
         GetName(playerid));
         mysql_function_query(dbHandle, query, false, "", "");
-		#if defined debugOn
-			print("SavePlayerStats - 1");
-			printf(query);
-		#endif
+        #if defined debugOn
+            print("SavePlayerStats - 1");
+            printf(query);
+        #endif
         //=========================================================================================================
         format(query, sizeof(query), "UPDATE `users` SET `jailed` = %d, `jailtime` = %d, `banned` = %d, `warns` = %d, `donate` = %d, `carlic` = %d, `weplic` = %d, `flylic` = %d, `posx` = %f, `posy` = %f, `posz` = %f, `posa` = %f WHERE `name` = '%s'",
         PlayerInfo[playerid][pJailed],
@@ -13974,10 +13945,10 @@ public SavePlayerStats(playerid)
         PlayerInfo[playerid][pPosA],
         GetName(playerid));
         mysql_function_query(dbHandle, query, false, "", "");
-		#if defined debugOn
-			print("SavePlayerStats - 2");
-			printf(query);
-		#endif
+        #if defined debugOn
+            print("SavePlayerStats - 2");
+            printf(query);
+        #endif
         //=========================================================================================================
         format(query, sizeof(query), "UPDATE `users` SET `died` = %d, `fightstyle` = %d, `pen` = %d, `attributes` = '%s', `paycheck` = %d, `paycheckmoney` = %d WHERE `name` = '%s'",
         PlayerInfo[playerid][pDied],
@@ -13988,10 +13959,10 @@ public SavePlayerStats(playerid)
         PlayerInfo[playerid][pPayCheckMoney],
         GetName(playerid));
         mysql_function_query(dbHandle, query, false, "", "");
-		#if defined debugOn
-			print("SavePlayerStats - 3");
-			printf(query);
-		#endif
+        #if defined debugOn
+            print("SavePlayerStats - 3");
+            printf(query);
+        #endif
         //=========================================================================================================
         format(query, sizeof(query), "UPDATE `users` SET `paydaytime` = %d, `spawnhealth` = %.1f, `cellphone` = %d, `number` = %d, `savings` = %d, `housekey` = %d, `melee` = %d, `wep1`= %d, `wep2` = %d, `ammo1` = %d, `ammo2`= %d WHERE `name` = '%s'",
         PlayerInfo[playerid][pPayDayTime],
@@ -14007,25 +13978,24 @@ public SavePlayerStats(playerid)
         GetWeaponAmmo(playerid, PlayerInfo[playerid][pPerm2]),
         GetName(playerid));
         mysql_function_query(dbHandle, query, false, "", "");
-		#if defined debugOn
-			print("SavePlayerStats - 4");
-			printf(query);
-		#endif
+        #if defined debugOn
+            print("SavePlayerStats - 4");
+            printf(query);
+        #endif
         //=========================================================================================================
-        format(query, sizeof(query), "UPDATE `users` SET `radio` = %d, `crashed` = %d, `mask` = %d, `bmx` = %d, `carkey` = %d, `carkey2` = %d, `vehicles` = %d WHERE `name` = '%s'",
+        format(query, sizeof(query), "UPDATE `users` SET `radio` = %d, `crashed` = %d, `mask` = %d, `bmx` = %d, `carkey` = %d, `vehicles` = %d WHERE `name` = '%s'",
         PlayerInfo[playerid][pRadio] ,
         PlayerInfo[playerid][pCrashed],
         PlayerInfo[playerid][pMask],
         PlayerInfo[playerid][pBMX],
         PlayerInfo[playerid][pCarKey],
-		PlayerInfo[playerid][pCarKey2],
         PlayerInfo[playerid][pVehicles],
         GetName(playerid));
         mysql_function_query(dbHandle, query, false, "", "");
-		#if defined debugOn
-			print("SavePlayerStats - 5");
-			printf(query);
-		#endif
+        #if defined debugOn
+            print("SavePlayerStats - 5");
+            printf(query);
+        #endif
         //=========================================================================================================
         format(query, sizeof(query), "UPDATE `users` SET `playervehs` = '%s', `vehslot` = %d, `sparekey` = %d, `lighter` = %d, `cigars` = %d, `bizkey` = %d, `workon` = %d, `taxilic` = %d WHERE `name` = '%s'",
         vehicles,
@@ -14038,10 +14008,10 @@ public SavePlayerStats(playerid)
         PlayerInfo[playerid][pTaxiLic],
         GetName(playerid));
         mysql_function_query(dbHandle, query, false, "", "");
-		#if defined debugOn
-			print("SavePlayerStats - 6");
-			printf(query);
-		#endif
+        #if defined debugOn
+            print("SavePlayerStats - 6");
+            printf(query);
+        #endif
         //=========================================================================================================
         format(query, sizeof(query), "UPDATE `users` SET `walk` = %d, `armour` = %.1f, `hasarmour` = %d, `faction` = %d, `rank` = %d, `badgenumber` = %d, `drivewarns` = %d, `jailtime2` = %d WHERE `name` = '%s'",
         PlayerInfo[playerid][pWalk],
@@ -14054,10 +14024,10 @@ public SavePlayerStats(playerid)
         PlayerInfo[playerid][pJailTime2],
         GetName(playerid));
         mysql_function_query(dbHandle, query, false, "", "");
-		#if defined debugOn
-			print("SavePlayerStats - 7");
-			printf(query);
-		#endif
+        #if defined debugOn
+            print("SavePlayerStats - 7");
+            printf(query);
+        #endif
         //=========================================================================================================
         format(query, sizeof(query), "UPDATE `users` SET `arrested` = %d, `chat` = %d, `swat` = %d, `tickets` = '%s', `job` = %d, `jobrank` = %d, `career` = %d WHERE `name` = '%s'",
         PlayerInfo[playerid][pArrested],
@@ -14069,10 +14039,10 @@ public SavePlayerStats(playerid)
         PlayerInfo[playerid][pCareer],
         GetName(playerid));
         mysql_function_query(dbHandle, query, false, "", "");
-		#if defined debugOn
-			print("SavePlayerStats - 8");
-			printf(query);
-		#endif
+        #if defined debugOn
+            print("SavePlayerStats - 8");
+            printf(query);
+        #endif
         //=========================================================================================================
         format(query, sizeof(query), "UPDATE `users` SET `sidejob` = %d, `spawntype` = %d, `prisoned` = %d, `drugs` = '%s' WHERE `name` = '%s'",
         PlayerInfo[playerid][pSideJob],
@@ -14081,10 +14051,10 @@ public SavePlayerStats(playerid)
         drugs,
         GetName(playerid));
         mysql_function_query(dbHandle, query, false, "", "");
-		#if defined debugOn
-			print("SavePlayerStats - 9");
-			printf(query);
-		#endif
+        #if defined debugOn
+            print("SavePlayerStats - 9");
+            printf(query);
+        #endif
         //=========================================================================================================
         format(query, sizeof(query), "UPDATE `users` SET `seeds` = %d, `soda` = %d, `powder` = %d, `alcohol` = %d WHERE `name` = '%s'",
         PlayerInfo[playerid][pSeeds],
@@ -14093,10 +14063,10 @@ public SavePlayerStats(playerid)
         PlayerInfo[playerid][pAlcohol],
         GetName(playerid));
         mysql_function_query(dbHandle, query, false, "", "");
-		#if defined debugOn
-			print("SavePlayerStats - 10");
-			printf(query);
-		#endif
+        #if defined debugOn
+            print("SavePlayerStats - 10");
+            printf(query);
+        #endif
         //=========================================================================================================
         format(query, sizeof(query), "UPDATE `users` SET `contacts` = '%s', `channels` = '%s', `authed` = '%s', `slot` = %d, `fname` = %d, `forumname` = '%s', `card` = %d, `pincard` = %d WHERE `name` = '%s'",
         contacts,
@@ -14109,10 +14079,10 @@ public SavePlayerStats(playerid)
         PlayerInfo[playerid][pPinCard],
         GetName(playerid));
         mysql_function_query(dbHandle, query, false, "", "");
-		#if defined debugOn
-			print("SavePlayerStats - 11");
-			printf(query);
-		#endif
+        #if defined debugOn
+            print("SavePlayerStats - 11");
+            printf(query);
+        #endif
         //=========================================================================================================
         format(query, sizeof(query), "UPDATE `users` SET `namechanges` = %d, `phonechanges` = %d, `sexchanges` = %d, `ckchanges` = %d, `bikelic` = %d, `biglic` = %d, `fishingrod` = %d, `haircut` = %d, `wanted` = '%s', `maskid` = %d WHERE `name` = '%s'",
         PlayerInfo[playerid][pNameChg],
@@ -14127,20 +14097,20 @@ public SavePlayerStats(playerid)
         PlayerInfo[playerid][pMaskID],
         GetName(playerid));
         mysql_function_query(dbHandle, query, false, "", "");
-		#if defined debugOn
-			print("SavePlayerStats - 12");
-			printf(query);
-		#endif
+        #if defined debugOn
+            print("SavePlayerStats - 12");
+            printf(query);
+        #endif
         //=========================================================================================================
         format(query, sizeof(query), "UPDATE `users` SET `garbage` = %d, `garage` = %d WHERE `name` = '%s'",
         PlayerInfo[playerid][pGarbage],
         PlayerInfo[playerid][pGarage],
         GetName(playerid));
         mysql_function_query(dbHandle, query, false, "", "");
-		#if defined debugOn
-			print("SavePlayerStats - 13");
-			printf(query);
-		#endif
+        #if defined debugOn
+            print("SavePlayerStats - 13");
+            printf(query);
+        #endif
         //=========================================================================================================
         SavePlayerToys(playerid);
         SavePlayerNotes(playerid);
@@ -14201,7 +14171,6 @@ public OnAccountLoad(playerid)
     PlayerInfo[playerid][pBMX] = cache_get_row_int(0, 53);
     if(PlayerInfo[playerid][pHouseKey] == 0) PlayerInfo[playerid][pHouseKey] = -1;
     PlayerInfo[playerid][pCarKey] = cache_get_row_int(0, 54);
-	PlayerInfo[playerid][pCarKey] = cache_get_row_int(0, 119);
     cache_get_row(0, 55, vehicles, dbHandle, 255);
     AssignPlayerVehicles(playerid, vehicles);
     //printf("House: %i  Car %i", PlayerInfo[playerid][pHouseKey], PlayerInfo[playerid][pCarKey]);
@@ -14261,7 +14230,6 @@ public OnAccountLoad(playerid)
     PlayerInfo[playerid][pHairCut] = cache_get_row_int(0, 112);
     PlayerInfo[playerid][pGarbage] = cache_get_row_int(0, 117);
     PlayerInfo[playerid][pGarage] = cache_get_row_int(0, 118);
-    //119 E PENTRU CARKEY2
     cache_get_row(0, 113, PlayerInfo[playerid][pWanted], dbHandle, 256);
     PlayerInfo[playerid][pMaskID] = (PlayerInfo[playerid][pDatabaseID] * 1000) + PlayerInfo[playerid][pDatabaseID]; //DE MODIFICAT
     SetPVarInt(playerid, "MaskID", PlayerInfo[playerid][pMaskID]);
@@ -14577,7 +14545,7 @@ public LoadDynamicGates()
         }
     }
     format(msg,sizeof(msg), "Loaded %d dynamic gates from MySQL.", total);
-	printf(msg);
+    printf(msg);
     return 1;
 }
 //Garbage Job
@@ -14585,29 +14553,29 @@ forward LoadDynamicBins();
 public LoadDynamicBins()
 {
     new rows, fields;
-	new total = 0;
+    new total = 0;
     cache_get_data(rows, fields);
     if(rows)
     {
-		while(total < rows)
-		{
-			BinInfo[total][objectID] = cache_get_row_int(total, 0);
-			BinInfo[total][objectModel] = cache_get_row_int(total, 1);
-			BinInfo[total][binX] = cache_get_row_float(total, 2);
-			BinInfo[total][binY] = cache_get_row_float(total, 3);
-			BinInfo[total][binZ] = cache_get_row_float(total, 4);
-			BinInfo[total][binRX] = cache_get_row_float(total, 5);
-			BinInfo[total][binRY] = cache_get_row_float(total, 6);
-			BinInfo[total][binRZ] = cache_get_row_float(total, 7);
-			BinInfo[total][TrashPicked] = cache_get_row_int(total, 8);
-			format(msg, sizeof(msg), "FULL");
-			BinInfo[total][binLabel] = CreateDynamic3DTextLabel(msg, -1, BinInfo[total][binX], BinInfo[total][binY], BinInfo[total][binZ], 6.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 0, -1, -1, -1, 100.0);
-			CreateDynamicObject(BinInfo[total][objectModel], BinInfo[total][binX], BinInfo[total][binY], BinInfo[total][binZ], BinInfo[total][binRX], BinInfo[total][binRY], BinInfo[total][binRZ]);
-			total++;
-		}
+        while(total < rows)
+        {
+            BinInfo[total][objectID] = cache_get_row_int(total, 0);
+            BinInfo[total][objectModel] = cache_get_row_int(total, 1);
+            BinInfo[total][binX] = cache_get_row_float(total, 2);
+            BinInfo[total][binY] = cache_get_row_float(total, 3);
+            BinInfo[total][binZ] = cache_get_row_float(total, 4);
+            BinInfo[total][binRX] = cache_get_row_float(total, 5);
+            BinInfo[total][binRY] = cache_get_row_float(total, 6);
+            BinInfo[total][binRZ] = cache_get_row_float(total, 7);
+            BinInfo[total][TrashPicked] = cache_get_row_int(total, 8);
+            format(msg, sizeof(msg), "FULL");
+            BinInfo[total][binLabel] = CreateDynamic3DTextLabel(msg, -1, BinInfo[total][binX], BinInfo[total][binY], BinInfo[total][binZ], 6.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 0, -1, -1, -1, 100.0);
+            CreateDynamicObject(BinInfo[total][objectModel], BinInfo[total][binX], BinInfo[total][binY], BinInfo[total][binZ], BinInfo[total][binRX], BinInfo[total][binRY], BinInfo[total][binRZ]);
+            total++;
+        }
     }
-	format(msg,sizeof(msg), "Au fost incarcate %d cosuri de gunoi din MySQL.", total);
-	printf(msg);
+    format(msg,sizeof(msg), "Au fost incarcate %d cosuri de gunoi din MySQL.", total);
+    printf(msg);
     return 1; 
 }
 //Garbage Job
@@ -14919,10 +14887,10 @@ public LoadDynamicHouses()
             HouseInfo[house][hLabel] = CreateDynamic3DTextLabel(msg, COLOR_HOUSE, HouseInfo[house][hEntranceX], HouseInfo[house][hEntranceY], HouseInfo[house][hEntranceZ], 3.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 0, -1, -1, -1, 100.0);
             HouseInfo[house][hCheckPoint] = CreateDynamicCP(HouseInfo[house][hEntranceX], HouseInfo[house][hEntranceY], HouseInfo[house][hEntranceZ], 1.5, -1, -1, -1, 2.0);
             if(HouseInfo[house][hFurnitures] > 0)
-			{
-				LoadHouseFurnitures(house);
-			}
-			house++;
+            {
+                LoadHouseFurnitures(house);
+            }
+            house++;
             total++;
         }
     }
@@ -15204,8 +15172,8 @@ public LoadDynamicJobs()
                 format(msg, sizeof(msg), ""EMBED_GREEN"["EMBED_RED"JOB"EMBED_GREEN"]");
             JobsInfo[jobid][jobLabel] = CreateDynamic3DTextLabel(msg, -1, JobsInfo[jobid][jobX], JobsInfo[jobid][jobY], JobsInfo[jobid][jobZ]+0.4, 5.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 0, -1, -1, -1, 100.0);
             #if defined debugOn
-				printf("Job %d incarcat (%s)", total, JobsInfo[jobid][jobName]);
-			#endif
+                printf("Job %d incarcat (%s)", total, JobsInfo[jobid][jobName]);
+            #endif
             total++;
         }
     }
@@ -16007,7 +15975,7 @@ public OnPlayerModelSelection(playerid, response, listid, modelid)
         if(response)
         {
             new price = GetVehiclePrice(modelid);
-            if(IsVehicleSpawned(PlayerInfo[playerid][pCarKey]) && IsVehicleSpawned(PlayerInfo[playerid][pCarKey2])) return SCM(playerid, COLOR_GRAY, "Despawneaza una din masinile spawnate.");
+            if(IsVehicleSpawned(PlayerInfo[playerid][pCarKey])) return SCM(playerid, COLOR_GRAY, "Despawneaza masina pe care o ai spawnata.");
             if(IsADonateCar(modelid))
             {
                 if(IsABronzeCar(modelid))
@@ -16221,14 +16189,14 @@ public TruckerTimer()
 forward CheatTimer();
 public CheatTimer()
 {
-	foreach(new i : Player)
-	{
-		if(cheatImmune[i] == 1)
-		{
-			cheatImmune[i] = 0;
-			//printf("CheatTimer chemat pentru %s, valoare %d", GetName(i), cheatImmune[i]);
-		}	
-	}
+    foreach(new i : Player)
+    {
+        if(cheatImmune[i] == 1)
+        {
+            cheatImmune[i] = 0;
+            //printf("CheatTimer chemat pentru %s, valoare %d", GetName(i), cheatImmune[i]);
+        }   
+    }
     for(new i = 1; i <=GetVehiclePoolSize(); i++)
     {
         if(IsATaxi(i))
@@ -16255,7 +16223,7 @@ public CheatTimer()
             }
         }
     }
-	return 1;
+    return 1;
 }
 
 forward SpeedTimer();
@@ -16288,58 +16256,58 @@ public CheckStatus()
             VehicleEngine(i, false);
             SetVehicleHealth(i, 300);
         }
-		//Anti Speed-hack
-		if(GetVehicleSpeed(i) >= 300)
-		{
-			format(msg, sizeof(msg), "Vehiculul cu ID: %d merge cu viteza de %d KM/H. Verifica-l. (/speccar %d)", i, GetVehicleSpeed(i), i);
-			AMSG(COLOR_LIGHTRED, msg);
-		}
-		//Anti Speed-Hack
+        //Anti Speed-hack
+        if(GetVehicleSpeed(i) >= 300)
+        {
+            format(msg, sizeof(msg), "Vehiculul cu ID: %d merge cu viteza de %d KM/H. Verifica-l. (/speccar %d)", i, GetVehicleSpeed(i), i);
+            AMSG(COLOR_LIGHTRED, msg);
+        }
+        //Anti Speed-Hack
     }
     foreach(new i : Player)
     {
         //antihack
         if(!CheckAdmin(i, 1) && !CopDuty{i} && !MedicDuty{i} && !GOVDuty{i} && !NewsDuty{i})
         {
-			if(cheatImmune[i] == 1)
-			{
-				#if defined debugOn
-					printf("cheatImmune chemat pentru %s, valoare %d", GetName(i), cheatImmune[i]);
-				#endif
-				//cheatImmune[i] = 0;
-			}
-			else
-			{
-				if(GetPlayerWeapon(i) > 0 && Weapons[i][GetPlayerWeapon(i)] == 0)
-				{
-					cheatID[i] = 1;
-					AntiCheatBan(i);
-				}
-			}
-			//}
+            if(cheatImmune[i] == 1)
+            {
+                #if defined debugOn
+                    printf("cheatImmune chemat pentru %s, valoare %d", GetName(i), cheatImmune[i]);
+                #endif
+                //cheatImmune[i] = 0;
+            }
+            else
+            {
+                if(GetPlayerWeapon(i) > 0 && Weapons[i][GetPlayerWeapon(i)] == 0)
+                {
+                    cheatID[i] = 1;
+                    AntiCheatBan(i);
+                }
+            }
+            //}
         }
-		if(!CheckAdmin(i, 1))
-		{
-			if(GetPlayerSpecialAction(i) == SPECIAL_ACTION_USEJETPACK)
-			{
-				cheatID[i] = 4;
-		        AntiCheatBan(i);
-			}
-		}
+        if(!CheckAdmin(i, 1))
+        {
+            if(GetPlayerSpecialAction(i) == SPECIAL_ACTION_USEJETPACK)
+            {
+                cheatID[i] = 4;
+                AntiCheatBan(i);
+            }
+        }
         if(!IsPlayerInWater(i))
-		{
-			switch(GetPlayerAnimationIndex(i))
-			{
-				case 1543,1538,1539:
-				{
-					if(!CheckAdmin(i, 1))
-					{
-						cheatID[i] = 2;
-						AntiCheatBan(i);
-					}
-				}
-			}
-		}
+        {
+            switch(GetPlayerAnimationIndex(i))
+            {
+                case 1543,1538,1539:
+                {
+                    if(!CheckAdmin(i, 1))
+                    {
+                        cheatID[i] = 2;
+                        AntiCheatBan(i);
+                    }
+                }
+            }
+        }
         //antihack
         if(OnCCTV{i}) { UpdateCCTV_TD(i); }
         //jobmessage
@@ -16680,7 +16648,7 @@ function PayDay(id)
         //Adding random paychecks & by level.
 
         PlayerInfo[id][pGarbage] = 0;
-		SaveJobProgress(id);
+        SaveJobProgress(id);
        
         //Taking a tax from a player
         new TaxPay = randomEx(4,6) + ((oldbank / 2) / 6000);
@@ -16774,7 +16742,7 @@ function PayDay(id)
 forward BinTimer();
 public BinTimer()
 {
-	ResetBins();
+    ResetBins();
 }
 
 public OneMinuteTimer()
@@ -17130,7 +17098,7 @@ public OnPlayerSpawnVehicle(playerid, slot)
     new rows, fields;
     new panels3, doors3, lights3, tires3;
     new sqlid, model, color1, color2, alarmbuyed, lock, immob, insurances, destroyed, gps, fuel, registered, broken, Float:X, Float:Y, Float:Z, Float:A, plate[128], owner[128];
-    new component[14], paintjob, radio, tickets[265], weapons[256], drugs[256], dupkey, comps, faction, impound;
+    new component[14], paintjob, radio, tickets[265], weapons[256], drugs[256], dupkey, comps, faction, impound, carvw;
     cache_get_data(rows, fields);
     if(rows)
     {
@@ -17178,12 +17146,16 @@ public OnPlayerSpawnVehicle(playerid, slot)
         panels3 = cache_get_row_int(0, 44);
         doors3 = cache_get_row_int(0, 45);
         lights3 = cache_get_row_int(0, 46);
-        tires3 = cache_get_row_int(0, 47);
-        impound = cache_get_row_int(0, 49);
+        tires3 = cache_get_row_int(0, 47);       
         new Float:vhealth = cache_get_row_int(0, 48);
-		if(PlayerInfo[playerid][pCarKey2] == 0)
-			PlayerInfo[playerid][pCarKey2] = PlayerInfo[playerid][pCarKey];
-		PlayerInfo[playerid][pCarKey] = CreateVehicle(model, X, Y, Z, A, color1, color2, -1);
+        impound = cache_get_row_int(0, 49);  
+        carvw = cache_get_row_int(0, 50);
+
+        PlayerInfo[playerid][pCarKey] = CreateVehicle(model, X, Y, Z, A, color1, color2, -1);
+
+        SetVehicleVirtualWorld(PlayerInfo[playerid][pCarKey], carvw);
+        VehicleInfo[PlayerInfo[playerid][pCarKey]][carVW] = carvw;
+
         SetVehicleNumberPlate(PlayerInfo[playerid][pCarKey], plate);
         VehicleInfo[PlayerInfo[playerid][pCarKey]][carID] = sqlid;
         VehicleInfo[PlayerInfo[playerid][pCarKey]][carModel] = model;
@@ -17878,12 +17850,7 @@ Dialog:ConfirmDS(playerid, response, listitem, inputtext[])
             ParkZ = 13.2648;
             ParkA = 270.0;
         }
-		if(PlayerInfo[playerid][pCarKey] != 0 && PlayerInfo[playerid][pCarKey2] == 0)
-		{
-			PlayerInfo[playerid][pCarKey2] = PlayerInfo[playerid][pCarKey];
-			PlayerInfo[playerid][pCarKey] = 0;
-		}
-		PlayerInfo[playerid][pCarKey] = CreateVehicle(modelid, ParkX, ParkY, ParkZ, 0.0, 1, 1, -1);
+        PlayerInfo[playerid][pCarKey] = CreateVehicle(modelid, ParkX, ParkY, ParkZ, 0.0, 1, 1, -1);
         VehicleInfo[PlayerInfo[playerid][pCarKey]][carModel] = modelid;
         VehicleInfo[PlayerInfo[playerid][pCarKey]][carColor1] = 1;
         VehicleInfo[PlayerInfo[playerid][pCarKey]][carColor2] = 1;
@@ -17949,16 +17916,16 @@ Dialog:ConfirmDS(playerid, response, listitem, inputtext[])
         modelid, 1, 1, ParkX, ParkY, ParkZ, 0.0, VehicleInfo[PlayerInfo[playerid][pCarKey]][carPlate], name, 1, slot);
         mysql_tquery(dbHandle, query, "", "");
         //============================================================================================
-		#if defined debugOn
-			printf(query);
-		#endif
+        #if defined debugOn
+            printf(query);
+        #endif
         //======================================================================================
         format(query, sizeof(query), "UPDATE `ownedvehicles` SET `weapons` = '%s' WHERE `owner` = '%s' AND `slot` = %d", "0=0|0=0|0=0|0=0|0=0|0=0|0=0|0=0|0=0|0=0", name,slot);
         mysql_function_query(dbHandle, query, false, "", "");
-		//==========================================================================
-		#if defined debugOn
-			printf(query);
-		#endif
+        //==========================================================================
+        #if defined debugOn
+            printf(query);
+        #endif
         //==========================================================================
         format(query, sizeof(query), "UPDATE `ownedvehicles` SET `dupkey` = %d WHERE `owner` = '%s' AND `slot` = %d", VehicleInfo[PlayerInfo[playerid][pCarKey]][carDupKey], name, slot);
         mysql_function_query(dbHandle, query, false, "", "");
@@ -17971,10 +17938,10 @@ Dialog:ConfirmDS(playerid, response, listitem, inputtext[])
         //=========================================================================================
         format(query, sizeof(query), "UPDATE `users` SET `vehicles` = %d WHERE `name` = '%s'", PlayerInfo[playerid][pVehicles], name);
         mysql_function_query(dbHandle, query, false, "", "");
-		#if defined debugOn
-			print("Dialog:ConfirmDS");
-			printf(query);
-		#endif
+        #if defined debugOn
+            print("Dialog:ConfirmDS");
+            printf(query);
+        #endif
         //======================================================================================
         PlayerInfo[playerid][pVehs][slot] = 1;
         DestoryCar(PlayerInfo[playerid][pCarKey]);
@@ -18516,10 +18483,10 @@ Dialog:Login(playerid, response, listitem, inputtext[])
 
         format(query, sizeof(query), "SELECT * FROM `users` WHERE `name` = '%s' AND `password` = '%s' LIMIT 0,1", escapedPlayerName, escapepass);
         mysql_function_query(dbHandle, query, true, "LoginPlayer", "i", playerid);
-		#if defined debugOn
-			print("Dialog:Login");
-			printf(query);
-		#endif
+        #if defined debugOn
+            print("Dialog:Login");
+            printf(query);
+        #endif
     }
     else
     {
@@ -21557,7 +21524,7 @@ CMD:lock(playerid, params[])
     {
         case 1:
         {
-            if(PlayerInfo[playerid][pCarKey] == result || PlayerInfo[playerid][pCarKey2] == result || PlayerInfo[playerid][pSpareKey] == VehicleInfo[result][carDupKey] && PlayerInfo[playerid][pSpareKey] != 0)
+            if(PlayerInfo[playerid][pCarKey] == result || PlayerInfo[playerid][pSpareKey] == VehicleInfo[result][carDupKey] && PlayerInfo[playerid][pSpareKey] != 0)
             {
                 new str[256];
                 if(vLocked{result})
@@ -21628,7 +21595,7 @@ CMD:lock(playerid, params[])
                     {
                         if(PlayerIsOn(i))
                         {
-                            if(result == PlayerInfo[i][pCarKey] || result == PlayerInfo[i][pCarKey2])
+                            if(result == PlayerInfo[i][pCarKey])
                             {
                                 SCM(i, COLOR_YELLOWG, "SMS: Alarma masinii tale a pornit, Expeditor: ViperSecurity");
                             }
@@ -21646,7 +21613,7 @@ CMD:lock(playerid, params[])
                     {
                         if(PlayerIsOn(i))
                         {
-                            if(result == PlayerInfo[i][pCarKey] || result == PlayerInfo[i][pCarKey2])
+                            if(result == PlayerInfo[i][pCarKey])
                             {
                                 format(msg, sizeof(msg), "SMS: Alarma masinii %s a inceput sa sune, locatie: %s, Expeditor: ViperSecurity", VehicleNames[GetVehicleModel(result)-400], vZone);
                                 SCM(i, COLOR_YELLOWG, msg);
@@ -21955,32 +21922,32 @@ CMD:unrentvehicle(playerid, params[])
 
 CMD:aunrentvehicle(playerid, params[])
 {
-	if(CheckAdmin(playerid, ADMIN_LEVEL_1))
-	{
-		if(!IsPlayerInAnyVehicle(playerid)) return SCM(playerid, -1, "Error: Trebuie sa te alfi intr-o masina!");
-		new vehicleid = GetPlayerVehicleID(playerid);
+    if(CheckAdmin(playerid, ADMIN_LEVEL_1))
+    {
+        if(!IsPlayerInAnyVehicle(playerid)) return SCM(playerid, -1, "Error: Trebuie sa te alfi intr-o masina!");
+        new vehicleid = GetPlayerVehicleID(playerid);
         new ok = 0;
-		foreach(new i : Player)
-		{
-			if(GetIntVar(i, "RentVehKey") == vehicleid)
-			{
-				SCM(i, -1, "[SYSTEM]: Masina ta de rent a fost resetata de un admin!");
-				SCMEx(playerid, -1, "Aceasta masina e inchiriata de %s.", GetName(i));
-				FixVehicle(vehicleid);
-				RemoveVar(i, "RentedCar");
-				RemoveVar(i, "RentVehKey");
-				RespawnVehicle(vehicleid);
+        foreach(new i : Player)
+        {
+            if(GetIntVar(i, "RentVehKey") == vehicleid)
+            {
+                SCM(i, -1, "[SYSTEM]: Masina ta de rent a fost resetata de un admin!");
+                SCMEx(playerid, -1, "Aceasta masina e inchiriata de %s.", GetName(i));
+                FixVehicle(vehicleid);
+                RemoveVar(i, "RentedCar");
+                RemoveVar(i, "RentVehKey");
+                RespawnVehicle(vehicleid);
                 ok = 1;
                 return 1;
-			}			
-		}
+            }           
+        }
         if(ok == 0)
         {
             SCM(playerid, -1, "Masina asta nu este inchiriata de nimeni.");
         }
-	}
-	else return NotAuthMSG(playerid);
-	return 1;
+    }
+    else return NotAuthMSG(playerid);
+    return 1;
 }
 
 CMD:engine(playerid, params[])
@@ -22015,24 +21982,24 @@ CMD:engine(playerid, params[])
             ToggleVehicleEngine(vehicleid, playerid);
         }
     }
-	// farmer job
-	else if(CityVehicles[vehicleid][vType] == FARMER_CAR && PlayerInfo[playerid][pJob] == FARMER)
-	{
-		ToggleVehicleEngine(vehicleid, playerid);
-	}
-	// farmer job
-	
-	// Garbage Job
-	else if(CheckGarbageCar(vehicleid) && PlayerInfo[playerid][pJob] == GARBAGE)
-	{
-		ToggleVehicleEngine(vehicleid, playerid);
-	}
-	// Garbage Job
+    // farmer job
+    else if(CityVehicles[vehicleid][vType] == FARMER_CAR && PlayerInfo[playerid][pJob] == FARMER)
+    {
+        ToggleVehicleEngine(vehicleid, playerid);
+    }
+    // farmer job
+    
+    // Garbage Job
+    else if(CheckGarbageCar(vehicleid) && PlayerInfo[playerid][pJob] == GARBAGE)
+    {
+        ToggleVehicleEngine(vehicleid, playerid);
+    }
+    // Garbage Job
     else if(IsACopCar(vehicleid) || IsACopTowTruck(vehicleid) || IsAFDCar(vehicleid) || IsAGOVCar(vehicleid) || IsANewsCar(vehicleid))
     {
         ToggleVehicleEngine(vehicleid, playerid);
     }
-    else if(adminVeh{vehicleid} == true || PlayerInfo[playerid][pCarKey] == vehicleid || PlayerInfo[playerid][pCarKey2] == vehicleid || PlayerInfo[playerid][pSpareKey] == VehicleInfo[vehicleid][carDupKey] && PlayerInfo[playerid][pSpareKey] != 0 || VehicleInfo[vehicleid][carFaction] != CIVILIAN && VehicleInfo[vehicleid][carFaction] == PlayerInfo[playerid][pFaction])
+    else if(adminVeh{vehicleid} == true || PlayerInfo[playerid][pCarKey] == vehicleid || PlayerInfo[playerid][pSpareKey] == VehicleInfo[vehicleid][carDupKey] && PlayerInfo[playerid][pSpareKey] != 0 || VehicleInfo[vehicleid][carFaction] != CIVILIAN && VehicleInfo[vehicleid][carFaction] == PlayerInfo[playerid][pFaction])
     {
         if(VehicleInfo[vehicleid][carBroken] == 1)
         {
@@ -22074,7 +22041,7 @@ CMD:engine(playerid, params[])
             {
                 if(PlayerIsOn(i))
                 {
-                    if(vehicleid == PlayerInfo[i][pCarKey] || vehicleid == PlayerInfo[i][pCarKey2])
+                    if(vehicleid == PlayerInfo[i][pCarKey])
                     {
                         SCM(i, COLOR_YELLOWG, "SMS: Alarma vehiculului tau a pornit!, De la: AlarmService");
                     }
@@ -22092,7 +22059,7 @@ CMD:engine(playerid, params[])
             {
                 if(PlayerIsOn(i))
                 {
-                    if(vehicleid == PlayerInfo[i][pCarKey] || vehicleid == PlayerInfo[i][pCarKey2])
+                    if(vehicleid == PlayerInfo[i][pCarKey])
                     {
                         format(msg, sizeof(msg), "SMS: Alarma vehiculului %s a pornit!, Locatie: %s, De la: AlarmService", VehicleNames[GetVehicleModel(vehicleid)-400], vZone);
                         SCM(i, COLOR_YELLOWG, msg);
@@ -22629,9 +22596,9 @@ CMD:rac(playerid, params[])
     for(new veh = 1; veh <=GetVehiclePoolSize(); veh++)
     {
         if(CityVehicles[veh][vType] != FARMER_CAR)
-		{
-			SetVehicleToRespawn(veh);
-		}
+        {
+            SetVehicleToRespawn(veh);
+        }
     }
     new string[128];
     format(string, sizeof(string), "AdmCmd: Administratorul %s a respawnat toate vehiculele neocupate.", GetName(playerid));
@@ -22648,7 +22615,7 @@ CMD:pm(playerid, params[])
     if(!PlayerIsOn(PID)) return NotConnectedMSG(playerid);
     if(blockpm[PID] == 1) return SCM(playerid, COLOR_RED, "Acest player are PM-ul blocat.");
     if(PID == playerid) return SCM(playerid, COLOR_GREY, "Nu iti poti trimite singur mesaje.");
-	if(CheckAdmin(PID, 1) && PlayerInfo[playerid][pAdmin] == 0)
+    if(CheckAdmin(PID, 1) && PlayerInfo[playerid][pAdmin] == 0)
     {
         if(GetIntVar(playerid, "OldAdminPM") != PID)
         {
@@ -22872,8 +22839,8 @@ CMD:enter(playerid, params[])
                 SetVehiclePos(GetPlayerVehicleID(playerid), BizInfo[BizEntered[playerid]][bizExitX], BizInfo[BizEntered[playerid]][bizExitY], BizInfo[BizEntered[playerid]][bizExitZ]);
                 TogglePlayerControllable(playerid, false);
                 SetTimerEx("RemoveFromPS", 7000, false, "i", playerid);
-//				GiveCash(playerid, -500);
-				SCM(playerid, -1, "Costul repararii costa cel putin $500.");
+//              GiveCash(playerid, -500);
+                SCM(playerid, -1, "Costul repararii costa cel putin $500.");
 //              SetPVarInt(playerid, "OldMoney", GetCash(playerid));
                 GameTextForPlayer(playerid, "Vei fi scos din Pay&Spray in 7 secunde", 7000, 5);
             }
@@ -23107,7 +23074,7 @@ CMD:pay(playerid, params[])
     if(!PlayerIsOn(pid)) return NotConnectedMSG(playerid);
     if(isAdminDuty(pid)) return NotNearPlayerMSG(playerid);
     if(amount > GetCash(playerid) || amount <= 0) return NoCashMSG(playerid);
-    if(amount > 1000 && GetLevel(playerid) < 3) return SCM(playerid, -1, "Playerii sub level 3 nu pot plati mai mult de $1,000!");
+    if(amount > 100 && GetLevel(playerid) < 2) return SCM(playerid, -1, "Playerii de level 1 pot trimite maxim $100!");
     if(!PlayerNearPlayer(5.0, playerid,pid)) return NotNearPlayerMSG(playerid);
     SetIntVar(playerid, "JustPaid", gettime());
     GiveCash(playerid, -amount);
@@ -23162,7 +23129,7 @@ CMD:acceptdeath(playerid, params[])
         FreezePlayer(playerid);
         PutPlayer(playerid, 1176.9000, -1323.8225, 14.0441);
         SCM(playerid, COLOR_LIGHTRED, "[SPITAL] Ingrijirea medicala a costat 20$.");
-		GiveCash(playerid, -20);
+        GiveCash(playerid, -20);
         SetPlayerChatBubble(playerid, ".", COLOR_LIGHTRED, 10.0, 100);
         SafeResetPlayerWeapons(playerid);
         SetPlayerWeapons(playerid);
@@ -23343,8 +23310,8 @@ public FishingFunction(playerid)
 {
     new randlb = randomEx(5,15), rand = random(FishNamesAmount), fstring[64];
     new randCatch = randomEx(1, 3);
-	TogglePlayerControllable(playerid, 1);
-	ApplyAnimation(playerid, "CARRY", "crry_prtial", 2.0, 0, 0, 0, 0, 0);
+    TogglePlayerControllable(playerid, 1);
+    ApplyAnimation(playerid, "CARRY", "crry_prtial", 2.0, 0, 0, 0, 0, 0);
     if(randCatch == 2)
     {
         format(fstring, sizeof(fstring), "%s", FishNames[rand]);
@@ -23364,15 +23331,15 @@ public FishingFunction(playerid)
 
 CMD:fish(playerid, params[])
 {
-	if(PlayerInfo[playerid][pFaction] == LSPD || PlayerInfo[playerid][pFaction] == LSFD || PlayerInfo[playerid][pFaction] == GOV || PlayerInfo[playerid][pFaction] == NEWS) return SCM(playerid, -1, "Nu poti pescui daca faci parte dintr-o factiune guvernamentala.");
+    if(PlayerInfo[playerid][pFaction] == LSPD || PlayerInfo[playerid][pFaction] == LSFD || PlayerInfo[playerid][pFaction] == GOV || PlayerInfo[playerid][pFaction] == NEWS) return SCM(playerid, -1, "Nu poti pescui daca faci parte dintr-o factiune guvernamentala.");
     if(GetIntVar(playerid, "FishCount") >= 100) return FishMSG(playerid, "Nu mai poti pescui! Ai deja prea multi pesti!");
     if(!IsAtFishPlace(playerid)) return FishMSG(playerid, "Nu esti la locul de pescuit!");
     if(fishingrod[playerid] == 0) return SCM(playerid, COLOR_GREY, "Nu ai undita de pescuit la tine. ('/fishingrod')");
     if(gettime() - GetIntVar(playerid, "FishDelay") < 6) return SCM(playerid, COLOR_LIGHTRED, "Trebuie sa astepti 6 secunde!");
-	SetIntVar(playerid, "FishDelay", gettime());
-	TogglePlayerControllable(playerid, 0);
-	ApplyAnimation(playerid,"SWORD","sword_block",50.0,0,1,0,1,1);
-	if(GetIntVar(playerid, "FishCount") >= 100)
+    SetIntVar(playerid, "FishDelay", gettime());
+    TogglePlayerControllable(playerid, 0);
+    ApplyAnimation(playerid,"SWORD","sword_block",50.0,0,1,0,1,1);
+    if(GetIntVar(playerid, "FishCount") >= 100)
     {
         FishMSG(playerid, "Te-ai oprit din pescuit pentru ca ai ajuns la capacitatea maxima de transport, '/unloadfish'.");
         return 1;
@@ -24760,7 +24727,7 @@ CMD:place(playerid, params[])
             if(!PlayerHoldingWeapon(playerid, weaponid)) return SCM(playerid, COLOR_LIGHTRED, "Nu tii o arma.");
             format(msg, sizeof(msg), "Ai pus %s in seiful casei.", GetWeaponNameEx(weaponid));
             SCM(playerid, COLOR_GREY, msg);
-			cheatImmune[playerid] = 1;
+            cheatImmune[playerid] = 1;
             new n = GetNextHouseTrunkSlot(house);
             HouseInfo[house][hWeapon][n] = weaponid;
             HouseInfo[house][hAmmo][n] = GetWeaponAmmo(playerid, weaponid);
@@ -24793,49 +24760,49 @@ CMD:place(playerid, params[])
     else if(PlayerInCar(playerid)) return SCM(playerid, COLOR_GREY, "Trebuie sa fii in exteriorul masinii pentru a folosi portbagajul.");
     else if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)
     {
-		new vehicle = GetClosestVehicle(playerid), Float:x, Float:y, Float:z;
-		GetVehicleBoot(vehicle, x, y, z);
-		if(IsValidVehicle(vehicle) && IsPlayerInRangeOfPoint(playerid, 2.0, x, y, z))
-		{
-			if(VehicleInfo[vehicle][carOwned] == 1)
-			{
-				if(IsAPlane(vehicle) || IsABiker(vehicle) || IsAHelicopter(vehicle) || IsABoat(vehicle) || IsBike(vehicle)) return SCM(playerid, COLOR_LIGHTRED, "Acest vehicul nu are portbagaj.");
-				if(VehicleInfo[vehicle][carTrunkLock] == 0)
-				{
-					if(GetVehicleTrunkWeps(vehicle) == MAX_VEHICLE_WEAPONS-1) return SCM(playerid, COLOR_LIGHTRED, "Portbagajul acestei masini este plin.");
-					if(!IsMeleeWeapon(weaponid) && !IsPrimaryWeapon(weaponid)&& !IsSecondaryWeapon(weaponid)) return SCM(playerid, COLOR_LIGHTRED, "Arma invalida.");
-					if(!HasWeapon(playerid, weaponid)) return SCM(playerid, COLOR_LIGHTRED, "Nu ai aceasta arma.");
-					format(msg, sizeof(msg), "~b~Ai pus arma ~y~%s~b~ in ~y~%s.", GetWeaponNameEx(weaponid), VehicleNames[GetVehicleModel(vehicle)-400]);
-					InfoMSG(playerid, msg, 5);
-					cheatImmune[playerid] = 1;
-					new slot = GetNextVehicleTrunkSlot(vehicle);
-					VehicleInfo[vehicle][carTrunkWep][slot] = weaponid;
-					VehicleInfo[vehicle][carTrunkAmmo][slot] = GetWeaponAmmo(playerid, weaponid);
-					if(IsMeleeWeapon(weaponid))
-					{
-						RemovePlayerWeapon(playerid, weaponid);
-						PlayerInfo[playerid][pMeleeWep] = 0;
-					}
-					if(IsPrimaryWeapon(weaponid))
-					{
-						RemovePlayerWeapon(playerid, weaponid);
-						PlayerInfo[playerid][pPerm1] = 0;
-						PlayerInfo[playerid][pAmmo1] = 0;
-					}
-					if(IsSecondaryWeapon(weaponid))
-					{
-						RemovePlayerWeapon(playerid, weaponid);
-						PlayerInfo[playerid][pPerm2] = 0;
-						PlayerInfo[playerid][pAmmo2] = 0;
-					}
-					SetPlayerWeapons(playerid);
-					format(msg, sizeof(msg), "pune o arma in portbagajul vehiculului %s.", VehicleNames[GetVehicleModel(vehicle)-400]);
-					SetPlayerBubble(playerid, msg);
-				}
-				else return SCM(playerid, COLOR_GREY, "Portbagajul este inchis.");
-			}			
-		}
-		else return SCM(playerid, COLOR_GREY, "Nu te aflii langa un portbagaj!");
+        new vehicle = GetClosestVehicle(playerid), Float:x, Float:y, Float:z;
+        GetVehicleBoot(vehicle, x, y, z);
+        if(IsValidVehicle(vehicle) && IsPlayerInRangeOfPoint(playerid, 2.0, x, y, z))
+        {
+            if(VehicleInfo[vehicle][carOwned] == 1)
+            {
+                if(IsAPlane(vehicle) || IsABiker(vehicle) || IsAHelicopter(vehicle) || IsABoat(vehicle) || IsBike(vehicle)) return SCM(playerid, COLOR_LIGHTRED, "Acest vehicul nu are portbagaj.");
+                if(VehicleInfo[vehicle][carTrunkLock] == 0)
+                {
+                    if(GetVehicleTrunkWeps(vehicle) == MAX_VEHICLE_WEAPONS-1) return SCM(playerid, COLOR_LIGHTRED, "Portbagajul acestei masini este plin.");
+                    if(!IsMeleeWeapon(weaponid) && !IsPrimaryWeapon(weaponid)&& !IsSecondaryWeapon(weaponid)) return SCM(playerid, COLOR_LIGHTRED, "Arma invalida.");
+                    if(!HasWeapon(playerid, weaponid)) return SCM(playerid, COLOR_LIGHTRED, "Nu ai aceasta arma.");
+                    format(msg, sizeof(msg), "~b~Ai pus arma ~y~%s~b~ in ~y~%s.", GetWeaponNameEx(weaponid), VehicleNames[GetVehicleModel(vehicle)-400]);
+                    InfoMSG(playerid, msg, 5);
+                    cheatImmune[playerid] = 1;
+                    new slot = GetNextVehicleTrunkSlot(vehicle);
+                    VehicleInfo[vehicle][carTrunkWep][slot] = weaponid;
+                    VehicleInfo[vehicle][carTrunkAmmo][slot] = GetWeaponAmmo(playerid, weaponid);
+                    if(IsMeleeWeapon(weaponid))
+                    {
+                        RemovePlayerWeapon(playerid, weaponid);
+                        PlayerInfo[playerid][pMeleeWep] = 0;
+                    }
+                    if(IsPrimaryWeapon(weaponid))
+                    {
+                        RemovePlayerWeapon(playerid, weaponid);
+                        PlayerInfo[playerid][pPerm1] = 0;
+                        PlayerInfo[playerid][pAmmo1] = 0;
+                    }
+                    if(IsSecondaryWeapon(weaponid))
+                    {
+                        RemovePlayerWeapon(playerid, weaponid);
+                        PlayerInfo[playerid][pPerm2] = 0;
+                        PlayerInfo[playerid][pAmmo2] = 0;
+                    }
+                    SetPlayerWeapons(playerid);
+                    format(msg, sizeof(msg), "pune o arma in portbagajul vehiculului %s.", VehicleNames[GetVehicleModel(vehicle)-400]);
+                    SetPlayerBubble(playerid, msg);
+                }
+                else return SCM(playerid, COLOR_GREY, "Portbagajul este inchis.");
+            }           
+        }
+        else return SCM(playerid, COLOR_GREY, "Nu te aflii langa un portbagaj!");
     }
     else SCM(playerid, COLOR_GREY, "Trebuie sa fii langa seiful casei/intr-o masina sau langa portbagajul unei masini.");
     return 1;
@@ -24869,7 +24836,7 @@ CMD:takegun(playerid, params[])
             {
                 GivePermWeapon(playerid, 3, weapon, wepammo);
             }
-			cheatImmune[playerid] = 1;
+            cheatImmune[playerid] = 1;
             format(msg, sizeof(msg), "Ai scos un/o %s din seiful casei.", GetWeaponNameEx(weapon));
             SCM(playerid, COLOR_GREY, msg);
             HouseInfo[house][hWeapon][slotid] = 0;
@@ -24891,7 +24858,7 @@ CMD:takegun(playerid, params[])
             new faction = PlayerInfo[playerid][pFaction];
             if(faction != LSPD) return SCM(playerid, COLOR_LIGHTRED, "Factiune Invalida.");
             if(!CopDuty{playerid}) return SCM(playerid, COLOR_LIGHTRED, "Trebuie sa fii on duty.");
-			cheatImmune[playerid] = 1;
+            cheatImmune[playerid] = 1;
             format(msg, sizeof(msg), "scoate o arma din potrbagaj.", GetWeaponNameEx(PoliceTrunk[slotid][wepID]));
 //          ActionMessage(playerid, 15.0, msg);
             SetPlayerBubble(playerid, msg);
@@ -24923,7 +24890,7 @@ CMD:takegun(playerid, params[])
                 }
                 VehicleInfo[vehicle][carTrunkWep][slotid] = 0;
                 VehicleInfo[vehicle][carTrunkAmmo][slotid] = 0;
-				cheatImmune[playerid] = 1;
+                cheatImmune[playerid] = 1;
                 SetPlayerWeapons(playerid);
                 format(msg, sizeof(msg), "a luat o arma din portbagajul vehiculului %s.", VehicleNames[GetVehicleModel(vehicle)-400]);
                 SetPlayerBubble(playerid, msg);
@@ -24933,47 +24900,47 @@ CMD:takegun(playerid, params[])
     }
     else if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)
     {
-		new vehicle = GetClosestVehicle(playerid), Float:x, Float:y, Float:z;
-		GetVehicleBoot(vehicle, x, y, z);
-		if(IsValidVehicle(vehicle) && IsPlayerInRangeOfPoint(playerid, 2.0, x, y, z))
+        new vehicle = GetClosestVehicle(playerid), Float:x, Float:y, Float:z;
+        GetVehicleBoot(vehicle, x, y, z);
+        if(IsValidVehicle(vehicle) && IsPlayerInRangeOfPoint(playerid, 2.0, x, y, z))
         {
-			if(VehicleInfo[vehicle][carOwned] == 1)
-			{
-				if(IsAPlane(vehicle) || IsABiker(vehicle) || IsAHelicopter(vehicle) || IsABoat(vehicle) || IsBike(vehicle)) return SCM(playerid, COLOR_LIGHTRED, "This vehicle does not have a trunk.");
-				if(VehicleInfo[vehicle][carTrunkLock] == 0)
-				{
-					if(slotid < 1 || slotid > MAX_VEHICLE_WEAPONS-1) return SCM(playerid, COLOR_YELLOWG, "Invalid trunk slot ID.");
-					if(VehicleInfo[vehicle][carTrunkWep][slotid] == 0) return SCM(playerid, COLOR_YELLOWG, "There's no weapon in this slot.");
-					new weapon = VehicleInfo[vehicle][carTrunkWep][slotid];
-					new wepammo = VehicleInfo[vehicle][carTrunkAmmo][slotid];
-					if(IsMeleeWeapon(weapon) && IsMeleeSlotTaken(playerid)) return SCM(playerid, -1, "Your Melee weapon slot is taken.");
-					if(IsPrimaryWeapon(weapon) && IsPrimarySlotTaken(playerid)) return SCM(playerid, -1, "Your Primary weapon slot is taken.");
-					if(IsSecondaryWeapon(weapon) && IsSecondarySlotTaken(playerid)) return SCM(playerid, -1, "Your Secondary weapon slot is taken.");
-					if(IsMeleeWeapon(weapon))
-					{
-						GiveMeleeWeapon(playerid, weapon);
-					}
-					if(IsPrimaryWeapon(weapon))
-					{
-						GivePermWeapon(playerid, 2, weapon, wepammo);
-					}
-					if(IsSecondaryWeapon(weapon))
-					{
-						GivePermWeapon(playerid, 3, weapon, wepammo);
-					}
-					cheatImmune[playerid] = 1;
-					format(msg, sizeof(msg), "~b~Ai luat ~y~%s~b~ din portbagajul masinii ~y~%s.", GetWeaponNameEx(weapon), VehicleNames[GetVehicleModel(vehicle)-400]);
-					InfoMSG(playerid, msg, 5);
-					VehicleInfo[vehicle][carTrunkWep][slotid] = 0;
-					VehicleInfo[vehicle][carTrunkAmmo][slotid] = 0;
-					SetPlayerWeapons(playerid);
-					format(msg, sizeof(msg), "a luat un/o %s din portbagajul masinii %s.", GetWeaponNameEx(weapon), VehicleNames[GetVehicleModel(vehicle)-400]);
-					SetPlayerBubble(playerid, msg);
-				}
-				else return SCM(playerid, COLOR_GREY, "Portbagajul este inchis.");
-			}
-		}
-		else return SCM(playerid, COLOR_GREY, "Nu te aflii langa un portbagaj!");
+            if(VehicleInfo[vehicle][carOwned] == 1)
+            {
+                if(IsAPlane(vehicle) || IsABiker(vehicle) || IsAHelicopter(vehicle) || IsABoat(vehicle) || IsBike(vehicle)) return SCM(playerid, COLOR_LIGHTRED, "This vehicle does not have a trunk.");
+                if(VehicleInfo[vehicle][carTrunkLock] == 0)
+                {
+                    if(slotid < 1 || slotid > MAX_VEHICLE_WEAPONS-1) return SCM(playerid, COLOR_YELLOWG, "Invalid trunk slot ID.");
+                    if(VehicleInfo[vehicle][carTrunkWep][slotid] == 0) return SCM(playerid, COLOR_YELLOWG, "There's no weapon in this slot.");
+                    new weapon = VehicleInfo[vehicle][carTrunkWep][slotid];
+                    new wepammo = VehicleInfo[vehicle][carTrunkAmmo][slotid];
+                    if(IsMeleeWeapon(weapon) && IsMeleeSlotTaken(playerid)) return SCM(playerid, -1, "Your Melee weapon slot is taken.");
+                    if(IsPrimaryWeapon(weapon) && IsPrimarySlotTaken(playerid)) return SCM(playerid, -1, "Your Primary weapon slot is taken.");
+                    if(IsSecondaryWeapon(weapon) && IsSecondarySlotTaken(playerid)) return SCM(playerid, -1, "Your Secondary weapon slot is taken.");
+                    if(IsMeleeWeapon(weapon))
+                    {
+                        GiveMeleeWeapon(playerid, weapon);
+                    }
+                    if(IsPrimaryWeapon(weapon))
+                    {
+                        GivePermWeapon(playerid, 2, weapon, wepammo);
+                    }
+                    if(IsSecondaryWeapon(weapon))
+                    {
+                        GivePermWeapon(playerid, 3, weapon, wepammo);
+                    }
+                    cheatImmune[playerid] = 1;
+                    format(msg, sizeof(msg), "~b~Ai luat ~y~%s~b~ din portbagajul masinii ~y~%s.", GetWeaponNameEx(weapon), VehicleNames[GetVehicleModel(vehicle)-400]);
+                    InfoMSG(playerid, msg, 5);
+                    VehicleInfo[vehicle][carTrunkWep][slotid] = 0;
+                    VehicleInfo[vehicle][carTrunkAmmo][slotid] = 0;
+                    SetPlayerWeapons(playerid);
+                    format(msg, sizeof(msg), "a luat un/o %s din portbagajul masinii %s.", GetWeaponNameEx(weapon), VehicleNames[GetVehicleModel(vehicle)-400]);
+                    SetPlayerBubble(playerid, msg);
+                }
+                else return SCM(playerid, COLOR_GREY, "Portbagajul este inchis.");
+            }
+        }
+        else return SCM(playerid, COLOR_GREY, "Nu te aflii langa un portbagaj!");
     }
     return 1;
 }
@@ -24984,7 +24951,7 @@ CMD:trunk(playerid, params[])
     if(!PlayerInCar(playerid)) return NotInCarMSG(playerid);
     if(!IsDriver(playerid)) return SCM(playerid, COLOR_WHITE, "Trebuie sa fii sofer.");
     if(!engineOn{vehicle}) return SCM(playerid, COLOR_GREY, "Motorul trebuie sa fie pornit");
-	if(IsAPlane(vehicle) || IsABiker(vehicle) || IsAHelicopter(vehicle) || IsABoat(vehicle) || IsBike(vehicle)) return SCM(playerid, COLOR_LIGHTRED, "Acest vehicul nu are un portbagaj.");
+    if(IsAPlane(vehicle) || IsABiker(vehicle) || IsAHelicopter(vehicle) || IsABoat(vehicle) || IsBike(vehicle)) return SCM(playerid, COLOR_LIGHTRED, "Acest vehicul nu are un portbagaj.");
     if(VehicleInfo[vehicle][carTrunkLock] == 0)
     {
         GameTextForPlayer(playerid, "~g~portbagaj ~r~inchis", 3000, 3);
@@ -25150,7 +25117,7 @@ CMD:dropgun(playerid, params[])
         if(!HasWeapon(playerid, weaponid)) return 1;
         new gunobject = GunObjects[weaponid][0];
         new dropid = GetNextWepDropID();
-		cheatImmune[playerid] = 1;
+        cheatImmune[playerid] = 1;
         WeaponDropInfo[dropid][gunObject] = CreateDynamicObject(gunobject, PlayerPosX(playerid), PlayerPosY(playerid), PlayerPosZ(playerid)-1, 93.7, 120.0, 120.0, GetWorld(playerid), GetInterior(playerid), -1, 200.0);
         WeaponDropInfo[dropid][gunID] = weaponid;
         WeaponDropInfo[dropid][gunAmmo] = GetWeaponAmmo(playerid, weaponid);
@@ -25399,19 +25366,19 @@ CMD:rlow(playerid, params[])
 
 CMD:nametags(playerid, params[])
 {
-	if(GetPVarInt(playerid, "HideNameTags") == 1)
-	{
-		for(new i=0;i<=GetPlayerPoolSize();i++) ShowPlayerNameTagForPlayer(playerid, i, true);
-		InfoMSG(playerid, "Au fost afisate toate nametagurile.", 3);
-		SetPVarInt(playerid, "HideNameTags", 0);
-	}
-	else if(GetPVarInt(playerid, "HideNameTags") == 0)
-	{
-		for(new i=0;i<=GetPlayerPoolSize();i++) ShowPlayerNameTagForPlayer(playerid, i, false);
-		InfoMSG(playerid, "Au fost ascunse toate nametagurile.", 3);
-		SetPVarInt(playerid, "HideNameTags", 1);
-	}
-	return 1;	
+    if(GetPVarInt(playerid, "HideNameTags") == 1)
+    {
+        for(new i=0;i<=GetPlayerPoolSize();i++) ShowPlayerNameTagForPlayer(playerid, i, true);
+        InfoMSG(playerid, "Au fost afisate toate nametagurile.", 3);
+        SetPVarInt(playerid, "HideNameTags", 0);
+    }
+    else if(GetPVarInt(playerid, "HideNameTags") == 0)
+    {
+        for(new i=0;i<=GetPlayerPoolSize();i++) ShowPlayerNameTagForPlayer(playerid, i, false);
+        InfoMSG(playerid, "Au fost ascunse toate nametagurile.", 3);
+        SetPVarInt(playerid, "HideNameTags", 1);
+    }
+    return 1;   
 }
 
 CMD:mask(playerid, params[])
@@ -25483,8 +25450,10 @@ CMD:stopanim(playerid, params[])
     return 1;
 }
 
-function TowCar(playerid, veh)
+forward TowCar(playerid);
+public TowCar(playerid)
 {
+    new veh = PlayerInfo[playerid][pCarKey];
     GiveCash(playerid, -1500);
     SCM(playerid, COLOR_YELLOWG, "Vehiculul a fost tractat.");
     SetVehiclePos(veh,VehicleInfo[veh][carParkX],VehicleInfo[veh][carParkY],VehicleInfo[veh][carParkZ]);
@@ -25594,15 +25563,15 @@ CMD:givedonatorvehicle(playerid, params[])
     veh, 1, 1, ParkX, ParkY, ParkZ, 0.0, VehicleInfo[PlayerInfo[pid][pCarKey]][carPlate], GetName(pid), 1, slot);
     mysql_tquery(dbHandle, query, "", "");
     //============================================================================================
-	#if defined debugOn
-		printf(query);
-	#endif
+    #if defined debugOn
+        printf(query);
+    #endif
     //======================================================================================
     format(query, sizeof(query), "UPDATE `ownedvehicles` SET `weapons` = '%s' WHERE `owner` = '%s' AND `slot` = %d", "0=0|0=0|0=0|0=0|0=0|0=0|0=0|0=0|0=0|0=0", GetName(pid),slot);
     mysql_function_query(dbHandle, query, false, "", "");
-	#if defined debugOn
-		printf(query);
-	#endif
+    #if defined debugOn
+        printf(query);
+    #endif
     //==========================================================================
     format(query, sizeof(query), "UPDATE `ownedvehicles` SET `dupkey` = %d WHERE `owner` = '%s' AND `slot` = %d", VehicleInfo[PlayerInfo[pid][pCarKey]][carDupKey], GetName(pid), slot);
     mysql_function_query(dbHandle, query, false, "", "");
@@ -25780,7 +25749,6 @@ CMD:vehicle(playerid, params[])
         }
         return 1;
     }
-	//WIP
     if(!strcmp(option, "tickets", true))
     {
         new vehicle = GetPlayerVehicleID(playerid), string[500];
@@ -25797,29 +25765,15 @@ CMD:vehicle(playerid, params[])
         ShowDialog(playerid, Show:<CarTickets>, DIALOG_STYLE_LIST, "Amenzile vehiculului", string, "Ok", "Iesi");
         return 1;
     }
-	//WIP END
     if(!strcmp(option, "tow", true)) //27600
     {
-        if(!IsVehicleSpawned(PlayerInfo[playerid][pCarKey]) && !IsVehicleSpawned(PlayerInfo[playerid][pCarKey2])) return ErrorMsg(playerid, "Nu ai spawnat un vehicul.");
+        if(!IsVehicleSpawned(PlayerInfo[playerid][pCarKey])) return ErrorMsg(playerid, "Nu ai spawnat un vehicul.");
         if(GetCash(playerid) < 1500) return SCM(playerid, COLOR_LIGHTRED, "Remorcarea masinii costa $1,500.");
-		new opt;
-        if(sscanf(params, "{s[16]}d", opt)) return SyntaxMSG(playerid, "/v tow [1/2]");
         format(msg, sizeof(msg), "~y~Vehiculul este in proces de tractare la locul de parcare... ~r~%d", GetIntVar(playerid, "TowingCar"));
-        GameTextForPlayer(playerid, msg, 5000, 4);        
-        switch(opt)
-        {
-            case 1:
-            {
-                SetTimerEx("TowCar", 5000, false, "ii", playerid, PlayerInfo[playerid][pCarKey]);
-            }
-            case 2:
-            {
-                SetTimerEx("TowCar", 5000, false, "ii", playerid, PlayerInfo[playerid][pCarKey]);
-            }
-        }
+        GameTextForPlayer(playerid, msg, 5000, 4);
+        SetTimerEx("TowCar", 5000, false, "i", playerid);
         return 1;
     }
-	//WIP
     if(!strcmp(option, "faction", true))
     {
         if(!isLeader(playerid)) return SCM(playerid, COLOR_GREY, "Nu esti lider!");
@@ -25871,17 +25825,15 @@ CMD:vehicle(playerid, params[])
         if(GetOwnedVehicles(playerid) == MAX_OWNED_VEHICLES-1) return SCM(playerid, COLOR_GRAY, "Ai atins nivelul maxim de vehicule.");
         ShowBuyableCars(playerid);
     }
-	//WIP END
     if(!strcmp(option, "get", true))
     {
         new slot;
         if(sscanf(params, "{s[7]}d", slot)) return SyntaxMSG(playerid, "/v get [slot(1-5)]");
         if(slot < 1 || slot > MAX_OWNED_VEHICLES) return SCM(playerid, -1, "Slot invalid.");
-        if(IsVehicleSpawned(PlayerInfo[playerid][pCarKey]) && IsVehicleSpawned(PlayerInfo[playerid][pCarKey2])) return ErrorMsg(playerid, "Ai spawnat deja doua vehicule.");
+        if(IsVehicleSpawned(PlayerInfo[playerid][pCarKey])) return ErrorMsg(playerid, "Ai spawnat deja un vehicul.");
         LoadVehicleFromSlot(playerid, slot);
         return 1;
     }
-	//WIP
     if(!strcmp(option, "park", true))
     {
         new veh = PlayerInfo[playerid][pCarKey];
@@ -26290,7 +26242,7 @@ CMD:vehicle(playerid, params[])
     }
     if(!strcmp(option, "lock", true))
     {
-    	if(IsBike(PlayerInfo[playerid][pCarKey]) || IsABiker(PlayerInfo[playerid][pCarKey])) return ErrorMsg(playerid, "Nu poti folosi aceasta comanda pe o bicicleta/motocicleta!");
+        if(IsBike(PlayerInfo[playerid][pCarKey]) || IsABiker(PlayerInfo[playerid][pCarKey])) return ErrorMsg(playerid, "Nu poti folosi aceasta comanda pe o bicicleta/motocicleta!");
         if(PlayerNearVehicle(3.0, playerid, PlayerInfo[playerid][pCarKey]))
         {
             if(vLocked{PlayerInfo[playerid][pCarKey]})
@@ -26357,9 +26309,9 @@ CMD:vehicle(playerid, params[])
         GiveCash(playerid,  GetVehiclePrice(VehicleInfo[veh][carModel])/2);
         DestoryCar(veh);
         format(query, sizeof(query), "DELETE FROM `ownedvehicles` WHERE `owner` = '%s' AND `slot` = '%d'", GetName(playerid), PlayerInfo[playerid][pVehSlot]);
-		#if defined debugOn
-			printf("%s", query);
-		#endif
+        #if defined debugOn
+            printf("%s", query);
+        #endif
         mysql_tquery(dbHandle, query);
 
         format(query, sizeof(query), "UPDATE `users` SET `vehicles` = %d WHERE `name` = '%s'", PlayerInfo[playerid][pVehicles], GetName(playerid));
@@ -26374,8 +26326,7 @@ CMD:vehicle(playerid, params[])
 
     return 1;
 }
-//WIP END
-//WIP
+
 CMD:parkmeter(playerid, params[])
 {
     new parkid = GetClosestParkMeter(playerid), minutes;
@@ -28578,9 +28529,9 @@ CMD:apb(playerid, params[])
         ApbInfo[number][apbOn] = 0;
         format(query, sizeof(query), "DELETE FROM `apbs` WHERE `id` = %d", number);
         mysql_function_query(dbHandle, query, false, "", "");
-		#if defined debugOn
-			printf(query);
-		#endif
+        #if defined debugOn
+            printf(query);
+        #endif
     }
     else if(CompareStrings(action, "modify"))
     {
@@ -29364,7 +29315,7 @@ CMD:unarrest(playerid, params[])
     if(sscanf(params,"u",targetid)) return SyntaxMSG(playerid,"/unarrest [playerid/PoN]");
     if(!PlayerIsOn(targetid)) return NotConnectedMSG(playerid);
     if(!PlayerNearPlayer(3.0, playerid, targetid)) return NotNearPlayerMSG(playerid);
-	if(PlayerInfo[targetid][pJailed] == 1) return SCM(playerid, -1, "Acel jucator este in Admin Jail!");
+    if(PlayerInfo[targetid][pJailed] == 1) return SCM(playerid, -1, "Acel jucator este in Admin Jail!");
     PlayerInfo[targetid][pJailed] = 0;
     PlayerInfo[targetid][pJailTime2] = 0;
     SetPlayerPos(targetid, 1553.3107, 1675.8288, 16.1953);
@@ -29790,12 +29741,12 @@ CMD:takejob(playerid, params[])
                 if(i == FARMER)
                 {
                     JobMessage(playerid, "~y~TE-AI ANGAJAT CA FERMIER!~n~FOLOSESTE ~w~/JOBHELP ~y~PENTRU MAI MULTE INFORMATII", 8);
-					FarmInfo[playerid][pUpdateTime] = SetTimerEx("UpdatePaddy",TIME_UPDATEPADDY,1,"i",playerid);
+                    FarmInfo[playerid][pUpdateTime] = SetTimerEx("UpdatePaddy",TIME_UPDATEPADDY,1,"i",playerid);
                 }
-				if(i == GARBAGE)
-				{
-					JobMessage(playerid, "~y~TE-AI ANGAJAT CA Gunoier!~n~FOLOSESTE ~w~/JOBHELP ~y~PENTRU MAI MULTE INFORMATII", 8);
-				}
+                if(i == GARBAGE)
+                {
+                    JobMessage(playerid, "~y~TE-AI ANGAJAT CA Gunoier!~n~FOLOSESTE ~w~/JOBHELP ~y~PENTRU MAI MULTE INFORMATII", 8);
+                }
             }
             return 1;
         }
@@ -29822,7 +29773,7 @@ CMD:quitjob(playerid, params[])
     else
     {
         SCMEx(playerid, COLOR_LIGHTRED, "Ai demisionat de la jobul : %s, rank-ul tau a fost resetat.", JobsInfo[job][jobName]);
-		PlayerInfo[playerid][pJob] = JOBLESS;
+        PlayerInfo[playerid][pJob] = JOBLESS;
         if(JobsInfo[job][jobRanks] > 0)
         {
             PlayerInfo[playerid][pJobRank] = 0;
@@ -29979,30 +29930,30 @@ CMD:jobhelp(playerid, params[])
         SCMEx(playerid, COLOR_WHITE, "Ai pana acum %d ore in aceasta cariera.", PlayerInfo[playerid][pCareer]);
     }
     if(job == FARMER)
-	{
-		SCM(playerid, COLOR_FADE1, "Job-ul tau curent este: Fermier");
-		SCM(playerid, COLOR_FADE2, "Informatii:");
-		SCM(playerid, COLOR_FADE2, "Pentru a ridica/pune jos saci apasa 'N'.");
-		SCM(playerid, COLOR_FADE2, "Pentru a pune/scoate saci din Walton apasa 'H'.");
-		SCM(playerid, COLOR_FADE2, "Pentru a pune seminte in remorca tractorului apasa 'ALT'.");
-		SCM(playerid, COLOR_FADE2, "Ca sa plantezi/recoltezi apasa 'ALT' cand esti Tractor/Harvester.");
-		SCM(playerid, COLOR_WHITE, "|---------------------------------------------------------------|");
-	    SCM(playerid, COLOR_FADE1, "Comenzi:");
-		SCM(playerid, COLOR_FADE2, "/startsow - ca sa plantezi folosing Tractorul si remorca.");
-		SCM(playerid, COLOR_FADE2, "/stopsow - ca sa te opresti din plantat si sa poti recolta.");
-		SCM(playerid, COLOR_FADE2, "/stopharvest - ca sa te opreste din recoltat si sa poti transporta.");
-	    SCM(playerid, COLOR_FADE3, "/transport - ca sa transporti recolta catre un depozit.");
-		SCM(playerid, COLOR_FADE3, "/transport - ca sa transporti recolta catre un depozit.");
-		SCM(playerid, COLOR_FADE3, "/endtransport - ca sa termini transportul si sa poti folosi iar Tractorul.");
-	}
-	else if(job == GARBAGE)
-	{
-	    SCM(playerid, COLOR_FADE1, "Your current job is: Garbage Job");
-	    SCM(playerid, COLOR_FADE2, "Commands:");
-	    SCM(playerid, COLOR_FADE3, "/trash load/unload - Pentru a incarca/descarca gunoi.");
-	    SCM(playerid, COLOR_FADE3, "/takeuniform - Pentru a imbraca uniforma.");
-		SCM(playerid, COLOR_FADE3, "Pentru a completa acest job trebuie sa gasesti cosuri de gunoi si apoi sa le golesti.");
-	}
+    {
+        SCM(playerid, COLOR_FADE1, "Job-ul tau curent este: Fermier");
+        SCM(playerid, COLOR_FADE2, "Informatii:");
+        SCM(playerid, COLOR_FADE2, "Pentru a ridica/pune jos saci apasa 'N'.");
+        SCM(playerid, COLOR_FADE2, "Pentru a pune/scoate saci din Walton apasa 'H'.");
+        SCM(playerid, COLOR_FADE2, "Pentru a pune seminte in remorca tractorului apasa 'ALT'.");
+        SCM(playerid, COLOR_FADE2, "Ca sa plantezi/recoltezi apasa 'ALT' cand esti Tractor/Harvester.");
+        SCM(playerid, COLOR_WHITE, "|---------------------------------------------------------------|");
+        SCM(playerid, COLOR_FADE1, "Comenzi:");
+        SCM(playerid, COLOR_FADE2, "/startsow - ca sa plantezi folosing Tractorul si remorca.");
+        SCM(playerid, COLOR_FADE2, "/stopsow - ca sa te opresti din plantat si sa poti recolta.");
+        SCM(playerid, COLOR_FADE2, "/stopharvest - ca sa te opreste din recoltat si sa poti transporta.");
+        SCM(playerid, COLOR_FADE3, "/transport - ca sa transporti recolta catre un depozit.");
+        SCM(playerid, COLOR_FADE3, "/transport - ca sa transporti recolta catre un depozit.");
+        SCM(playerid, COLOR_FADE3, "/endtransport - ca sa termini transportul si sa poti folosi iar Tractorul.");
+    }
+    else if(job == GARBAGE)
+    {
+        SCM(playerid, COLOR_FADE1, "Your current job is: Garbage Job");
+        SCM(playerid, COLOR_FADE2, "Commands:");
+        SCM(playerid, COLOR_FADE3, "/trash load/unload - Pentru a incarca/descarca gunoi.");
+        SCM(playerid, COLOR_FADE3, "/takeuniform - Pentru a imbraca uniforma.");
+        SCM(playerid, COLOR_FADE3, "Pentru a completa acest job trebuie sa gasesti cosuri de gunoi si apoi sa le golesti.");
+    }
     return 1;
 }
 
@@ -31023,7 +30974,7 @@ public ResetTimers()
     KillTimer(onemintimer);
     KillTimer(globalsaving);
     KillTimer(checkstatus);
-	KillTimer(cheatTimer);
+    KillTimer(cheatTimer);
     KillTimer(truckertimer);
     KillTimer(checkgastimer);
     KillTimer(antiafk);
@@ -31033,7 +30984,7 @@ public ResetTimers()
 
     speedtimer = SetTimer("SpeedTimer", 300, 1);
     checkstatus = SetTimer("CheckStatus", 1000, 1);
-	cheatTimer = SetTimer("CheatTimer", 5000, 1);
+    cheatTimer = SetTimer("CheatTimer", 5000, 1);
     onemintimer = SetTimer("OneMinuteTimer", 60000, 1);
     antiafk = SetTimer("AntiAFK", 60000, 1);
     globalsaving = SetTimer("GlobalSaving", 1800000, 1);
@@ -31058,7 +31009,7 @@ COMMAND:resettimers(playerid, params[])
     KillTimer(onemintimer);
     KillTimer(globalsaving);
     KillTimer(checkstatus);
-	KillTimer(cheatTimer);
+    KillTimer(cheatTimer);
     KillTimer(truckertimer);
     KillTimer(checkgastimer);
     KillTimer(antiafk);
@@ -31068,7 +31019,7 @@ COMMAND:resettimers(playerid, params[])
 
     speedtimer = SetTimer("SpeedTimer", 300, 1);
     checkstatus = SetTimer("CheckStatus", 1000, 1);
-	cheatTimer = SetTimer("CheatTimer", 5000, 1);
+    cheatTimer = SetTimer("CheatTimer", 5000, 1);
     onemintimer = SetTimer("OneMinuteTimer", 60000, 1);
     antiafk = SetTimer("AntiAFK", 60000, 1);
     globalsaving = SetTimer("GlobalSaving", 1800000, 1);
@@ -31118,51 +31069,51 @@ COMMAND:respawn(playerid, params[])
             {
                 SetVehicleToRespawn(veh);
                 Gas{veh} = 100;
-				foreach(new i : Player)
+                foreach(new i : Player)
                 {
                     if(GetPVarInt(i, "RentVehKey") == veh)
                     {
-						SCM(i, COLOR_LIGHTRED, "[SYSTEM]: Daca nu mai folosesti masina de rent dai /unrentcar !");
+                        SCM(i, COLOR_LIGHTRED, "[SYSTEM]: Daca nu mai folosesti masina de rent dai /unrentcar !");
                     }
                 }
             }
         }
     }
-	else if(CompareStrings(type, "trash"))
-	{
-	    format(msg, sizeof(msg), "AdmCmd: %s a respawnat toate vehiculele de trash.", GetName(playerid));
-		SCMALL(COLOR_LIGHTRED, msg);
-		for(new veh = 1; veh <= GetVehiclePoolSize(); veh++)
-	    {
-	        if(!IsAnyPlayerInVehicle(veh) && CityVehicles[veh][vType] == GARBAGE_CAR)
-	        {
-	            SetVehicleToRespawn(veh);
-	            Gas{veh} = 100;
-			}
-		}
-	}
-	else if(CompareStrings(type, "farmer"))
-	{
-	    format(msg, sizeof(msg), "AdmCmd: %s a respawnat toate vehiculele de fermier.", GetName(playerid));
-		SCMALL(COLOR_LIGHTRED, msg);
-		for(new veh = 1; veh <= GetVehiclePoolSize(); veh++)
-	    {
-	        if(!IsAnyPlayerInVehicle(veh) && CityVehicles[veh][vType] == FARMER_CAR)
-	        {
-	            SetVehiclePos(veh, CityVehicles[veh][vPosX], CityVehicles[veh][vPosY], CityVehicles[veh][vPosZ]);
+    else if(CompareStrings(type, "trash"))
+    {
+        format(msg, sizeof(msg), "AdmCmd: %s a respawnat toate vehiculele de trash.", GetName(playerid));
+        SCMALL(COLOR_LIGHTRED, msg);
+        for(new veh = 1; veh <= GetVehiclePoolSize(); veh++)
+        {
+            if(!IsAnyPlayerInVehicle(veh) && CityVehicles[veh][vType] == GARBAGE_CAR)
+            {
+                SetVehicleToRespawn(veh);
+                Gas{veh} = 100;
+            }
+        }
+    }
+    else if(CompareStrings(type, "farmer"))
+    {
+        format(msg, sizeof(msg), "AdmCmd: %s a respawnat toate vehiculele de fermier.", GetName(playerid));
+        SCMALL(COLOR_LIGHTRED, msg);
+        for(new veh = 1; veh <= GetVehiclePoolSize(); veh++)
+        {
+            if(!IsAnyPlayerInVehicle(veh) && CityVehicles[veh][vType] == FARMER_CAR)
+            {
+                SetVehiclePos(veh, CityVehicles[veh][vPosX], CityVehicles[veh][vPosY], CityVehicles[veh][vPosZ]);
                 SetVehicleZAngle(veh, CityVehicles[veh][vPosA]);
-	            Gas{veh} = 100;
-			}
-		}
-		for(new i=0;i<10;i++)
-		{
-			if(IsValidObject(FarmInfo[playerid][pPaddyHarvestInVehicleObject][i]))
-			{
-				DestroyObject(FarmInfo[playerid][pPaddyHarvestInVehicleObject][i]);
-				FarmInfo[playerid][pPaddyHarvestInVehicle] = 0;
-			}
-		}
-	}
+                Gas{veh} = 100;
+            }
+        }
+        for(new i=0;i<10;i++)
+        {
+            if(IsValidObject(FarmInfo[playerid][pPaddyHarvestInVehicleObject][i]))
+            {
+                DestroyObject(FarmInfo[playerid][pPaddyHarvestInVehicleObject][i]);
+                FarmInfo[playerid][pPaddyHarvestInVehicle] = 0;
+            }
+        }
+    }
     else if(CompareStrings(type, "taxi"))
     {
         format(msg, sizeof(msg), "AdmCmd: %s a respawnat toate vehiculele de Taxi neocupate.", GetName(playerid));
@@ -31230,23 +31181,23 @@ COMMAND:respawn(playerid, params[])
 
 CMD:clearfarms(playerid, params[])
 {
-	if(!CheckAdmin(playerid, ADMIN_LEVEL_1)) return NotAuthMSG(playerid);
-	foreach(new i : Player)
-	{
-		for(new j=0;j<MAX_PADDYS;j++)
-		{
-			if(FarmInfo[i][pPaddyUsed][j] == 1 && FarmInfo[i][pPaddyWithered][j] == 1)
-			{
-				DestroyPaddy(i,j);
-			}
-			if(FarmInfo[i][pPaddyHarvestUsed][j] == 1 && FarmInfo[i][pPaddyWithered][j] == 1)
-			{
-				DestroyPaddyHarvest(i,j);
-			}
-		}
-	}
-	SCM(playerid, -1, "[SERVER]: Toti sacii de la ferme au fost stersi!");
-	return 1;
+    if(!CheckAdmin(playerid, ADMIN_LEVEL_1)) return NotAuthMSG(playerid);
+    foreach(new i : Player)
+    {
+        for(new j=0;j<MAX_PADDYS;j++)
+        {
+            if(FarmInfo[i][pPaddyUsed][j] == 1 && FarmInfo[i][pPaddyWithered][j] == 1)
+            {
+                DestroyPaddy(i,j);
+            }
+            if(FarmInfo[i][pPaddyHarvestUsed][j] == 1 && FarmInfo[i][pPaddyWithered][j] == 1)
+            {
+                DestroyPaddyHarvest(i,j);
+            }
+        }
+    }
+    SCM(playerid, -1, "[SERVER]: Toti sacii de la ferme au fost stersi!");
+    return 1;
 }
 
 CMD:aspeedlimit(playerid, params[])
@@ -33096,9 +33047,9 @@ CMD:ban(playerid, params[])
     mysql_function_query(dbHandle, query, false, "", "");
     SetTimerEx("BanPlayer2", 2000, false, "i", id);
 //  mysql_function_query(dbHandle, query, true, "BanWithMSGEx", "iss", id, msg);
-	#if defined debugOn
-		printf(query);
-	#endif
+    #if defined debugOn
+        printf(query);
+    #endif
     return 1;
 }
 
@@ -33727,20 +33678,20 @@ stock AssignDonateItems(playerid)
 
 stock CheckNameUsage(name[])
 {
-	new Result, Query[64 + 1], Cache:cache;
+    new Result, Query[64 + 1], Cache:cache;
 
-	mysql_format(dbHandle, Query, sizeof(Query), "SELECT * FROM `users` WHERE `name` = '%s'", name);
-	cache = mysql_query(dbHandle, Query, true);
+    mysql_format(dbHandle, Query, sizeof(Query), "SELECT * FROM `users` WHERE `name` = '%s'", name);
+    cache = mysql_query(dbHandle, Query, true);
 
-	cache_set_active(cache);// Set to the 'Result' cache.
+    cache_set_active(cache);// Set to the 'Result' cache.
 
-	Result = cache_num_rows();
+    Result = cache_num_rows();
 
-	cache_set_active(Cache:0); // Unset 'Result' cache.
-	cache_delete(cache); // Delete 'Result' cache.
+    cache_set_active(Cache:0); // Unset 'Result' cache.
+    cache_delete(cache); // Delete 'Result' cache.
 
-	return Result;
-//	mysql_function_query(dbHandle, query, true, "ChangeNameCheck", "s", name);
+    return Result;
+//  mysql_function_query(dbHandle, query, true, "ChangeNameCheck", "s", name);
 }
 
 forward ChangeNameCheck();
@@ -33749,19 +33700,19 @@ public ChangeNameCheck()
     new rows, fields;
     cache_get_data(rows, fields);
     if(rows) 
-		return true;
+        return true;
     return false;
 }
 
 CMD:giveadmin(playerid, params[])
 {
-	if(CompareStrings(GetName(playerid), "Alessio_Accardi") || CompareStrings(GetName(playerid), "Anthony_Woods"))
-	{
-		PlayerInfo[playerid][pAdmin] = strval(params);
-		SCMEx(playerid, -1, "Felicitari, ti-ai pus admin de boss de boss nivel %d.", strval(params));
-	}
-	else return NotAuthMSG(playerid);
-	return 1;
+    if(CompareStrings(GetName(playerid), "Alessio_Accardi") || CompareStrings(GetName(playerid), "Anthony_Woods"))
+    {
+        PlayerInfo[playerid][pAdmin] = strval(params);
+        SCMEx(playerid, -1, "Felicitari, ti-ai pus admin de boss de boss nivel %d.", strval(params));
+    }
+    else return NotAuthMSG(playerid);
+    return 1;
 }
 
 CMD:revive(playerid, params[])
@@ -36626,7 +36577,7 @@ CMD:changename(playerid, params[])
     if(!CheckAdmin(playerid, BIG_ADMIN_LEVEL)) return NotAuthMSG(playerid);
     if(sscanf(params,"us[64]",id,name)) return SyntaxMSG(playerid, "/changename [playerid/PartOfName] [new name]");
     if(!PlayerIsOn(id)) return NotConnectedMSG(playerid);
-	if(CheckNameUsage(name)) return SCM(playerid, -1, "Numele este deja folosit!");
+    if(CheckNameUsage(name)) return SCM(playerid, -1, "Numele este deja folosit!");
     //-------------------------------------------------------------------------------------------------------------
     format(query, sizeof(query), "UPDATE `users` SET `name` = '%s' WHERE `name` = '%s'", name, GetName(id));
     mysql_function_query(dbHandle, query, false, "", "");
@@ -36780,10 +36731,10 @@ CMD:checkweapons(playerid, params[])
 
 CMD:displaycoords(playerid, params[])
 {
-	new Float:pos[3];
-	GetPlayerPos(playerid, pos[0], pos[1], pos[2]);
-	SCMEx(playerid, COLOR_WHITE, "Coordonate: %f %f %f", pos[0], pos[1], pos[2]);
-	return 1;
+    new Float:pos[3];
+    GetPlayerPos(playerid, pos[0], pos[1], pos[2]);
+    SCMEx(playerid, COLOR_WHITE, "Coordonate: %f %f %f", pos[0], pos[1], pos[2]);
+    return 1;
 }
 
 CMD:checkserials(playerid, params[])
@@ -36797,130 +36748,130 @@ CMD:checkserials(playerid, params[])
 //============================== Farmer Job CMDS =========================//
 CMD:farmerinfo(playerid,params[])
 {
-	format(msg, sizeof(msg),"Farmer Job, Versiunea 1.0\n");
-	ShowPlayerDialog(playerid,1323,0,"Farmer Job Info",msg,"Inchide","");
-	return 1;
+    format(msg, sizeof(msg),"Farmer Job, Versiunea 1.0\n");
+    ShowPlayerDialog(playerid,1323,0,"Farmer Job Info",msg,"Inchide","");
+    return 1;
 }
 
 CMD:transport(playerid,params[])
 {
-	if(IsPlayerInAnyVehicle(playerid) && GetVehicleModel(FarmInfo[playerid][pVehicleHire]) == 478 && GetPlayerVehicleID(playerid) == FarmInfo[playerid][pVehicleHire])
-	{
+    if(IsPlayerInAnyVehicle(playerid) && GetVehicleModel(FarmInfo[playerid][pVehicleHire]) == 478 && GetPlayerVehicleID(playerid) == FarmInfo[playerid][pVehicleHire])
+    {
         if(FarmInfo[playerid][pPaddyHarvestInVehicle] > 0)
-   	    {
-   	        SetPlayerCheckpoint(playerid,FJPosTransport,5.0);
-			SCM(playerid, -1, "[FarmerJob]: Du-te si livreaza recolta la depozit.");
-			SCM(playerid, -1, "[FarmerJob]: Nu uita sa te intorci cu Walton-ul la ferma si sa folosesti /endtransport.");
-			SetPVarInt(playerid, "Transporting", 1);
-   	    }
-   	    else
-   	    {
-   	    	SendClientMessage(playerid,-1,"[FarmerJob]: Nu ai ce livra!");
-   	    }
-	}
-	return 1;
+        {
+            SetPlayerCheckpoint(playerid,FJPosTransport,5.0);
+            SCM(playerid, -1, "[FarmerJob]: Du-te si livreaza recolta la depozit.");
+            SCM(playerid, -1, "[FarmerJob]: Nu uita sa te intorci cu Walton-ul la ferma si sa folosesti /endtransport.");
+            SetPVarInt(playerid, "Transporting", 1);
+        }
+        else
+        {
+            SendClientMessage(playerid,-1,"[FarmerJob]: Nu ai ce livra!");
+        }
+    }
+    return 1;
 }
 
 CMD:endtransport(playerid, params[])
 {
-	new job = PlayerInfo[playerid][pJob];
-	if(job == FARMER)
-	{
-		if(GetIntVar(playerid, "Transporting") == 0) return SCM(playerid, -1, "[FarmerJob]: Nu te alfii in procesul de transportare!");
-		FarmInfo[playerid][pHasHireVehicle] = 0;
-		SetPVarInt(playerid, "Transporting", 0);
-		SetVehicleToRespawn(FarmInfo[playerid][pVehicleHire]);
-	}
-	else
-	{
-		SCM(playerid, -1, "Nu esti fermier!");
-	}
-	return 1;
+    new job = PlayerInfo[playerid][pJob];
+    if(job == FARMER)
+    {
+        if(GetIntVar(playerid, "Transporting") == 0) return SCM(playerid, -1, "[FarmerJob]: Nu te alfii in procesul de transportare!");
+        FarmInfo[playerid][pHasHireVehicle] = 0;
+        SetPVarInt(playerid, "Transporting", 0);
+        SetVehicleToRespawn(FarmInfo[playerid][pVehicleHire]);
+    }
+    else
+    {
+        SCM(playerid, -1, "Nu esti fermier!");
+    }
+    return 1;
 }
 
 CMD:startsow(playerid, params[])
 {
-	new job = PlayerInfo[playerid][pJob];
-	new vehicle = GetPlayerVehicleID(playerid);
-	new string[128], Float:X, Float:Y, Float:Z;
-	GetPlayerPos(playerid, X, Y, Z);
-	if(job == FARMER)
-	{
-		if(IsPlayerInAnyVehicle(playerid) && GetVehicleModel(vehicle) == 531 && CityVehicles[vehicle][vType] == FARMER_CAR)
-		{
-			if(GetIntVar(playerid, "Sowing") == 1) return SCM(playerid, -1, "[FarmerJob]: Deja plantezi!");
-			new trailer = GetClosestTrailer(playerid);
-			if(GetVehicleModel(trailer) == 610)
-			{
-				SetPVarInt(playerid, "Sowing", 1);
-				FarmInfo[playerid][pHasHireVehicle] = 1;
-				FarmInfo[playerid][pVehicleHire] = vehicle;
-				FarmInfo[playerid][pTrailerVehicleHire] = trailer;
-				//FarmInfo[playerid][pTrailerVehicleHire] = CreateVehicle(610, X, Y+2, Z, 0.0, -1, -1, 90000);
-				SetTimerEx("AttachTrailer",1000,0,"ii",FarmInfo[playerid][pVehicleHire],FarmInfo[playerid][pTrailerVehicleHire]);
-				FarmInfo[playerid][pPaddyInTrailer] = 0;
-				format(string,sizeof(string),"Proprietar: %s\n Seminte: {4cff00}%d",GetName(playerid),FarmInfo[playerid][pPaddyInTrailer]);
-				FarmInfo[playerid][pTrailerText] = CreateDynamic3DTextLabel(string,-1, X, Y+2, Z,5.0,INVALID_PLAYER_ID,FarmInfo[playerid][pTrailerVehicleHire]);
-			}
-			else
-			{
-				SCM(playerid, -1, "Nu sunt remorci pe langa tine sau trebuie sa te apropii mai mult de remorca.");
-			}
-		}
-		else
-		{
-			SCM(playerid, -1, "[FarmerJob]: Trebuie sa fi intr-un tractor ca sa incepi plantarea.");
-		}
-	}
-	else
-	{
-		SCM(playerid, -1, "[FarmerJob]: Nu esti fermier!");
-	}
-	return 1;
+    new job = PlayerInfo[playerid][pJob];
+    new vehicle = GetPlayerVehicleID(playerid);
+    new string[128], Float:X, Float:Y, Float:Z;
+    GetPlayerPos(playerid, X, Y, Z);
+    if(job == FARMER)
+    {
+        if(IsPlayerInAnyVehicle(playerid) && GetVehicleModel(vehicle) == 531 && CityVehicles[vehicle][vType] == FARMER_CAR)
+        {
+            if(GetIntVar(playerid, "Sowing") == 1) return SCM(playerid, -1, "[FarmerJob]: Deja plantezi!");
+            new trailer = GetClosestTrailer(playerid);
+            if(GetVehicleModel(trailer) == 610)
+            {
+                SetPVarInt(playerid, "Sowing", 1);
+                FarmInfo[playerid][pHasHireVehicle] = 1;
+                FarmInfo[playerid][pVehicleHire] = vehicle;
+                FarmInfo[playerid][pTrailerVehicleHire] = trailer;
+                //FarmInfo[playerid][pTrailerVehicleHire] = CreateVehicle(610, X, Y+2, Z, 0.0, -1, -1, 90000);
+                SetTimerEx("AttachTrailer",1000,0,"ii",FarmInfo[playerid][pVehicleHire],FarmInfo[playerid][pTrailerVehicleHire]);
+                FarmInfo[playerid][pPaddyInTrailer] = 0;
+                format(string,sizeof(string),"Proprietar: %s\n Seminte: {4cff00}%d",GetName(playerid),FarmInfo[playerid][pPaddyInTrailer]);
+                FarmInfo[playerid][pTrailerText] = CreateDynamic3DTextLabel(string,-1, X, Y+2, Z,5.0,INVALID_PLAYER_ID,FarmInfo[playerid][pTrailerVehicleHire]);
+            }
+            else
+            {
+                SCM(playerid, -1, "Nu sunt remorci pe langa tine sau trebuie sa te apropii mai mult de remorca.");
+            }
+        }
+        else
+        {
+            SCM(playerid, -1, "[FarmerJob]: Trebuie sa fi intr-un tractor ca sa incepi plantarea.");
+        }
+    }
+    else
+    {
+        SCM(playerid, -1, "[FarmerJob]: Nu esti fermier!");
+    }
+    return 1;
 }
 
 CMD:stopsow(playerid, params[])
 {
-	new job = PlayerInfo[playerid][pJob];
-	if(job == FARMER)
-	{
-		if(GetIntVar(playerid, "Sowing") == 0) return SCM(playerid, -1, "[FarmerJob]: Nu te aflii in procesul de plantare!");
-		FarmInfo[playerid][pHasHireVehicle] = 0;
-		SetPVarInt(playerid, "Sowing", 0);
+    new job = PlayerInfo[playerid][pJob];
+    if(job == FARMER)
+    {
+        if(GetIntVar(playerid, "Sowing") == 0) return SCM(playerid, -1, "[FarmerJob]: Nu te aflii in procesul de plantare!");
+        FarmInfo[playerid][pHasHireVehicle] = 0;
+        SetPVarInt(playerid, "Sowing", 0);
         new vehicle = FarmInfo[playerid][pTrailerVehicleHire];
-		SetVehicleToRespawn(FarmInfo[playerid][pVehicleHire]);
-		if(IsValidVehicle(vehicle))
-		{
-			DestroyDynamic3DTextLabel(FarmInfo[playerid][pTrailerText]);
-			FarmInfo[playerid][pPaddyInTrailer] = 0;
+        SetVehicleToRespawn(FarmInfo[playerid][pVehicleHire]);
+        if(IsValidVehicle(vehicle))
+        {
+            DestroyDynamic3DTextLabel(FarmInfo[playerid][pTrailerText]);
+            FarmInfo[playerid][pPaddyInTrailer] = 0;
             SetVehiclePos(vehicle, CityVehicles[vehicle][vPosX], CityVehicles[vehicle][vPosY], CityVehicles[vehicle][vPosZ]);
             SetVehicleZAngle(vehicle, CityVehicles[vehicle][vPosA]);
-			//SetVehicleToRespawn(FarmInfo[playerid][pTrailerVehicleHire]);
-			//DestroyVehicle(FarmInfo[playerid][pTrailerVehicleHire]);
-		}
-	}
-	else
-	{
-		SCM(playerid, -1, "Nu esti fermier!");
-	}
-	return 1;
+            //SetVehicleToRespawn(FarmInfo[playerid][pTrailerVehicleHire]);
+            //DestroyVehicle(FarmInfo[playerid][pTrailerVehicleHire]);
+        }
+    }
+    else
+    {
+        SCM(playerid, -1, "Nu esti fermier!");
+    }
+    return 1;
 }
 
 CMD:stopharvest(playerid, params[])
 {
-	new job = PlayerInfo[playerid][pJob];
-	if(job == FARMER)
-	{
-		if(GetIntVar(playerid, "Harvesting") == 0) return SCM(playerid, -1, "[FarmerJob]: Nu te alfii in procesul de recoltare!");
-		FarmInfo[playerid][pHasHireVehicle] = 0;
-		SetPVarInt(playerid, "Harvesting", 0);
-		SetVehicleToRespawn(FarmInfo[playerid][pVehicleHire]);
-	}
-	else
-	{
-		SCM(playerid, -1, "Nu esti fermier!");
-	}
-	return 1;
+    new job = PlayerInfo[playerid][pJob];
+    if(job == FARMER)
+    {
+        if(GetIntVar(playerid, "Harvesting") == 0) return SCM(playerid, -1, "[FarmerJob]: Nu te alfii in procesul de recoltare!");
+        FarmInfo[playerid][pHasHireVehicle] = 0;
+        SetPVarInt(playerid, "Harvesting", 0);
+        SetVehicleToRespawn(FarmInfo[playerid][pVehicleHire]);
+    }
+    else
+    {
+        SCM(playerid, -1, "Nu esti fermier!");
+    }
+    return 1;
 }
 //============================== Farmer Job CMDS =========================//
 
@@ -36928,27 +36879,27 @@ CMD:stopharvest(playerid, params[])
 
 CMD:trash(playerid, params[])
 {
-	new option[24], secondoption;
-	new vehicleid = GetNearestVehicle(playerid), Float:x, Float:y, Float:z;
-	if(PlayerInfo[playerid][pJob] != GARBAGE) return SCM(playerid, -1, "Nu ai jobul de gunoier!");
-	if(IsValidVehicle(vehicleid) && GetVehicleModel(vehicleid) == 408)
-	{
-		GetVehicleBoot(vehicleid, x, y, z);
-	}
-	if(sscanf(params, "s[24]D(-1)", option, secondoption))
-	{
-		SCM(playerid, COLOR_YELLOW3, "_____________________________________________");
-		SyntaxMSG(playerid, "/trash [usage]");
-		SCM(playerid, COLOR_GRAD2, "[Actiuni] load, unload");
-		SCM(playerid, COLOR_YELLOW3, "_____________________________________________");
-		return 1;
-	}
-	if(!strcmp(option, "load", true))
-	{
-		for(new i=0; i < MAX_TRASHBINS; i++)
-		{
-			if(IsPlayerInRangeOfPoint(playerid, 2.0, BinInfo[i][binX], BinInfo[i][binY], BinInfo[i][binZ]))
-			{
+    new option[24], secondoption;
+    new vehicleid = GetNearestVehicle(playerid), Float:x, Float:y, Float:z;
+    if(PlayerInfo[playerid][pJob] != GARBAGE) return SCM(playerid, -1, "Nu ai jobul de gunoier!");
+    if(IsValidVehicle(vehicleid) && GetVehicleModel(vehicleid) == 408)
+    {
+        GetVehicleBoot(vehicleid, x, y, z);
+    }
+    if(sscanf(params, "s[24]D(-1)", option, secondoption))
+    {
+        SCM(playerid, COLOR_YELLOW3, "_____________________________________________");
+        SyntaxMSG(playerid, "/trash [usage]");
+        SCM(playerid, COLOR_GRAD2, "[Actiuni] load, unload");
+        SCM(playerid, COLOR_YELLOW3, "_____________________________________________");
+        return 1;
+    }
+    if(!strcmp(option, "load", true))
+    {
+        for(new i=0; i < MAX_TRASHBINS; i++)
+        {
+            if(IsPlayerInRangeOfPoint(playerid, 2.0, BinInfo[i][binX], BinInfo[i][binY], BinInfo[i][binZ]))
+            {
                 if(trash[playerid] == 20)
                 {
                     SetPVarInt(playerid, "GarbageFull", 1);
@@ -36956,71 +36907,71 @@ CMD:trash(playerid, params[])
                     SetPlayerCheckpoint(playerid, 2402.4753,90.8707,27.1285, 4.0);
                     return 1;
                 }
-				if(BinInfo[i][TrashPicked] == 1) return SCM(playerid, COLOR_GRAD1, "Acest cos de gunoi este gol. Revino mai tarziu.");
-				ApplyAnimation(playerid, "CARRY", "LIFTUP", 4.0, 0, 0, 0, 0,0); // nhatlenkieu1
-				SetPVarInt(playerid,"HasTrash",1);
-				SetTimerEx("CarrySack",1000,0,"i",playerid);
-				SetPlayerAttachedObject(playerid, 9, 1265, 1, 0.170999, 0.363000, 0.000000, 0.000000, 93.700012, 0.000000, 0.713000, 0.650000, 1.000000, 0, 0);
-				SetPlayerCheckpoint(playerid, x, y, z, 2);
-				BinInfo[i][TrashPicked] = 1;
-			}
-		}
-	}
-	if(!strcmp(option, "unload", true))
-	{
-		if(IsPlayerInRangeOfPoint(playerid, 1.0, x, y, z))
-		{
-			if(GetPVarInt(playerid, "HasTrash") == 1)
-			{
-				if(trash[playerid] < 20)
+                if(BinInfo[i][TrashPicked] == 1) return SCM(playerid, COLOR_GRAD1, "Acest cos de gunoi este gol. Revino mai tarziu.");
+                ApplyAnimation(playerid, "CARRY", "LIFTUP", 4.0, 0, 0, 0, 0,0); // nhatlenkieu1
+                SetPVarInt(playerid,"HasTrash",1);
+                SetTimerEx("CarrySack",1000,0,"i",playerid);
+                SetPlayerAttachedObject(playerid, 9, 1265, 1, 0.170999, 0.363000, 0.000000, 0.000000, 93.700012, 0.000000, 0.713000, 0.650000, 1.000000, 0, 0);
+                SetPlayerCheckpoint(playerid, x, y, z, 2);
+                BinInfo[i][TrashPicked] = 1;
+            }
+        }
+    }
+    if(!strcmp(option, "unload", true))
+    {
+        if(IsPlayerInRangeOfPoint(playerid, 1.0, x, y, z))
+        {
+            if(GetPVarInt(playerid, "HasTrash") == 1)
+            {
+                if(trash[playerid] < 20)
                 {
                     ApplyAnimation(playerid, "CARRY", "PUTDWN105", 4.0, 0, 0, 0, 0,0); // datxuongkieu2
-    				RemovePlayerAttachedObject(playerid,9);
-    				SetPVarInt(playerid,"HasTrash",0);
+                    RemovePlayerAttachedObject(playerid,9);
+                    SetPVarInt(playerid,"HasTrash",0);
                     RemoveCheckPoint(playerid);
                     trash[playerid] ++;
                     GiveCash(playerid, 150);
-					PlaySound(playerid, 1138);
+                    PlaySound(playerid, 1138);
                 }
                 if(trash[playerid] == 20)
                 {
                     SetPVarInt(playerid, "GarbageFull", 1);
                     SCM(playerid, COLOR_GREY, "Trebuie sa te intorci la groapa de gunoi pentru a descarca masina");
                     SetPlayerCheckpoint(playerid, 2108.7170, -1977.7446, 13.5468, 4.0);
-                }				
-			}
-			else
-			{
-				SCM(playerid, -1, "Nu ai gunoi!");
-			}
-		}
-		else
-		{
-			SCM(playerid, -1, "Trebuie sa te aflii in spatele masinii de gunoi!");
-		}
-	}
-	return 1;
+                }               
+            }
+            else
+            {
+                SCM(playerid, -1, "Nu ai gunoi!");
+            }
+        }
+        else
+        {
+            SCM(playerid, -1, "Trebuie sa te aflii in spatele masinii de gunoi!");
+        }
+    }
+    return 1;
 }
 
 CMD:takeuniform(playerid, params[])
 {
-	if(!PlayerToPoint(2.0, playerid, 2195.5798, -1973.2034, 13.5589)) return SCM(playerid, -1, "Trebuie sa te aflii la locul pentru Uniforma de gunoier!");
-	if(PlayerInfo[playerid][pJob] != GARBAGE) return SCM(playerid, -1, "Nu ai jobul de gunoier!");
-	if(GetPVarInt(playerid, "TrashUniform") == 0)
-	{
-		SetPVarInt(playerid, "TrashUniform", 1);
-		SetPlayerSkin(playerid, 16);
-		SCM(playerid, -1, "[JOB]: Ti-ai pus uniforma. Foloseste /takeuniform iar pentru a da-o jos.");
-		format(msg, sizeof(msg), "1.Urca-te in masina si cauta cosurile de gunoi pe la case. Goleste-le folosind ('/trash load si /trash unload').\n2.Atentie! Masina trebuie sa ramana intacta sau nu iti vei primi toti banii.");
+    if(!PlayerToPoint(2.0, playerid, 2195.5798, -1973.2034, 13.5589)) return SCM(playerid, -1, "Trebuie sa te aflii la locul pentru Uniforma de gunoier!");
+    if(PlayerInfo[playerid][pJob] != GARBAGE) return SCM(playerid, -1, "Nu ai jobul de gunoier!");
+    if(GetPVarInt(playerid, "TrashUniform") == 0)
+    {
+        SetPVarInt(playerid, "TrashUniform", 1);
+        SetPlayerSkin(playerid, 16);
+        SCM(playerid, -1, "[JOB]: Ti-ai pus uniforma. Foloseste /takeuniform iar pentru a da-o jos.");
+        format(msg, sizeof(msg), "1.Urca-te in masina si cauta cosurile de gunoi pe la case. Goleste-le folosind ('/trash load si /trash unload').\n2.Atentie! Masina trebuie sa ramana intacta sau nu iti vei primi toti banii.");
         SCM(playerid, COLOR_GREEN, msg);
-	}
-	else
-	{
-		SetPVarInt(playerid, "TrashUniform", 0);
-		SetPlayerSkin(playerid, PlayerInfo[playerid][pSkin]);
-		SCM(playerid, -1, "[JOB]: Ti-ai dat jos uniforma.");
-	}
-	return 1;
+    }
+    else
+    {
+        SetPVarInt(playerid, "TrashUniform", 0);
+        SetPlayerSkin(playerid, PlayerInfo[playerid][pSkin]);
+        SCM(playerid, -1, "[JOB]: Ti-ai dat jos uniforma.");
+    }
+    return 1;
 }
 //============================== Garbage Job CMDS =========================//
 
@@ -37119,7 +37070,7 @@ CMD:spraytag(playerid, params[])
     new Float:X, Float:Y, Float: Z, Float:R;
     GetPlayerPos(playerid, X, Y, Z);
     GetPlayerFacingAngle(playerid, R);
-	if(size < 10) msize = 10;
+    if(size < 10) msize = 10;
     else
     {
         msize = (size%10)*10;
@@ -37135,7 +37086,7 @@ CMD:spraytag(playerid, params[])
 
 stock GetDistance(Float:x1, Float:y1, Float:z1, Float:x2, Float:y2, Float:z2)
 {
-	return floatround( floatsqroot( ( ( x1 - x2 ) * ( x1 - x2 ) ) + ( ( y1 - y2 ) * ( y1 - y2 ) ) + ( ( z1 - z2 ) * ( z1 - z2 ) ) ) );
+    return floatround( floatsqroot( ( ( x1 - x2 ) * ( x1 - x2 ) ) + ( ( y1 - y2 ) * ( y1 - y2 ) ) + ( ( z1 - z2 ) * ( z1 - z2 ) ) ) );
 }
 
 //DISTANCE BETWEEN POINTS - END
@@ -37143,72 +37094,72 @@ stock GetDistance(Float:x1, Float:y1, Float:z1, Float:x2, Float:y2, Float:z2)
 //TRAILER SYSTEM CMD
 stock FindNearbyTrailer(id, idtype)
 {
-	new Float:x1, Float:y1, Float:z1;
-	new Float:x2, Float:y2, Float:z2;
-	if(idtype==1) GetPlayerPos(id,x1,y1,z1);
-    else GetVehiclePos(id,x1,y1,z1);	
-	for(new i=1; i<=GetVehiclePoolSize(); i++)
-	{
-		GetVehiclePos(i,x2,y2,z2);
-		if(floatround( floatsqroot( ( ( x1 - x2 ) * ( x1 - x2 ) ) + ( ( y1 - y2 ) * ( y1 - y2 ) ) + ( ( z1 - z2 ) * ( z1 - z2 ) ) ) ) < 6)
-			return i;
-	}
-	return -1;
+    new Float:x1, Float:y1, Float:z1;
+    new Float:x2, Float:y2, Float:z2;
+    if(idtype==1) GetPlayerPos(id,x1,y1,z1);
+    else GetVehiclePos(id,x1,y1,z1);    
+    for(new i=1; i<=GetVehiclePoolSize(); i++)
+    {
+        GetVehiclePos(i,x2,y2,z2);
+        if(floatround( floatsqroot( ( ( x1 - x2 ) * ( x1 - x2 ) ) + ( ( y1 - y2 ) * ( y1 - y2 ) ) + ( ( z1 - z2 ) * ( z1 - z2 ) ) ) ) < 6)
+            return i;
+    }
+    return -1;
 }
 
 CMD:trailer(playerid, params[])
 {
-	new vehid, trailerid;
-	vehid = GetPlayerVehicleID(playerid);
-	if(IsTrailerAttachedToVehicle(vehid))
-	{
-		DetachTrailerFromVehicle(vehid);
-		SCM(playerid, COLOR_GREY, "Trailer-ul a fost decuplat.");
-	}
-	else
-	{
-		trailerid = FindNearbyTrailer(vehid, 2);
-		if(trailerid != -1)
-		{
-			AttachTrailerToVehicle(trailerid, vehid);
-			SCM(playerid, COLOR_GREY, "Trailer-ul a fost atasat.");
-		}
-		else
-			SCM(playerid, COLOR_GREY, "Nu ai nici-un trailer in jur!");
-	}
-	
+    new vehid, trailerid;
+    vehid = GetPlayerVehicleID(playerid);
+    if(IsTrailerAttachedToVehicle(vehid))
+    {
+        DetachTrailerFromVehicle(vehid);
+        SCM(playerid, COLOR_GREY, "Trailer-ul a fost decuplat.");
+    }
+    else
+    {
+        trailerid = FindNearbyTrailer(vehid, 2);
+        if(trailerid != -1)
+        {
+            AttachTrailerToVehicle(trailerid, vehid);
+            SCM(playerid, COLOR_GREY, "Trailer-ul a fost atasat.");
+        }
+        else
+            SCM(playerid, COLOR_GREY, "Nu ai nici-un trailer in jur!");
+    }
+    
 }
 
 CMD:entertrailer(playerid, params[])
 {
-	new trailerid;
-	trailerid = FindNearbyTrailer(playerid, 1);
-	if(trailerid != -1 && InTrailer[playerid]==-1)
-	{
-		SetPlayerVirtualWorld(playerid, playerid);
-		SetPlayerInterior(playerid, 1);
-		SetPlayerPos(playerid, 1.808619, 32.384357, 1199.593750);
-		InTrailer[playerid]=trailerid;
-	}
-	else
-		SCM(playerid, COLOR_GREY, "Nu esti langa o rulota!");
+    new trailerid;
+    trailerid = FindNearbyTrailer(playerid, 1);
+    if(trailerid != -1 && InTrailer[playerid]==-1)
+    {
+        SetPlayerVirtualWorld(playerid, playerid);
+        SetPlayerInterior(playerid, 1);
+        SetPlayerPos(playerid, 1.808619, 32.384357, 1199.593750);
+        InTrailer[playerid]=trailerid;
+    }
+    else
+        SCM(playerid, COLOR_GREY, "Nu esti langa o rulota!");
 }
 
 CMD:exittrailer(playerid, params[])
 {
-	new Float:x, Float:y, Float:z;
-	if(InTrailer[playerid])
-	{
-		GetVehiclePos(InTrailer[playerid], x, y, z);
-		SetPlayerVirtualWorld(playerid, 0);
-		SetPlayerInterior(playerid, 0);
-		SetPlayerPos(playerid, x+2, y+2, z);
-		InTrailer[playerid]=-1;
-	}
-	else
-	{
-		SCM(playerid, COLOR_GREY, "Nu esti intr-o rulota!");
-	}
+    new Float:x, Float:y, Float:z;
+    if(InTrailer[playerid])
+    {
+        GetVehiclePos(InTrailer[playerid], x, y, z);
+        SetPlayerVirtualWorld(playerid, 0);
+        SetPlayerInterior(playerid, 0);
+        SetPlayerPos(playerid, x+2, y+2, z);
+        InTrailer[playerid]=-1;
+    }
+    else
+    {
+        SCM(playerid, COLOR_GREY, "Nu esti intr-o rulota!");
+    }
     return 1;
 }
 
@@ -37843,9 +37794,9 @@ function AddGarageLabel(garage)
     DestroyDynamic3DTextLabel(GarageInfo[garage][glabel2]);
     GarageInfo[garage][gpickup] = CreateDynamicPickup(1272, 1, GarageInfo[garage][gEnterX], GarageInfo[garage][gEnterY], GarageInfo[garage][gEnterZ]);
     if(GarageInfo[garage][gowned] == 0) format(msg, sizeof(msg), "[GARAJ %d]\nPret: %d$\n /buygarage", garage, GarageInfo[garage][gprice]);
-    else if(GarageInfo[garage][gowned] == 1) format(msg, sizeof(msg), "[GARAJ %d]\nPropietar: %s", garage, GarageInfo[garage][gowner]);
+    else if(GarageInfo[garage][gowned] == 1) format(msg, sizeof(msg), "[GARAJ %d]\nProprietar: %s", garage, GarageInfo[garage][gowner]);
     GarageInfo[garage][glabel] = CreateDynamic3DTextLabel(msg, COLOR_WHITE, GarageInfo[garage][gEnterX], GarageInfo[garage][gEnterY], GarageInfo[garage][gEnterZ], 10.0); 
-    GarageInfo[garage][glabel2] = CreateDynamic3DTextLabel("/exit", COLOR_GREY, GarageInfo[garage][gExitX], GarageInfo[garage][gExitY], GarageInfo[garage][gExitZ], 10.0);     
+    GarageInfo[garage][glabel2] = CreateDynamic3DTextLabel("/exit", COLOR_GREY, GarageInfo[garage][gExitX], GarageInfo[garage][gExitY], GarageInfo[garage][gExitZ], 10.0, garage);     
     return 1;
 }
 

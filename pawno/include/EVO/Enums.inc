@@ -2220,6 +2220,7 @@ enum OWNED_CARS_INFO
 	carImpound,
 	carRadarDetector,
 	carDmg,
+	carVW
 }
 new VehicleInfo[MAX_VEHICLES][OWNED_CARS_INFO];
 
