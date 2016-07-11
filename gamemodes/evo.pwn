@@ -1715,7 +1715,7 @@ public OnPlayerDisconnect(playerid, reason)
             else
             {
                 PlayerInfo[playerid][pCarKey2] = 0;
-                PlayerInfo[playerid][pVehSlot] = 0;
+                PlayerInfo[playerid][pVehSlot2] = 0;
             }
             RemovePlayerBoomBox(playerid);
             CheckPMBlockList(playerid);
@@ -5692,6 +5692,7 @@ stock ResetPlayerVariables(playerid)
     PlayerInfo[playerid][pCarKey2] = 0;
     PlayerInfo[playerid][pVehicles] = 0;
     PlayerInfo[playerid][pVehSlot] = 0;
+    PlayerInfo[playerid][pVehSlot2] = 0;
     PlayerInfo[playerid][pSpareKey] = 0;
     PlayerInfo[playerid][pLighter] = 0;
     PlayerInfo[playerid][pCigars] = 0;
@@ -6025,6 +6026,15 @@ stock OnOwnedVehicleInsert(vehid)
 stock UpdateVehicleStatus(playerid, vehicle)
 {
     new slot = PlayerInfo[playerid][pVehSlot];
+    VehicleStatus[playerid][slot][carAlarm] = VehicleInfo[vehicle][carAlarm];
+    VehicleStatus[playerid][slot][carLock] = VehicleInfo[vehicle][carLock];
+    VehicleStatus[playerid][slot][carImmob] = VehicleInfo[vehicle][carImmob];
+    VehicleStatus[playerid][slot][carInsurances] = VehicleInfo[vehicle][carInsurances];
+    VehicleStatus[playerid][slot][carDestroyed] = VehicleInfo[vehicle][carDestroyed];
+    VehicleStatus[playerid][slot][carGps] = VehicleInfo[vehicle][carGps];
+    format(VehicleStatus[playerid][slot][carPlate], 128, "%s", VehicleInfo[vehicle][carPlate]);
+	
+	slot = PlayerInfo[playerid][pVehSlot2];
     VehicleStatus[playerid][slot][carAlarm] = VehicleInfo[vehicle][carAlarm];
     VehicleStatus[playerid][slot][carLock] = VehicleInfo[vehicle][carLock];
     VehicleStatus[playerid][slot][carImmob] = VehicleInfo[vehicle][carImmob];
@@ -26220,13 +26230,11 @@ CMD:vehicle(playerid, params[])
         if(param[1])
         {
             SetVehicleParamsEx(vehicleid,param[0],0,param[2],param[3],param[4],param[5],param[6]);
-//          ActionMessage(playerid, 15.0, "opreste farurile vehiculului.");
             return 1;
         }
         else
         {
             SetVehicleParamsEx(vehicleid,param[0],1,param[2],param[3],param[4],param[5],param[6]);
-//          ActionMessage(playerid, 15.0, "porneste farurile vehiculului.");
             return 1;
         }
     }
@@ -26374,7 +26382,7 @@ CMD:vehicle(playerid, params[])
     return 1;
 }
 //WIP END
-//WIP
+
 CMD:parkmeter(playerid, params[])
 {
     new parkid = GetClosestParkMeter(playerid), minutes;
@@ -29075,7 +29083,7 @@ CMD:impound(playerid, params[])
     SaveVehicle(TowingCar[playerid]);
     foreach(new i : Player)
     {
-        if(PlayerInfo[i][pCarKey] == TowingCar[playerid])
+        if(PlayerInfo[i][pCarKey] == TowingCar[playerid] || PlayerInfo[i][pCarKey2] == TowingCar[playerid])
         {
             format(msg, sizeof(msg), "* Vehiculul %s a fost confiscat de catre %s %s.", VehicleNames[VehicleInfo[TowingCar[playerid]][carModel]-400], GetRankName(playerid), GetNameEx(playerid));
             SCM(i, COLOR_LIGHTBLUE, msg);
@@ -29105,7 +29113,7 @@ CMD:unimpound(playerid, params[])
     SaveVehicle(vehID);
     foreach(new i : Player)
     {
-        if(PlayerInfo[i][pCarKey] == vehID)
+        if(PlayerInfo[i][pCarKey] == vehID || PlayerInfo[i][pCarKey2] == vehID)
         {
             format(msg, sizeof(msg), "* Vehiculul %s a fost eliberat de catre %s %s.", VehicleNames[VehicleInfo[vehID][carModel]-400], GetRankName(playerid), GetNameEx(playerid));
             SCM(i, COLOR_LIGHTBLUE, msg);
@@ -33419,6 +33427,7 @@ CMD:setstat(playerid, params[])
         SCM(playerid, COLOR_GRAD4, "|23 Dice |24 Radio |25 Mask |26 BMX |27 VehKey |28 ToolKit");
         SCM(playerid, COLOR_GRAD4, "|29 Lighter |30 Cigarettes |31 BizKey |32 WorkOn |33 WalkStyle");
         SCM(playerid, COLOR_GRAD4, "|34 Faction |35 Rank |36 Job |37 JobRank |38 Career |39 SideJob");
+        SCM(playerid, COLOR_GRAD4, "|40 VehKey2");
         return 1;
     }
     if(!PlayerIsOn(pid)) return NotConnectedMSG(playerid);
@@ -33622,6 +33631,11 @@ CMD:setstat(playerid, params[])
         {
             format(msg, sizeof(msg), "   %s's SideJob has been set to %d.", GetName(pid), amount);
             PlayerInfo[pid][pSideJob] = amount;
+        }
+        case 40:
+        {
+            format(msg, sizeof(msg), "   %s's Vehicle Key has been set to %d.", GetName(pid), amount);
+            PlayerInfo[pid][pCarKey2] = amount;
         }
         default:
         {
@@ -34267,7 +34281,7 @@ CMD:apark(playerid, params[])
     new p=-1;
     foreach(new i : Player)
     {
-        if(PlayerInfo[i][pCarKey] == veh)
+        if(PlayerInfo[i][pCarKey] == veh || PlayerInfo[i][pCarKey2])
         {
             SCM(i, COLOR_GREEN, "Masina ta a fost despawnata de catre un admin.");
             SCMEx(playerid, COLOR_GREEN, "Masina lui %s a fost despawnata.", GetName(i));
@@ -34285,8 +34299,16 @@ CMD:apark(playerid, params[])
     if(p==-1) SCM(playerid, COLOR_GREEN, "Ai despawnat masina unui jucator neconectat.");
     if(p!=-1)
     {
-        PlayerInfo[p][pCarKey] = 0;
-        PlayerInfo[p][pVehSlot] = 0;
+		if(PlayerInfo[p][pCarKey] == veh)
+		{
+			PlayerInfo[p][pCarKey] = 0;
+			PlayerInfo[p][pVehSlot] = 0;
+		}
+		else
+		{
+			PlayerInfo[p][pCarKey2] = 0;
+			PlayerInfo[p][pVehSlot2] = 0;
+		}
     }
     return 1;
 }
@@ -37352,11 +37374,19 @@ function DestroyCarJack(playerid, vehicleid)
         if(PlayerInfo[i][pCarKey] == vehicleid)
         {
             SCMEx(i, COLOR_GREY, "Masina ta %s a fost distrusa ((carjacked)). Acum ai %d asigurari si %d distrugeri.", VehicleNames[GetVehicleModel(vehicleid)-400], VehicleInfo[vehicleid][carInsurances], VehicleInfo[vehicleid][carDestroyed]);
-            PlayerInfo[i][pCarKey] = 0;
+			PlayerInfo[i][pCarKey] = 0;
             PlayerInfo[i][pVehSlot] = 0;
             UpdateVehicleStatus(playerid, vehicleid);
             break;
         }
+		else if(PlayerInfo[i][pCarKey2] == vehicleid)
+		{
+            SCMEx(i, COLOR_GREY, "Masina ta %s a fost distrusa ((carjacked)). Acum ai %d asigurari si %d distrugeri.", VehicleNames[GetVehicleModel(vehicleid)-400], VehicleInfo[vehicleid][carInsurances], VehicleInfo[vehicleid][carDestroyed]);
+			PlayerInfo[i][pCarKey2] = 0;
+            PlayerInfo[i][pVehSlot2] = 0;
+            UpdateVehicleStatus(playerid, vehicleid);
+            break;
+		}
     }
     SaveVehicle(vehicleid);
     VehicleInfo[vehicleid][carSpawned] = 0;

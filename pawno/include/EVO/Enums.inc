@@ -1035,6 +1035,7 @@ enum p_Info
 	pCarKey2,
 	pVehicles,
 	pVehSlot,
+	pVehSlot2,
 	pSpareKey,
 	pLighter,
 	pCigars,
