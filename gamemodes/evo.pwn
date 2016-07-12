@@ -285,7 +285,6 @@ new Menu:FoodStallMenu;
 #define MAX_ATMS 50
 #define MAX_GAS_STATIONS 50
 #define MAX_HOUSES 602 // Needs to be plus 1
-#define MAX_GPS_LOCATION 50
 #define MAX_BIZ 100
 #define MAX_FURNITURE 100
 #define MAX_HOUSE_WEAPONS 6 // Needs to be plus 1
@@ -1180,14 +1179,35 @@ public OnGameModeInit()
     //Reseting player vehicle key & slot
     
     //Actor for Weapon Dealer
-    new GovernmentActors[1];
+    new GovernmentActors[8];
     GovernmentActors[0] = CreateActor(265, 1543.2919, -1621.3621, 13.5613, 180); // LSPD - Bariera
+    GovernmentActors[1] = CreateActor(91, 304.0050, 1874.6152, 904.4222, 358.7325); // PRIMARIE - Principal
+    GovernmentActors[2] = CreateActor(163, 306.8501, 1875.4375, 904.4222, 12.5193); // PRIMARIE - Gardian 1
+    GovernmentActors[3] = CreateActor(164, 301.1582, 1875.4431, 904.4222, 347.7423); // PRIMARIE - Gardian 2
+    GovernmentActors[4] = CreateActor(266,1465.7140,-1770.5183,3377.3479,317.3486); // LSPD - Gardian 1
+    GovernmentActors[5] = CreateActor(267,1465.9283,-1766.1008,3377.3479,217.7077); // LSPD - Gardian 2
+    GovernmentActors[6] = CreateActor(303,1476.6714,-1765.8367,3377.3479,91.1199); // LSPD - Interior 1
+    GovernmentActors[7] = CreateActor(306,1476.6808,-1770.5554,3377.3479,87.3598); // LSPD - Interior 2
 
     ApplyActorAnimation(GovernmentActors[0], "DEALER", "DEALER_IDLE", 4.1, 1, 0, 0, 0, 0); // DealStance Anim
+    ApplyActorAnimation(GovernmentActors[1], "DEALER", "DEALER_IDLE", 4.1, 1, 0, 0, 0, 0); // DealStance Anim
+    ApplyActorAnimation(GovernmentActors[2], "DEALER", "DEALER_IDLE", 4.1, 1, 0, 0, 0, 0); // DealStance Anim
+    ApplyActorAnimation(GovernmentActors[3], "DEALER", "DEALER_IDLE", 4.1, 1, 0, 0, 0, 0); // DealStance Anim
+    ApplyActorAnimation(GovernmentActors[4], "DEALER", "DEALER_IDLE", 4.1, 1, 0, 0, 0, 0); // DealStance Anim
+    ApplyActorAnimation(GovernmentActors[5], "DEALER", "DEALER_IDLE", 4.1, 1, 0, 0, 0, 0); // DealStance Anim
+    ApplyActorAnimation(GovernmentActors[6], "DEALER", "DEALER_IDLE", 4.1, 1, 0, 0, 0, 0); // DealStance Anim
+    ApplyActorAnimation(GovernmentActors[7], "DEALER", "DEALER_IDLE", 4.1, 1, 0, 0, 0, 0); // DealStance Anim
 
     SetActorInvulnerable(GovernmentActors[0], true);
+    SetActorInvulnerable(GovernmentActors[1], true);
+    SetActorInvulnerable(GovernmentActors[2], true);
+    SetActorInvulnerable(GovernmentActors[3], true);
+    SetActorInvulnerable(GovernmentActors[4], true);
+    SetActorInvulnerable(GovernmentActors[5], true);
+    SetActorInvulnerable(GovernmentActors[6], true);
+    SetActorInvulnerable(GovernmentActors[7], true);
 
-
+    //Actor for Weapon Dealer
     GunActor[0] = CreateActor(29, 165.8469, -166.4714, 6.7786, 2.7556); //  Jackson - Blueberry
     GunActor[1] = CreateActor(47, 2350.7771, -647.6725, 128.0547, 252.7574); //  Enrique - Rockstar North
     GunActor[2] = CreateActor(22, 2481.7700, -1331.8817, 28.3106, 94.7265); //  Shakur - East LS
@@ -7759,28 +7779,23 @@ stock GetVehicleByPlate(plate[])
 
 stock PutPlayerInCell(playerid)
 {
-    new cell = randomEx(1, 5);
+    new cell = randomEx(1, 4);
     switch(cell)
     {
         case 1:
         {
-            SetPlayerPos(playerid, 227.4369,110.2468,999.0156);
-            SetSpawnInfo(playerid, 0, PlayerInfo[playerid][pSkin], 227.4369,110.2468,999.0156, 1.0, -1, -1, -1, -1, -1, -1);
+            SetPlayerPos(playerid, 1475.8820,-1743.1548,3373.8860);
+            SetSpawnInfo(playerid, 0, PlayerInfo[playerid][pSkin], 1475.8820,-1743.1548,3373.8860, 1.0, -1, -1, -1, -1, -1, -1);
         }
         case 2:
         {
-            SetPlayerPos(playerid, 223.4676,110.3705,999.0156);
-            SetSpawnInfo(playerid, 0, PlayerInfo[playerid][pSkin], 223.4676,110.3705,999.0156, 1.0, -1, -1, -1, -1, -1, -1);
+            SetPlayerPos(playerid, 1471.8043,-1743.1537,3373.8860);
+            SetSpawnInfo(playerid, 0, PlayerInfo[playerid][pSkin], 1471.8043,-1743.1537,3373.8860, 1.0, -1, -1, -1, -1, -1, -1);
         }
         case 3:
         {
-            SetPlayerPos(playerid, 219.4929,110.2554,999.0156);
-            SetSpawnInfo(playerid, 0, PlayerInfo[playerid][pSkin], 219.4929,110.2554,999.0156, 1.0, -1, -1, -1, -1, -1, -1);
-        }
-        case 4:
-        {
-            SetPlayerPos(playerid, 215.4898,110.2842,999.0156);
-            SetSpawnInfo(playerid, 0, PlayerInfo[playerid][pSkin], 215.4898,110.2842,999.0156, 1.0, -1, -1, -1, -1, -1, -1);
+            SetPlayerPos(playerid, 1467.6678,-1743.1534,3373.8860);
+            SetSpawnInfo(playerid, 0, PlayerInfo[playerid][pSkin], 1467.6678,-1743.1534,3373.8860, 1.0, -1, -1, -1, -1, -1, -1);
         }
     }
     return 1;
@@ -10845,13 +10860,13 @@ public OnPlayerEnterCheckpoint(playerid)
 
     if(GetPVarInt(playerid, "GarbageFull") == 1 && GetVehicleModel(GetPlayerVehicleID(playerid)) == 408)
     {
-        if(PlayerToPoint(5.0, playerid, 2402.4753,90.8707,27.1285))
+        if(PlayerToPoint(5.0, playerid, 2198.4236,-1977.2279,13.4196))
         {
             RemoveVar(playerid, "GarbageFull");
             new Float:health, vehicleid = GetPlayerVehicleID(playerid);
             GetVehicleHealth(vehicleid, health);
             new vhealth = floatround(1000.0-health, floatround_round);
-            new money = 200 - (vhealth/100);
+            new money = 1500 - (vhealth/100);
             PlayerInfo[playerid][pPayCheckMade] += money;
             if(money == 200) SCM(playerid, COLOR_GREEN, "Felicitari! Nu ai lovit masina si ai primit 200$.");
             else if(money <= 200) SCMEx(playerid, COLOR_GREEN, "Din nefericire ai lovit masina si ai primit doar %d$.", money);
@@ -16121,7 +16136,7 @@ public TruckerTimer()
                     {
                         TruckComps[vehicle] += 100;
                     }
-                    TruckingMoney[i] += 5;
+                    TruckingMoney[i] += 20;
                     SetTruckerText(i);
                     LoadingTruck{i}--;
                     if(TruckComps[vehicle] >= GetMaxTruckComps(vehicle))
@@ -16489,7 +16504,7 @@ public CheckStatus()
 
             PlayerInfo[i][pJailTime] = 0;
             PlayerInfo[i][pJailed] = 0;
-            SetPlayerPos(i, 1553.3107, 1675.8288, 16.1953);
+            SetPlayerPos(i, 303.9930,1876.5928,904.3759);
             SetInterior(i, 0);
             SetPlayerVirtualWorld(i, 0);
             GameTextForPlayer(i,"~g~Ai fost eliberat din admin-jail.",5000,1);
@@ -16510,7 +16525,7 @@ public CheckStatus()
             {
                 PlayerInfo[i][pJailTime2] = 0;
                 PlayerInfo[i][pJailed] = 0;
-                SetPlayerPos(i, 1553.3107, 1675.8288, 16.1953);
+                SetPlayerPos(i, 303.9930,1876.5928,904.3759);
                 SetInterior(i, 0);
                 SetPlayerVirtualWorld(i, 0);
                 GameTextForPlayer(i,"~g~Libertate~n~~w~Incearca sa fi un cetatean mai bun",5000,1);
@@ -17211,6 +17226,7 @@ public OnPlayerSpawnVehicle(playerid, slot)
         LoadComp(PlayerInfo[playerid][pCarKey]);
         UpdateVehicleStatus(playerid, PlayerInfo[playerid][pCarKey]);
         SetVehicleHealth(PlayerInfo[playerid][pCarKey], vhealth);
+        if(IsBike(PlayerInfo[playerid][pCarKey]) || IsABiker(PlayerInfo[playerid][pCarKey])) ToggleVehicleLock(PlayerInfo[playerid][pCarKey], false), ToggleVehicleLockForPlayer(playerid, PlayerInfo[playerid][pCarKey], false);
         SCM(playerid, COLOR_GREEN2, "Vehiculul este la locul de parcare:");
         format(msg, sizeof(msg), "%s, Alarma[%d], Incuietoare[%d], Imobilizare[%d], GPS[%d], Asigurari[%d], Distrugeri[%d], Pretul Asigurarii[$%d]", VehicleNames[model-400],alarmbuyed, lock, immob, gps, insurances, destroyed, GetInsurancePrice(PlayerInfo[playerid][pCarKey]));
         SCM(playerid, COLOR_WHITE, msg);
@@ -17773,15 +17789,7 @@ Dialog:FACTIONS(playerid, response, listitem, inputtext[])
     else return 1;
 }
 
-Dialog:DialogGPS(playerid, response, listitem, inputtext[])
-{
-    if(response)
-    {
-        SetPlayerCheckpoint(playerid, GPSInfo[listitem][gpsX], GPSInfo[listitem][gpsY], GPSInfo[listitem][gpsZ], 2);
-        SCMEx(playerid, COLOR_GREY, "[GPS] A fost setat un checkpoint la '%s'.", GPSInfo[listitem][gpsName]);
-    }
-    return 1;
-}
+
 
 Dialog:RENTCAR(playerid, response, listitem, inputtext[])
 {
@@ -20787,20 +20795,25 @@ CMD:suitcase(playerid,params[])
 forward SaveGPSLoc(name[], Float:x, Float:y, Float:z, gps);
 forward OnGPSLoad();
 
-COMMAND:gps(playerid, params[])
+
+CMD:gps(playerid, params[])
 {
-    new gpsstr[2048], strsecond[64];
-    strdel(gpsstr, 0, 2048);
-    format(gpsstr, sizeof(gpsstr), "1. %s", GPSInfo[1][gpsName]);
-    for(new i=2;i<=sizeof(GPSInfo);i++)
+    new string[1200];
+    for(new i=0;i<=MAX_GPS;i++)
     {
-        if(GPSInfo[i][gpsOn] == 1)
-        {
-            format(strsecond, sizeof(strsecond), "\n%d. %s", i, GPSInfo[i][gpsName]);
-            strcat(gpsstr, strsecond);
-        }
+        format(string, sizeof(string), "%s\n%d. %s" ,string, i+1, GPSInfo[i][gpsName]);
     }
-    ShowDialog(playerid, Show:<DialogGPS>, DIALOG_STYLE_LIST, "GPS - Los Santos/Red County", gpsstr, "Ok", "Inchide");
+    ShowDialog(playerid, Show:<DialogGPS>, DIALOG_STYLE_LIST, "GPS - Los Santos/Red County", string, "Ok", "Inchide");
+    return 1;
+}
+
+Dialog:DialogGPS(playerid, response, listitem, inputtext[])
+{
+    if(response)
+    {
+        SetPlayerCheckpoint(playerid, GPSInfo[listitem][gpsX], GPSInfo[listitem][gpsY], GPSInfo[listitem][gpsZ], 2);
+        SCMEx(playerid, COLOR_GREY, "[GPS] A fost setat un checkpoint la '%s'.", GPSInfo[listitem][gpsName]);
+    }
     return 1;
 }
 
@@ -20840,7 +20853,7 @@ CMD:removegps(playerid, params[])
 
 stock GetNextGPSID()
 {
-    for(new i=1;i<=MAX_GPS_LOCATION;i++)
+    for(new i=1;i<sizeof(GarageInfo);i++)
     {
         if(GPSInfo[i][gpsOn] == 0) { return i; }
 //      printf("Tested for gpsOn [%d].", i);
@@ -22608,7 +22621,7 @@ CMD:rac(playerid, params[])
 
 CMD:pm(playerid, params[])
 {
-    if(PlayerInfo[playerid][pLevel] == 1 && PlayerInfo[playerid][pExp] == 0) return SCM(playerid, COLOR_GREY, "Trebuie sa ai o ora jucate!");
+    if(PlayerInfo[playerid][pLevel] == 1 && PlayerInfo[playerid][pExp] == 2 && !CheckAdmin(playerid, 1) && PlayerInfo[playerid][pHelper] > 0) return SCM(playerid, COLOR_GREY, "Trebuie sa ai doua ore jucate!");
     if(GetIntVar(playerid, "Muted") == 1) return SCM(playerid, COLOR_GREY, "Error: Ai primit mute.");
     new PID, text[128], str[300];
     if(sscanf(params, "us[128]", PID, text)) return SyntaxMSG(playerid, "/PM [playerid] [message]");
@@ -22737,7 +22750,7 @@ CMD:enter(playerid, params[])
 {
     for(new i = 0; i < sizeof(DoorInfo); i ++)
     {
-        if (PlayerToPoint(3, playerid,DoorInfo[i][dEnterX], DoorInfo[i][dEnterY], DoorInfo[i][dEnterZ]))
+        if (PlayerToPoint(4, playerid,DoorInfo[i][dEnterX], DoorInfo[i][dEnterY], DoorInfo[i][dEnterZ]))
         {
             SetPlayerPos(playerid,DoorInfo[i][dExitX],DoorInfo[i][dExitY],DoorInfo[i][dExitZ]);
             SetInterior(playerid,DoorInfo[i][dExitInterior]);
@@ -22847,7 +22860,7 @@ CMD:enter(playerid, params[])
             return 1;
         }
     }
-    for(new i = 1; i <= sizeof(GarageInfo); i ++)
+    for(new i = 1; i <= MAX_GARAGES; i ++)
     {
         if (PlayerToPoint(3, playerid,GarageInfo[i][gEnterX], GarageInfo[i][gEnterY], GarageInfo[i][gEnterZ]))
         {
@@ -22969,9 +22982,9 @@ CMD:exit(playerid, params[])
             return 1;
         }
     }
-    for(new i = 1; i <= sizeof(GarageInfo); i ++)
+    for(new i = 1; i <= MAX_GARAGES; i ++)
     {
-        if (PlayerToPoint(3, playerid,GarageInfo[i][gExitX], GarageInfo[i][gExitY], GarageInfo[i][gExitZ]) && GetPlayerVirtualWorld(playerid) == i)
+        if (PlayerToPoint(5, playerid,GarageInfo[i][gExitX], GarageInfo[i][gExitY], GarageInfo[i][gExitZ]) && GetPlayerVirtualWorld(playerid) == i)
         {
             if(GarageInfo[i][glock] == 0)
             {
@@ -27930,7 +27943,7 @@ CMD:duty(playerid, params[])
         {
             SetPVarInt(playerid, "COLOR", 1);
 //          ShowDialog(playerid, Show:<LSPDDuty>, DIALOG_STYLE_MSGBOX, "LSPD Duty", "Alege-ti culoarea din TAB.", "Albastru", "Alb");
-            if(!PlayerToPoint(30.0, playerid, 312.2816,-165.5768,999.6010) && !PlayerToPoint(3.0, playerid, 327.2328,307.7859,999.1484)) return SCM(playerid, COLOR_WHITE, "Nu esti in Armoury.");
+            if(!PlayerToPoint(30.0, playerid, 1484.4340,-1782.5486,3377.3508) && !PlayerToPoint(3.0, playerid, 1482.3894,-1767.1707,3377.3508)) return SCM(playerid, COLOR_WHITE, "Nu esti in Armoury.");
             format(msg, sizeof(msg), "%s %s isi scoate arma si insigna din dulap.", GetRankName(playerid), GetNameWithMask(playerid));
             ProxDetector(15.0, playerid, msg, COLOR_PURPLE);
             format(msg, sizeof(msg), "** HQ: %s %s este acum OnDuty! **", GetRankName(playerid), GetNameEx(playerid));
@@ -28084,7 +28097,7 @@ CMD:armoury(playerid, params[])
 {
     if(PlayerInfo[playerid][pFaction] == LSPD)
     {
-        if(!PlayerToPoint(3.0, playerid, 312.2816,-165.5768,999.6010) && !PlayerToPoint(3, playerid, 326.9988,307.7197,999.1484)) return SCM(playerid, COLOR_WHITE, "Nu esti in armoury.");
+        if(!PlayerToPoint(3.0, playerid, 1482.3894,-1767.1707,3377.3508)) return SCM(playerid, COLOR_WHITE, "Nu esti in armoury.");
         if(!CopDuty{playerid}) return SCM(playerid, COLOR_INFO, "Trebuie sa fi On Duty");
         ShowDialog(playerid, Show:<LSPDArmoury>, DIALOG_STYLE_LIST, "Echipamentele OCSD", "Arme\nObiectele politiei", "Imbraca", "Anuleaza");
     }
@@ -29285,7 +29298,7 @@ CMD:arrest(playerid, params[])
     if(faction != LSPD) return SCM(playerid, COLOR_LIGHTRED, "Factiune Invalida.");
     if(sscanf(params,"udd",id,time,fine)) return SyntaxMSG(playerid, "/arrest [playerid/PartOfName] [timp(minute)] [amenda]");
     if(!CopDuty{playerid}) return SCM(playerid, COLOR_LIGHTRED, "Trebuie sa fii on duty.");
-    if(!PlayerToPoint(6.0, playerid, 221.5274,114.6393,999.0156)) return SCM(playerid, COLOR_LIGHTRED, "Nu esti langa o celula.");
+    if(!PlayerToPoint(6.0, playerid, 1478.8085,-1742.3149,3373.8860)) return SCM(playerid, COLOR_LIGHTRED, "Nu esti langa o celula.");
     if(!PlayerIsOn(id)) return NotConnectedMSG(playerid);
     if(!PlayerNearPlayer(3.0, playerid, id)) return NotNearPlayerMSG(playerid);
 //  if(fine < 0 || fine > 1000) return SCM(playerid, COLOR_GRAD2, "Amenda trebuie sa fie intre 0 si 1000$.");
@@ -32113,7 +32126,7 @@ CMD:aunjail(playerid, params[])
     SetPlayerPos(targetid, 1553.3107, 1675.8288, 16.1953);
     format(msg, sizeof(msg), "AdmCmd: %s a fost scos din Ajail de catre %s.", GetName(targetid), GetName(playerid));
     LOCALAMSG(targetid, 20, COLOR_LIGHTRED, msg);
-    SetSpawnInfo(playerid, 0, PlayerInfo[playerid][pSkin], 2262.7705,-86.0881,26.4535, 1.0, -1, -1, -1, -1, -1, -1);
+    SetSpawnInfo(playerid, 0, PlayerInfo[playerid][pSkin], 303.9930,1876.5928,904.3759, 1.0, -1, -1, -1, -1, -1, -1);
     PlayerTextDrawHide(targetid,jail_timeleft[targetid]);
     return 1;
 }
@@ -36904,7 +36917,7 @@ CMD:trash(playerid, params[])
                 {
                     SetPVarInt(playerid, "GarbageFull", 1);
                     SCM(playerid, COLOR_GREY, "[JOB]: Trebuie sa te intorci la groapa de gunoi pentru a descarca masina.");
-                    SetPlayerCheckpoint(playerid, 2402.4753,90.8707,27.1285, 4.0);
+                    SetPlayerCheckpoint(playerid, 2198.4236,-1977.2279,13.4196, 4.0);
                     return 1;
                 }
                 if(BinInfo[i][TrashPicked] == 1) return SCM(playerid, COLOR_GRAD1, "Acest cos de gunoi este gol. Revino mai tarziu.");
@@ -36937,7 +36950,7 @@ CMD:trash(playerid, params[])
                 {
                     SetPVarInt(playerid, "GarbageFull", 1);
                     SCM(playerid, COLOR_GREY, "Trebuie sa te intorci la groapa de gunoi pentru a descarca masina");
-                    SetPlayerCheckpoint(playerid, 2108.7170, -1977.7446, 13.5468, 4.0);
+                    SetPlayerCheckpoint(playerid, 2198.4236,-1977.2279,13.4196, 4.0);
                 }               
             }
             else
@@ -36955,7 +36968,7 @@ CMD:trash(playerid, params[])
 
 CMD:takeuniform(playerid, params[])
 {
-    if(!PlayerToPoint(2.0, playerid, 2195.5798, -1973.2034, 13.5589)) return SCM(playerid, -1, "Trebuie sa te aflii la locul pentru Uniforma de gunoier!");
+    if(!PlayerToPoint(2.0, playerid, 2195.4971,-1972.9010,13.5590)) return SCM(playerid, -1, "Trebuie sa te aflii la locul pentru Uniforma de gunoier!");
     if(PlayerInfo[playerid][pJob] != GARBAGE) return SCM(playerid, -1, "Nu ai jobul de gunoier!");
     if(GetPVarInt(playerid, "TrashUniform") == 0)
     {
@@ -37620,7 +37633,7 @@ CMD:makegarage(playerid, params[])
     GarageInfo[garage][gprice] = price;
     format(GarageInfo[garage][gowner], 64, "Statul");
     GarageInfo[garage][gowned] = 0;
-    GarageInfo[garage][glock] = 0;
+    GarageInfo[garage][glock] = 1;
     GarageInfo[garage][gOn] = 1;
     AddGarage(garage);
     AddGarageLabel(garage);
@@ -37792,11 +37805,11 @@ function AddGarageLabel(garage)
     DestroyDynamicPickup(GarageInfo[garage][gpickup]);
     DestroyDynamic3DTextLabel(GarageInfo[garage][glabel]);
     DestroyDynamic3DTextLabel(GarageInfo[garage][glabel2]);
-    GarageInfo[garage][gpickup] = CreateDynamicPickup(1272, 1, GarageInfo[garage][gEnterX], GarageInfo[garage][gEnterY], GarageInfo[garage][gEnterZ]);
+    GarageInfo[garage][gpickup] = CreateDynamicPickup(1272, 1, GarageInfo[garage][gEnterX], GarageInfo[garage][gEnterY], GarageInfo[garage][gEnterZ]+1);
     if(GarageInfo[garage][gowned] == 0) format(msg, sizeof(msg), "[GARAJ %d]\nPret: %d$\n /buygarage", garage, GarageInfo[garage][gprice]);
     else if(GarageInfo[garage][gowned] == 1) format(msg, sizeof(msg), "[GARAJ %d]\nProprietar: %s", garage, GarageInfo[garage][gowner]);
-    GarageInfo[garage][glabel] = CreateDynamic3DTextLabel(msg, COLOR_WHITE, GarageInfo[garage][gEnterX], GarageInfo[garage][gEnterY], GarageInfo[garage][gEnterZ], 10.0); 
-    GarageInfo[garage][glabel2] = CreateDynamic3DTextLabel("/exit", COLOR_GREY, GarageInfo[garage][gExitX], GarageInfo[garage][gExitY], GarageInfo[garage][gExitZ], 10.0, garage);     
+    GarageInfo[garage][glabel] = CreateDynamic3DTextLabel(msg, COLOR_WHITE, GarageInfo[garage][gEnterX], GarageInfo[garage][gEnterY], GarageInfo[garage][gEnterZ]+1, 10.0); 
+    GarageInfo[garage][glabel2] = Create3DTextLabel("/exit", COLOR_GREY, GarageInfo[garage][gExitX], GarageInfo[garage][gExitY], GarageInfo[garage][gExitZ]+1, 10.0, garage);
     return 1;
 }
 

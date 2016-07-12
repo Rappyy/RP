@@ -1,6 +1,6 @@
 #include <a_samp>
 
-#define MAX_GARAGES 100
+#define MAX_GARAGES 200
 enum GaInfo{
 	gid,
 	Float:gEnterX,
@@ -1911,8 +1911,9 @@ enum GPSEnums
 	Float:gpsY,
 	Float:gpsZ
 };
+#define MAX_GPS 100
+new GPSInfo[MAX_GPS][GPSEnums];
 
-new GPSInfo[MAX_GPS_LOCATION][GPSEnums];
 
 //DMV
 
