@@ -1,4 +1,13 @@
 #include <a_samp>
+
+#define STREAMER_OBJECT_SD 200.0
+#define STREAMER_OBJECT_DD 200.0
+#define STREAMER_PICKUP_SD 200.0
+#define STREAMER_CP_SD 200.0
+#define STREAMER_RACE_CP_SD 200.0
+#define STREAMER_MAP_ICON_SD 200.0
+#define STREAMER_3D_TEXT_LABEL_SD 200.0
+
 #include <a_mysql>
 #include <izcmd>
 #include <sscanf2>
@@ -43,10 +52,10 @@ new dbHandle;
 
 #if defined localhost_mysql
 
-    #define SQL_HOST "vps.evolution-rp.ro"
-    #define SQL_USER "server"
-    #define SQL_PASS "server_evorp"
-    #define SQL_DB "evorp_test"
+    #define SQL_HOST "localhost"
+    #define SQL_USER "root"
+    #define SQL_PASS ""
+    #define SQL_DB "evorp"
     
 #else
 
@@ -307,7 +316,7 @@ new Menu:FoodStallMenu;
 #define MAX_WEAPONS 46 // Needs to be plus 1
 #define MAX_PLANTS 50
 #undef MAX_OBJECTS
-#define MAX_OBJECTS 20000
+#define MAX_OBJECTS 15500
 #define MAX_TRASHBINS 100
 #define MAX_SPRAYS 50
 #define BANK_CARD_PRICE 500
@@ -517,7 +526,7 @@ new levelexp = 4; //Adding 4 exp every level.
 
 //============================Tolls============================//
 // Main configuration
-#define TollCost (50)                   // How much it costs to pass the tolls
+#define TollCost (10)                   // How much it costs to pass the tolls
 #define TollDelayCop (5)                // The timespace in seconds between each /toll command for all cops (To avoid spam)
 #define TollOpenDistance (4.0)          // The distance in units the player can be from the icon to open the toll
 
@@ -1091,7 +1100,6 @@ stock ConnectMySQL()
     return 1;
 }
 
-
 public OnGameModeInit()
 {
     ConnectMySQL();
@@ -1181,7 +1189,7 @@ public OnGameModeInit()
     //Reseting player vehicle key & slot
     
     //Actor for Weapon Dealer
-    new GovernmentActors[8];
+    new GovernmentActors[10];
     GovernmentActors[0] = CreateActor(265, 1543.2919, -1621.3621, 13.5613, 180); // LSPD - Bariera
     GovernmentActors[1] = CreateActor(91, 304.0050, 1874.6152, 904.4222, 358.7325); // PRIMARIE - Principal
     GovernmentActors[2] = CreateActor(163, 306.8501, 1875.4375, 904.4222, 12.5193); // PRIMARIE - Gardian 1
@@ -1190,24 +1198,14 @@ public OnGameModeInit()
     GovernmentActors[5] = CreateActor(267,1465.9283,-1766.1008,3377.3479,217.7077); // LSPD - Gardian 2
     GovernmentActors[6] = CreateActor(303,1476.6714,-1765.8367,3377.3479,91.1199); // LSPD - Interior 1
     GovernmentActors[7] = CreateActor(306,1476.6808,-1770.5554,3377.3479,87.3598); // LSPD - Interior 2
+    GovernmentActors[8] = CreateActor(70, 1973.3049, 1169.5427, -5.2087, 181.9331); // LSFA - Receptie 
+    GovernmentActors[9] = CreateActor(71, 1966.3323, 1160.5472, -5.2087, 314.4509); // LSFA - Gardian 
 
-    ApplyActorAnimation(GovernmentActors[0], "DEALER", "DEALER_IDLE", 4.1, 1, 0, 0, 0, 0); // DealStance Anim
-    ApplyActorAnimation(GovernmentActors[1], "DEALER", "DEALER_IDLE", 4.1, 1, 0, 0, 0, 0); // DealStance Anim
-    ApplyActorAnimation(GovernmentActors[2], "DEALER", "DEALER_IDLE", 4.1, 1, 0, 0, 0, 0); // DealStance Anim
-    ApplyActorAnimation(GovernmentActors[3], "DEALER", "DEALER_IDLE", 4.1, 1, 0, 0, 0, 0); // DealStance Anim
-    ApplyActorAnimation(GovernmentActors[4], "DEALER", "DEALER_IDLE", 4.1, 1, 0, 0, 0, 0); // DealStance Anim
-    ApplyActorAnimation(GovernmentActors[5], "DEALER", "DEALER_IDLE", 4.1, 1, 0, 0, 0, 0); // DealStance Anim
-    ApplyActorAnimation(GovernmentActors[6], "DEALER", "DEALER_IDLE", 4.1, 1, 0, 0, 0, 0); // DealStance Anim
-    ApplyActorAnimation(GovernmentActors[7], "DEALER", "DEALER_IDLE", 4.1, 1, 0, 0, 0, 0); // DealStance Anim
-
-    SetActorInvulnerable(GovernmentActors[0], true);
-    SetActorInvulnerable(GovernmentActors[1], true);
-    SetActorInvulnerable(GovernmentActors[2], true);
-    SetActorInvulnerable(GovernmentActors[3], true);
-    SetActorInvulnerable(GovernmentActors[4], true);
-    SetActorInvulnerable(GovernmentActors[5], true);
-    SetActorInvulnerable(GovernmentActors[6], true);
-    SetActorInvulnerable(GovernmentActors[7], true);
+    for(new i=0; i<sizeof(GovernmentActors); i++)
+    {
+        ApplyActorAnimation(GovernmentActors[i], "DEALER", "DEALER_IDLE", 4.1, 1, 0, 0, 0, 0); // DealStance Anim
+        SetActorInvulnerable(GovernmentActors[i], true);
+    }
 
     //Actor for Weapon Dealer
     GunActor[0] = CreateActor(29, 165.8469, -166.4714, 6.7786, 2.7556); //  Jackson - Blueberry
@@ -1647,7 +1645,17 @@ public OnPlayerDisconnect(playerid, reason)
             FarmInfo[playerid][pPaddyHarvestInVehicle] = 0;
         }
     }
+
+    if(enteredgarage[playerid] > 0)
+    {
+        PlayerInfo[playerid][pPosX] = GarageInfo[enteredgarage[playerid]][gEnterX];
+        PlayerInfo[playerid][pPosY] = GarageInfo[enteredgarage[playerid]][gEnterY];
+        PlayerInfo[playerid][pPosZ] = GarageInfo[enteredgarage[playerid]][gEnterZ];
+        SavePlayerStats(playerid);
+    }
+
     // Farmer job
+    enteredgarage[playerid] = 0;
     ProxDetectorP(30.0, playerid, msg, COLOR_WHITE, COLOR_WHITE, COLOR_WHITE, COLOR_WHITE, COLOR_WHITE);
     KillTimer(LoginTimer{playerid});
     dmv_bike[playerid] = 0;
@@ -4270,14 +4278,14 @@ stock UpdatePlayerToy(playerid, toyslot, bone, Float:X, Float:Y, Float:Z, Float:
 
 stock LoadPlayerToys(playerid)
 {
-    format(query, sizeof(query), "SELECT * FROM `playertoys` WHERE `player` = %d", GetName(playerid));
+    format(query, sizeof(query), "SELECT * FROM `playertoys` WHERE `player` = '%s'", GetName(playerid));
     mysql_function_query(dbHandle, query, true, "OnPlayerLoadToys", "i", playerid);
     return 1;
 }
 
 stock RemovePlayerToyFromSlot(playerid, toyslot)
 {
-    format(query, sizeof(query), "DELETE FROM `playertoys` WHERE `id` = %d", PlayerToys[playerid][toyslot][ptID]);
+    format(query, sizeof(query), "DELETE FROM `playertoys` WHERE `id` = %d AND `player` = '%s'", PlayerToys[playerid][toyslot][ptID], GetName(playerid));
     mysql_function_query(dbHandle, query, true, "OnPlayerRemovedToy", "id", playerid, toyslot);
     return 1;
 }
@@ -4314,12 +4322,29 @@ stock GivePermWeapon(playerid, slot, wepid, ammo)
 
 stock RemoveObjectsFromServer(playerid)
 {
+    //Parc LSFA
+    RemoveBuildingForPlayer(playerid, 5929, 1230.890, -1337.984, 12.539, 0.250);
+    RemoveBuildingForPlayer(playerid, 739, 1231.140, -1341.851, 12.734, 0.250);
+    RemoveBuildingForPlayer(playerid, 739, 1231.140, -1328.093, 12.734, 0.250);
+    RemoveBuildingForPlayer(playerid, 739, 1231.140, -1356.210, 12.734, 0.250);
+    RemoveBuildingForPlayer(playerid, 620, 1222.664, -1374.609, 12.296, 0.250);
+    RemoveBuildingForPlayer(playerid, 620, 1222.664, -1356.554, 12.296, 0.250);
+    RemoveBuildingForPlayer(playerid, 1297, 1231.640, -1389.867, 15.671, 0.250);
+    RemoveBuildingForPlayer(playerid, 620, 1240.921, -1374.609, 12.296, 0.250);
+    RemoveBuildingForPlayer(playerid, 620, 1240.921, -1356.554, 12.296, 0.250);
+    RemoveBuildingForPlayer(playerid, 1297, 1210.804, -1337.835, 15.773, 0.250);
+    RemoveBuildingForPlayer(playerid, 620, 1222.664, -1335.054, 12.296, 0.250);
+    RemoveBuildingForPlayer(playerid, 620, 1222.664, -1317.742, 12.296, 0.250);
+    RemoveBuildingForPlayer(playerid, 5812, 1230.890, -1337.984, 12.539, 0.250);
+    RemoveBuildingForPlayer(playerid, 620, 1240.921, -1335.054, 12.296, 0.250);
+    RemoveBuildingForPlayer(playerid, 620, 1240.921, -1317.742, 12.296, 0.250);
+    RemoveBuildingForPlayer(playerid, 620, 1222.664, -1300.921, 12.296, 0.250);
+    RemoveBuildingForPlayer(playerid, 620, 1240.921, -1300.921, 12.296, 0.250);
+    RemoveBuildingForPlayer(playerid, 1294, 1230.507, -1285.304, 17.078, 0.250);
     //Exterior PD
     RemoveBuildingForPlayer(playerid, 4063, 1578.468, -1676.421, 13.070, 0.250);
     RemoveBuildingForPlayer(playerid, 4064, 1571.601, -1675.750, 35.679, 0.250);
     RemoveBuildingForPlayer(playerid, 4228, 1568.289, -1677.781, 10.820, 0.250);
-    RemoveBuildingForPlayer(playerid, 4032, 1568.289, -1677.781, 10.820, 0.250);
-    RemoveBuildingForPlayer(playerid, 4232, 1568.289, -1677.781, 10.820, 0.250);
     RemoveBuildingForPlayer(playerid, 3975, 1578.468, -1676.421, 13.070, 0.250);
     RemoveBuildingForPlayer(playerid, 3976, 1571.601, -1675.750, 35.679, 0.250);
     RemoveBuildingForPlayer(playerid, 4097, 1605.140, -1728.937, 18.273, 0.250);
@@ -8951,7 +8976,7 @@ stock GetDrugInfo(playerid, slot)
     new info[64];
     if(PlayerInfo[playerid][pDrug][slot] == 0)
     {
-        info = "Empty";
+        info = "Gol";
     }
     else
     {
@@ -8965,7 +8990,7 @@ stock GetVehicleDrugInfo(vehicle, slot)
     new info[64];
     if(VehicleInfo[vehicle][carDrug][slot] == 0)
     {
-        info = "Empty";
+        info = "Gol";
     }
     else
     {
@@ -12027,7 +12052,7 @@ public OnPlayerClickPlayer(playerid, clickedplayerid, source)
 
     if(PlayerInfo[clickedplayerid][pHelper] > 0) strcat(msg, "\nModerator: Da");
 
-    if(clickedplayerid == playerid)
+    if(clickedplayerid == playerid || CheckAdmin(playerid, 2014))
     {
         new timeleft = 60 - PlayerInfo[clickedplayerid][pPayDayTime];
         format(string2, sizeof(string2), "\n\n\n{FF0000}*Payday in %d minute.", timeleft);
@@ -14378,7 +14403,7 @@ public LoadDynamicLabels()
             total++;
         }
     }
-    format(msg,sizeof(msg), "Au fost incarcate %d labels din baza de date MySQL.", total);
+    format(msg,sizeof(msg), "[MYSQL] LabelsInfo: %d.", total);
     printf(msg);
     return 1;
 }
@@ -14410,7 +14435,7 @@ public LoadDynamicDoors()
             total++;
         }
     }
-    format(msg,sizeof(msg), "Loaded %d doors from MySQL.", total);
+    format(msg,sizeof(msg), "[MYSQL] DoorInfo: %d.", total);
     printf(msg);
     return 1;
 }
@@ -14446,7 +14471,7 @@ public LoadDynamicFactionDoors()
             total++;
         }
     }
-    format(msg,sizeof(msg), "Loaded %d faction doors from MySQL.", total);
+    format(msg,sizeof(msg), "[MYSQL] FactionDoors: %d.", total);
     printf(msg);
     return 1;
 }
@@ -14499,7 +14524,7 @@ public LoadMoveDoors()
             total++;
         }
     }
-    format(msg,sizeof(msg), "Loaded %d dynamic movable doors from MySQL.", total);
+    format(msg,sizeof(msg), "[MYSQL] Doors: %d.", total);
     printf(msg);
     return 1;
 }
@@ -14563,7 +14588,7 @@ public LoadDynamicGates()
             total++;
         }
     }
-    format(msg,sizeof(msg), "Loaded %d dynamic gates from MySQL.", total);
+    format(msg,sizeof(msg), "[MYSQL] Gates: %d.", total);
     printf(msg);
     return 1;
 }
@@ -14593,7 +14618,7 @@ public LoadDynamicBins()
             total++;
         }
     }
-    format(msg,sizeof(msg), "Au fost incarcate %d cosuri de gunoi din MySQL.", total);
+    format(msg,sizeof(msg), "[MYSQL] BinInfo: %d.", total);
     printf(msg);
     return 1; 
 }
@@ -14620,7 +14645,7 @@ public LoadDynamicATMS()
             total++;
         }
     }
-    format(msg,sizeof(msg), "Loaded %d ATM's from MySQL.", total);
+    format(msg,sizeof(msg), "[MYSQL] ATMInfo: %d.", total);
     printf(msg);
     return 1;
 }
@@ -14644,7 +14669,7 @@ public LoadDynamicTeles()
             total++;
         }
     }
-    format(msg,sizeof(msg), "Loaded %d admin teleports from MySQL.", total);
+    format(msg,sizeof(msg), "[MYSQL] HouseInteriors: %d.", total);
     printf(msg);
     return 1;
 }
@@ -14687,7 +14712,7 @@ public LoadDynamicObjects()
             total++;
         }
     }
-    format(msg,sizeof(msg), "Loaded %d dynamic objects from MySQL.", total);
+    format(msg,sizeof(msg), "[MYSQL] ObjectsInfo: %d.", total);
     printf(msg);
     return 1;
 }
@@ -14730,7 +14755,7 @@ public LoadDynamicCCTV()
             total++;
         }
     }
-    format(msg,sizeof(msg), "Loaded %d dynamic CCTV's from MySQL.", total);
+    format(msg,sizeof(msg), "[MYSQL] CCTVInfo: %d.", total);
     printf(msg);
     return 1;
 }
@@ -14759,7 +14784,7 @@ public LoadDynamicCPT()
             total++;
         }
     }
-    format(msg,sizeof(msg), "Loaded %d dynamic infos from MySQL.", total);
+    format(msg,sizeof(msg), "[MYSQL] CPTInfo: %d.", total);
     printf(msg);
     return 1;
 }
@@ -14786,7 +14811,7 @@ public LoadDynamicGasStations()
             total++;
         }
     }
-    format(msg,sizeof(msg), "Loaded %d dynamic gas stations from MySQL.", total);
+    format(msg,sizeof(msg), "[MYSQL] FactionDoors: %d.", total);
     printf(msg);
     return 1;
 }
@@ -14810,7 +14835,7 @@ public LoadDynamicBanks()
             total++;
         }
     }
-    format(msg,sizeof(msg), "Loaded %d dynamic banks from MySQL.", total);
+    format(msg,sizeof(msg), "[MYSQL] BankInfo: %d.", total);
     printf(msg);
     return 1;
 }
@@ -14858,7 +14883,7 @@ public LoadDynamicVehicles()
             total++;
         }
     }
-    format(msg,sizeof(msg), "Loaded %d dynamic vehicles from MySQL.", total);
+    format(msg,sizeof(msg), "[MYSQL] CityVehicles: %d.", total);
     printf(msg);
     return 1;
 }
@@ -14913,7 +14938,7 @@ public LoadDynamicHouses()
             total++;
         }
     }
-    format(msg,sizeof(msg), "Loaded %d dynamic houses from MySQL.", total);
+    format(msg,sizeof(msg), "[MYSQL] HouseInfo: %d.", total);
     printf(msg);
     return 1;
 }
@@ -14954,7 +14979,7 @@ public LoadDynamicBiz()
             total++;
         }
     }
-    format(msg,sizeof(msg), "Loaded %d dynamic businesses from MySQL.", total);
+    format(msg,sizeof(msg), "[MYSQL] BizInfo: %d.", total);
     printf(msg);
     return 1;
 }
@@ -15035,7 +15060,7 @@ public LoadDynamicStands()
             total++;
         }
     }
-    format(msg,sizeof(msg), "Loaded %d dynamic food stands from MySQL.", total);
+    format(msg,sizeof(msg), "[MYSQL] FoodStand: %d.", total);
     printf(msg);
     return 1;
 }
@@ -15066,7 +15091,7 @@ public LoadDynamicMeters()
             total++;
         }
     }
-    format(msg,sizeof(msg), "Loaded %d dynamic park meters from MySQL.", total);
+    format(msg,sizeof(msg), "[MYSQL] ParkMeters: %d.", total);
     printf(msg);
     return 1;
 }
@@ -15094,7 +15119,7 @@ public OnLoadApbs()
             total++;
         }
     }
-    format(msg,sizeof(msg), "Loaded %d APB's from MySQL.", total);
+    format(msg,sizeof(msg), "[MYSQL] ApbInfo: %d.", total);
     printf(msg);
     return 1;
 }
@@ -15150,7 +15175,7 @@ public LoadDynamicFactions()
             factionid++;
         }
     }
-    format(msg,sizeof(msg), "Loaded %d dynamic factions from MySQL.", total);
+    format(msg,sizeof(msg), "[MYSQL] Factions: %d.", total);
     printf(msg);
     return 1;
 }
@@ -15196,7 +15221,7 @@ public LoadDynamicJobs()
             total++;
         }
     }
-    format(msg,sizeof(msg), "Loaded %d dynamic jobs from MySQL.", total);
+    format(msg,sizeof(msg), "[MYSQL] JobsInfo: %d.", total);
     printf(msg);
     return 1;
 }
@@ -15219,7 +15244,7 @@ public LoadRadios()
             total++;
         }
     }
-    format(msg,sizeof(msg), "Loaded %d player radios from MySQL.", total);
+    format(msg,sizeof(msg), "[MYSQL] RadiosInfo: %d.", total);
     printf(msg);
     return 1;
 }
@@ -15243,7 +15268,7 @@ public LoadDynamicDealerShips()
             total++;
         }
     }
-    format(msg,sizeof(msg), "Loaded %d dynamic dealerships from MySQL.", total);
+    format(msg,sizeof(msg), "[MYSQL] DealersInfo: %d.", total);
     printf(msg);
     return 1;
 }
@@ -17751,7 +17776,7 @@ public OnPlantsAdd()
             total++;
         }
     }
-    format(msg, sizeof(msg), "Loaded %d plants from MySQL.", total);
+    format(msg, sizeof(msg), "[MYSQL] CropsInfo: %d.", total);
     printf(msg);
 }
 
@@ -20803,9 +20828,9 @@ forward OnGPSLoad();
 CMD:gps(playerid, params[])
 {
     new string[1200];
-    for(new i=0;i<=MAX_GPS;i++)
+    for(new gpsz=0;gpsz<sizeof(GPSInfo);gpsz++)
     {
-        if(GPSInfo[i][gpsOn] == 1) format(string, sizeof(string), "%s\n%d. %s" ,string, i+1, GPSInfo[i][gpsName]);
+        if(GPSInfo[gpsz][gpsOn] == 1) format(string, sizeof(string), "%s\n%d. %s" ,string, gpsz+1, GPSInfo[gpsz][gpsName]);
     }
     ShowDialog(playerid, Show:<DialogGPS>, DIALOG_STYLE_LIST, "GPS", string, "Ok", "Inchide");
     return 1;
@@ -20889,7 +20914,7 @@ public OnGPSLoad()
             total++;
         }
     }
-    format(msg,sizeof(msg), "Au fost incarcate %d locatii GPS din MySQL.", total);
+    format(msg,sizeof(msg), "[MYSQL] GPSInfo: %d.", total);
     printf(msg);
     return 1;
 }
@@ -21524,7 +21549,35 @@ CMD:gascan(playerid, params[])
 
 CMD:lock(playerid, params[])
 {
+    for(new i = 1; i < sizeof(GarageInfo); i++)
+    {
+        if(PlayerToPoint(3.0, playerid, GarageInfo[i][gEnterX], GarageInfo[i][gEnterY], GarageInfo[i][gEnterZ]) || PlayerToPoint(3.0, playerid, GarageInfo[i][gExitX], GarageInfo[i][gExitY], GarageInfo[i][gExitZ]))
+        {
+            if(PlayerInfo[playerid][pGarage] == i)
+            {
+                if(GarageInfo[i][glock] == 0)
+                {
+                    GarageInfo[i][glock] = 1; 
+                    GameTextForPlayer(playerid, "~w~Garaj ~r~Inchis", 2000, 6);   
+                    PlaySound(playerid, 1145);
+                    return 1;
+                }
+                else if(GarageInfo[i][glock] == 1)
+                {
+                    GarageInfo[i][glock] = 0; 
+                    GameTextForPlayer(playerid, "~w~Garaj ~g~Deschis", 2000, 6);   
+                    PlaySound(playerid, 1145);
+                    return 1;
+                }
+            }
 
+            else
+            {
+                GameTextForPlayer(playerid, "~r~Nu ai cheie", 5000, 6);
+                return 1;
+            }
+        }
+    }
     new counter = 0, result;
     for(new i = 1; i <=GetVehiclePoolSize(); i++)
     {
@@ -21783,35 +21836,7 @@ CMD:lock(playerid, params[])
         }
     }
 
-    for(new i = 1; i < sizeof(GarageInfo); i++)
-    {
-        if(PlayerToPoint(3.0, playerid, GarageInfo[i][gEnterX], GarageInfo[i][gEnterY], GarageInfo[i][gEnterZ]) || PlayerToPoint(3.0, playerid, GarageInfo[i][gExitX], GarageInfo[i][gExitY], GarageInfo[i][gExitZ]))
-        {
-            if(PlayerInfo[playerid][pGarage] == i)
-            {
-                if(GarageInfo[i][glock] == 0)
-                {
-                    GarageInfo[i][glock] = 1; 
-                    GameTextForPlayer(playerid, "~w~Garaj ~r~Inchis", 2000, 6);   
-                    PlaySound(playerid, 1145);
-                    return 1;
-                }
-                else if(GarageInfo[i][glock] == 1)
-                {
-                    GarageInfo[i][glock] = 0; 
-                    GameTextForPlayer(playerid, "~w~Garaj ~g~Deschis", 2000, 6);   
-                    PlaySound(playerid, 1145);
-                    return 1;
-                }
-            }
-
-            else
-            {
-                GameTextForPlayer(playerid, "~r~Nu ai cheie", 5000, 6);
-                return 1;
-            }
-        }
-    }
+    
     return 1;
 }
 
@@ -22864,36 +22889,39 @@ CMD:enter(playerid, params[])
             return 1;
         }
     }
-    for(new i = 1; i <= MAX_GARAGES; i ++)
+    for(new i = 1; i < sizeof(GarageInfo); i ++)
     {
-        if (PlayerToPoint(3, playerid,GarageInfo[i][gEnterX], GarageInfo[i][gEnterY], GarageInfo[i][gEnterZ]))
+        if(GarageInfo[i][gOn] == 1)
         {
-            if(GarageInfo[i][glock] == 0)
+            if (PlayerToPoint(3, playerid, GarageInfo[i][gEnterX], GarageInfo[i][gEnterY], GarageInfo[i][gEnterZ]))
             {
-                if(IsDriver(playerid))
+                if(GarageInfo[i][glock] == 0)
                 {
-                    enteredgarage[playerid] = i;
-                    SetVehiclePos(GetPlayerVehicleID(playerid),GarageInfo[i][gExitX],GarageInfo[i][gExitY],GarageInfo[i][gExitZ]);
-                    SetPlayerVirtualWorld(playerid, GarageInfo[i][gvw]);
-                    SetVehicleZAngle(GetPlayerVehicleID(playerid), GarageInfo[i][gEnterAngle]);
-                    SetVehicleVirtualWorld(GetPlayerVehicleID(playerid), GarageInfo[i][gvw]);
-                    FreezePlayer(playerid);
-                    GameTextForPlayer(playerid, "~r~INCARC OBIECTELE...", 2000, 4);
-                    SetTimerEx("UnFreezePlayer", 2000, 0, "i", playerid);
-                    return 1;
+                    if(IsDriver(playerid))
+                    {
+                        enteredgarage[playerid] = i;
+                        SetVehiclePos(GetPlayerVehicleID(playerid),GarageInfo[i][gExitX],GarageInfo[i][gExitY],GarageInfo[i][gExitZ]);
+                        SetPlayerVirtualWorld(playerid, GarageInfo[i][gvw]);
+                        SetVehicleZAngle(GetPlayerVehicleID(playerid), GarageInfo[i][gEnterAngle]);
+                        SetVehicleVirtualWorld(GetPlayerVehicleID(playerid), GarageInfo[i][gvw]);
+                        FreezePlayer(playerid);
+                        GameTextForPlayer(playerid, "~r~INCARC OBIECTELE...", 2000, 4);
+                        SetTimerEx("UnFreezePlayer", 2000, 0, "i", playerid);
+                        return 1;
+                    }
+                    else
+                    {
+                        enteredgarage[playerid] = i;
+                        SetPlayerPos(playerid, GarageInfo[i][gExitX], GarageInfo[i][gExitY], GarageInfo[i][gExitZ]);
+                        SetPlayerVirtualWorld(playerid, GarageInfo[i][gvw]);
+                        FreezePlayer(playerid);
+                        GameTextForPlayer(playerid, "~r~INCARC OBIECTELE...", 2000, 4);
+                        SetTimerEx("UnFreezePlayer", 2000, 0, "i", playerid);
+                        return 1;
+                    }
                 }
-                else
-                {
-                    enteredgarage[playerid] = i;
-                    SetPlayerPos(playerid, GarageInfo[i][gExitX], GarageInfo[i][gExitY], GarageInfo[i][gExitZ]);
-                    SetPlayerVirtualWorld(playerid, GarageInfo[i][gvw]);
-                    FreezePlayer(playerid);
-                    GameTextForPlayer(playerid, "~r~INCARC OBIECTELE...", 2000, 4);
-                    SetTimerEx("UnFreezePlayer", 2000, 0, "i", playerid);
-                    return 1;
-                }
+                else return GameTextForPlayer(playerid, "~r~INCHIS", 2000, 6);
             }
-            else return GameTextForPlayer(playerid, "~r~INCHIS", 2000, 6);
         }
     }
     return 1;
@@ -22988,7 +23016,7 @@ CMD:exit(playerid, params[])
             return 1;
         }
     }
-    for(new i = 1; i <= MAX_GARAGES; i ++)
+    for(new i = 1; i < sizeof(GarageInfo); i ++)
     {
         if (PlayerToPoint(5, playerid,GarageInfo[i][gExitX], GarageInfo[i][gExitY], GarageInfo[i][gExitZ]))
         {
@@ -27983,7 +28011,7 @@ CMD:duty(playerid, params[])
     }
     if(faction == LSFD)
     {
-        if(!PlayerToPoint(10.0, playerid, 3697.7292,-478.7621,3899.5659)) return SCM(playerid, COLOR_GREY, "Nu esti in vestiar.");
+        if(!PlayerToPoint(10.0, playerid, 1974.6576,1147.8197,-5.2087)) return SCM(playerid, COLOR_GREY, "Nu esti in vestiar.");
         if(!MedicDuty{playerid})
         {
             ActionMessage(playerid,15.0,"intra si ia echipamentul din dulapul sau.");
@@ -30857,7 +30885,7 @@ public PlantSeeds(playerid)
 {
     new plant = GetClosestPlantID(playerid);
     GivePlayerDrug(playerid, DRUG_MARIJUANA, CropsInfo[plant][pMade]);
-    new seeds = RandomEx(1, 6);
+    new seeds = CropsInfo[plant][pMade]/2;
     PlayerInfo[playerid][pSeeds] += seeds;
     SCMEx(playerid, COLOR_YELLOWG, "Ai cules cu success planta, ai obtinut %d grame și %d seminte.", CropsInfo[plant][pMade], seeds);
     UnFreezePlayer(playerid);
@@ -36975,7 +37003,6 @@ CMD:trash(playerid, params[])
 
 CMD:takeuniform(playerid, params[])
 {
-    if(PlayerInfo[playerid][pGarbage] >= 2) return ErrorMsg(playerid, "Ai lucrat destul, asteapta paydayul!");
     if(!PlayerToPoint(2.0, playerid, 2195.4971,-1972.9010,13.5590)) return SCM(playerid, -1, "Trebuie sa te aflii la locul pentru Uniforma de gunoier!");
     if(PlayerInfo[playerid][pJob] != GARBAGE) return SCM(playerid, -1, "Nu ai jobul de gunoier!");
     if(GetPVarInt(playerid, "TrashUniform") == 0)
@@ -37900,7 +37927,7 @@ function LoadGarages()
             total++;
         }
     }
-    format(msg,sizeof(msg), "Au fost incarcate %d garaje din baza de date..", total);
+    format(msg,sizeof(msg), "[MYSQL] GarageInfo: %d.", total);
     printf(msg);
     return 1;
 }

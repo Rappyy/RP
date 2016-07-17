@@ -3075,3 +3075,1518 @@ v0.3.7-R2, (C)2005-2015 SA-MP Team
 [16:24:11] [join] Jesen_Cleave has joined the server (1:46.214.213.166)
 [16:48:53] [part] Bjarn_Peer has left the server (0:1)
 [16:48:59] [part] Jesen_Cleave has left the server (1:1)
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[11:35:41] filterscripts = ""  (string)
+[11:35:41] 
+[11:35:41] Server Plugins
+[11:35:41] --------------
+[11:35:41]  Loading plugin: crashdetect
+[11:35:41]   CrashDetect v4.15.1 is OK.
+[11:35:41]   Loaded.
+[11:35:41]  Loading plugin: mysql
+[11:35:41]  >> plugin.mysql: R39-5 successfully loaded.
+[11:35:41]   Loaded.
+[11:35:41]  Loading plugin: streamer
+[11:35:41] 
+
+*** Streamer Plugin v2.8 by Incognito loaded ***
+
+[11:35:41]   Loaded.
+[11:35:41]  Loading plugin: sscanf
+[11:35:41] 
+
+[11:35:41]  ===============================
+
+[11:35:41]       sscanf plugin loaded.     
+
+[11:35:41]          Version:  2.8.2        
+
+[11:35:41]    (c) 2012 Alex "Y_Less" Cole  
+
+[11:35:41]  ===============================
+
+[11:35:41]   Loaded.
+[11:35:41]  Loading plugin: nativechecker
+[11:35:41]   Loaded.
+[11:35:41]  Loaded 5 plugins.
+
+[11:35:41] 
+[11:35:41] Ban list
+[11:35:41] --------
+[11:35:41]  Loaded: samp.ban
+[11:35:41] 
+[11:35:41] 
+[11:35:41] Filterscripts
+[11:35:41] ---------------
+[11:35:41]   Loaded 0 filterscripts.
+
+[11:35:42]  
+[11:35:42]  
+[11:35:42]  
+[11:35:42]  ======================================= 
+[11:35:42]  |                                     | 
+[11:35:42]  |        YSI version 3.09.0684        | 
+[11:35:42]  |        By Alex "Y_Less" Cole        | 
+[11:35:42]  |                                     | 
+[11:35:42]  ======================================= 
+[11:35:42]  
+[11:35:42] Number of vehicle models: 0
+[11:35:42] Au fost incarcate 34 labels din baza de date MySQL.
+[11:35:42] Loaded 31 doors from MySQL.
+[11:35:42] Loaded 8 faction doors from MySQL.
+[11:35:42] Loaded 2 dynamic gates from MySQL.
+[11:35:42] Loaded 8 ATM's from MySQL.
+[11:35:42] Loaded 41 admin teleports from MySQL.
+[11:35:42] Loaded 0 dynamic objects from MySQL.
+[11:35:42] Loaded 2 dynamic infos from MySQL.
+[11:35:42] Loaded 8 dynamic gas stations from MySQL.
+[11:35:42] Loaded 1 dynamic banks from MySQL.
+[11:35:42] Loaded 117 dynamic vehicles from MySQL.
+[11:35:42] Loaded 600 dynamic houses from MySQL.
+[11:35:42] Loaded 27 dynamic businesses from MySQL.
+[11:35:42] Loaded 0 dynamic food stands from MySQL.
+[11:35:42] Loaded 0 dynamic park meters from MySQL.
+[11:35:42] Loaded 0 APB's from MySQL.
+[11:35:42] Loaded 8 dynamic factions from MySQL.
+[11:35:42] [debug] Run time error 4: "Array index out of bounds"
+[11:35:42] [debug]  Accessing element at index 11 past array upper bound 9
+[11:35:42] [debug] AMX backtrace:
+[11:35:42] [debug] #0 003332c0 in public LoadDynamicJobs () at evo.pwn:15185
+[11:35:42] Loaded 14 dynamic movable doors from MySQL.
+[11:35:42] Loaded 0 dynamic CCTV's from MySQL.
+[11:35:42] Loaded 1 dynamic dealerships from MySQL.
+[11:35:42] Loaded 4 player radios from MySQL.
+[11:35:42] Loaded 6 plants from MySQL.
+[11:35:42] Au fost incarcate 57 cosuri de gunoi din MySQL.
+[11:35:42] Au fost incarcate 3 locatii GPS din MySQL.
+[11:35:42] Au fost incarcate 135 garaje din baza de date..
+[11:40:10] --- Server Shutting Down.
+[11:40:10] [debug] Run time error 4: "Array index out of bounds"
+[11:40:10] [debug]  Accessing element at index 200 past array upper bound 199
+[11:40:10] [debug] AMX backtrace:
+[11:40:10] [debug] #0 002876f8 in public ScriptInit_OnGameModeExit () at evo.pwn:1505
+[11:40:10] [debug] #1 000077a4 in public OnGameModeExit () at D:\SAMP\GitHub\RP\pawno\include\YSI\internal\..\y_scriptinit.inc:269
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[11:40:12] password = ""  (string)
+[11:40:12] filterscripts = ""  (string)
+[11:40:12] 
+[11:40:12] Server Plugins
+[11:40:12] --------------
+[11:40:12]  Loading plugin: crashdetect
+[11:40:12]   CrashDetect v4.15.1 is OK.
+[11:40:12]   Loaded.
+[11:40:12]  Loading plugin: mysql
+[11:40:12]  >> plugin.mysql: R39-5 successfully loaded.
+[11:40:12]   Loaded.
+[11:40:12]  Loading plugin: streamer
+[11:40:12] 
+
+*** Streamer Plugin v2.8 by Incognito loaded ***
+
+[11:40:12]   Loaded.
+[11:40:12]  Loading plugin: sscanf
+[11:40:12] 
+
+[11:40:12]  ===============================
+
+[11:40:12]       sscanf plugin loaded.     
+
+[11:40:12]          Version:  2.8.2        
+
+[11:40:12]    (c) 2012 Alex "Y_Less" Cole  
+
+[11:40:12]  ===============================
+
+[11:40:12]   Loaded.
+[11:40:12]  Loading plugin: nativechecker
+[11:40:12]   Loaded.
+[11:40:12]  Loaded 5 plugins.
+
+[11:40:12] 
+[11:40:12] Ban list
+[11:40:12] --------
+[11:40:12]  Loaded: samp.ban
+[11:40:12] 
+[11:40:12] 
+[11:40:12] Filterscripts
+[11:40:12] ---------------
+[11:40:12]   Loaded 0 filterscripts.
+
+[11:40:12]  
+[11:40:12]  
+[11:40:12]  
+[11:40:12]  ======================================= 
+[11:40:12]  |                                     | 
+[11:40:12]  |        YSI version 3.09.0684        | 
+[11:40:12]  |        By Alex "Y_Less" Cole        | 
+[11:40:12]  |                                     | 
+[11:40:12]  ======================================= 
+[11:40:12]  
+[11:40:12] Number of vehicle models: 0
+[11:40:12] Au fost incarcate 34 labels din baza de date MySQL.
+[11:40:12] Loaded 31 doors from MySQL.
+[11:40:12] Loaded 8 faction doors from MySQL.
+[11:40:12] Loaded 2 dynamic gates from MySQL.
+[11:40:12] Loaded 8 ATM's from MySQL.
+[11:40:12] Loaded 41 admin teleports from MySQL.
+[11:40:12] Loaded 0 dynamic objects from MySQL.
+[11:40:12] Loaded 2 dynamic infos from MySQL.
+[11:40:12] Loaded 8 dynamic gas stations from MySQL.
+[11:40:12] Loaded 1 dynamic banks from MySQL.
+[11:40:12] Loaded 117 dynamic vehicles from MySQL.
+[11:40:13] Loaded 600 dynamic houses from MySQL.
+[11:40:13] Loaded 27 dynamic businesses from MySQL.
+[11:40:13] Loaded 0 dynamic food stands from MySQL.
+[11:40:13] Loaded 0 dynamic park meters from MySQL.
+[11:40:13] Loaded 0 APB's from MySQL.
+[11:40:13] Loaded 8 dynamic factions from MySQL.
+[11:40:13] [debug] Run time error 4: "Array index out of bounds"
+[11:40:13] [debug]  Accessing element at index 11 past array upper bound 9
+[11:40:13] [debug] AMX backtrace:
+[11:40:13] [debug] #0 003332c0 in public LoadDynamicJobs () at evo.pwn:15185
+[11:40:13] Loaded 14 dynamic movable doors from MySQL.
+[11:40:13] Loaded 0 dynamic CCTV's from MySQL.
+[11:40:13] Loaded 1 dynamic dealerships from MySQL.
+[11:40:13] Loaded 4 player radios from MySQL.
+[11:40:13] Loaded 6 plants from MySQL.
+[11:40:13] Au fost incarcate 57 cosuri de gunoi din MySQL.
+[11:40:13] Au fost incarcate 3 locatii GPS din MySQL.
+[11:40:13] Au fost incarcate 135 garaje din baza de date..
+[11:40:32] [connection] 127.0.0.1:62401 requests connection cookie.
+[11:40:33] [connection] incoming connection: 127.0.0.1:62401 id: 0
+[11:40:33] [join] Devin_Cross has joined the server (0:127.0.0.1)
+[11:48:49] [debug] Run time error 4: "Array index out of bounds"
+[11:48:49] [debug]  Accessing element at index 11797 past array upper bound 49
+[11:48:49] [debug] AMX backtrace:
+[11:48:49] [debug] #0 00426978 in public cmd_removedoor (playerid=0, params[]=@0a7e2e44 "11797") at evo.pwn:32468
+[11:48:49] [debug] #1 native CallLocalFunction () from samp-server.exe
+[11:48:49] [debug] #2 0000087c in public OnPlayerCommandText (playerid=0, cmdtext[]=@0a7e2dfc "/removedoor 11797") at D:\SAMP\GitHub\RP\pawno\include\izcmd.inc:66
+[11:58:18] [debug] Run time error 4: "Array index out of bounds"
+[11:58:18] [debug]  Accessing element at index 200 past array upper bound 199
+[11:58:18] [debug] AMX backtrace:
+[11:58:18] [debug] #0 00390928 in public cmd_exit (playerid=0, params[]=@0a7e2e14 "") at evo.pwn:23010
+[11:58:18] [debug] #1 native CallLocalFunction () from samp-server.exe
+[11:58:18] [debug] #2 00000900 in public OnPlayerCommandText (playerid=0, cmdtext[]=@0a7e2dfc "/exit") at D:\SAMP\GitHub\RP\pawno\include\izcmd.inc:74
+[11:58:19] [debug] Run time error 4: "Array index out of bounds"
+[11:58:19] [debug]  Accessing element at index 200 past array upper bound 199
+[11:58:19] [debug] AMX backtrace:
+[11:58:19] [debug] #0 0038e5f0 in public cmd_enter (playerid=0, params[]=@0a7e2e18 "") at evo.pwn:22886
+[11:58:19] [debug] #1 native CallLocalFunction () from samp-server.exe
+[11:58:19] [debug] #2 00000900 in public OnPlayerCommandText (playerid=0, cmdtext[]=@0a7e2dfc "/enter") at D:\SAMP\GitHub\RP\pawno\include\izcmd.inc:74
+[11:58:19] [debug] Run time error 4: "Array index out of bounds"
+[11:58:19] [debug]  Accessing element at index 200 past array upper bound 199
+[11:58:19] [debug] AMX backtrace:
+[11:58:19] [debug] #0 00390928 in public cmd_exit (playerid=0, params[]=@0a7e2e14 "") at evo.pwn:23010
+[11:58:19] [debug] #1 native CallLocalFunction () from samp-server.exe
+[11:58:19] [debug] #2 00000900 in public OnPlayerCommandText (playerid=0, cmdtext[]=@0a7e2dfc "/exit") at D:\SAMP\GitHub\RP\pawno\include\izcmd.inc:74
+[12:24:16] [part] Devin_Cross has left the server (0:1)
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[12:24:39] password = ""  (string)
+[12:24:39] filterscripts = ""  (string)
+[12:24:39] 
+[12:24:39] Server Plugins
+[12:24:39] --------------
+[12:24:39]  Loading plugin: crashdetect
+[12:24:39]   CrashDetect v4.15.1 is OK.
+[12:24:39]   Loaded.
+[12:24:39]  Loading plugin: mysql
+[12:24:39]  >> plugin.mysql: R39-5 successfully loaded.
+[12:24:39]   Loaded.
+[12:24:39]  Loading plugin: streamer
+[12:24:39] 
+
+*** Streamer Plugin v2.8 by Incognito loaded ***
+
+[12:24:39]   Loaded.
+[12:24:39]  Loading plugin: sscanf
+[12:24:39] 
+
+[12:24:39]  ===============================
+
+[12:24:39]       sscanf plugin loaded.     
+
+[12:24:39]          Version:  2.8.2        
+
+[12:24:39]    (c) 2012 Alex "Y_Less" Cole  
+
+[12:24:39]  ===============================
+
+[12:24:39]   Loaded.
+[12:24:39]  Loading plugin: nativechecker
+[12:24:39]   Loaded.
+[12:24:39]  Loaded 5 plugins.
+
+[12:24:39] 
+[12:24:39] Ban list
+[12:24:39] --------
+[12:24:39]  Loaded: samp.ban
+[12:24:39] 
+[12:24:39] 
+[12:24:39] Filterscripts
+[12:24:39] ---------------
+[12:24:39]   Loaded 0 filterscripts.
+
+[12:24:40]  
+[12:24:40]  
+[12:24:40]  
+[12:24:40]  ======================================= 
+[12:24:40]  |                                     | 
+[12:24:40]  |        YSI version 3.09.0684        | 
+[12:24:40]  |        By Alex "Y_Less" Cole        | 
+[12:24:40]  |                                     | 
+[12:24:40]  ======================================= 
+[12:24:40]  
+[12:24:40] Number of vehicle models: 0
+[12:24:40] Au fost incarcate 35 labels din baza de date MySQL.
+[12:24:40] Loaded 31 doors from MySQL.
+[12:24:40] Loaded 7 faction doors from MySQL.
+[12:24:40] Loaded 2 dynamic gates from MySQL.
+[12:24:40] Loaded 8 ATM's from MySQL.
+[12:24:40] Loaded 41 admin teleports from MySQL.
+[12:24:40] Loaded 0 dynamic objects from MySQL.
+[12:24:40] Loaded 2 dynamic infos from MySQL.
+[12:24:40] Loaded 8 dynamic gas stations from MySQL.
+[12:24:40] Loaded 1 dynamic banks from MySQL.
+[12:24:40] Loaded 117 dynamic vehicles from MySQL.
+[12:24:40] Loaded 600 dynamic houses from MySQL.
+[12:24:40] Loaded 27 dynamic businesses from MySQL.
+[12:24:40] Loaded 0 dynamic food stands from MySQL.
+[12:24:40] Loaded 0 dynamic park meters from MySQL.
+[12:24:40] Loaded 0 APB's from MySQL.
+[12:24:40] Loaded 8 dynamic factions from MySQL.
+[12:24:40] [debug] Run time error 4: "Array index out of bounds"
+[12:24:40] [debug]  Accessing element at index 11 past array upper bound 9
+[12:24:40] [debug] AMX backtrace:
+[12:24:40] [debug] #0 0031b8ec in public LoadDynamicJobs () at evo.pwn:15175
+[12:24:40] Loaded 13 dynamic movable doors from MySQL.
+[12:24:40] Loaded 0 dynamic CCTV's from MySQL.
+[12:24:40] Loaded 1 dynamic dealerships from MySQL.
+[12:24:41] Loaded 4 player radios from MySQL.
+[12:24:41] Loaded 6 plants from MySQL.
+[12:24:41] Au fost incarcate 57 cosuri de gunoi din MySQL.
+[12:24:41] Au fost incarcate 3 locatii GPS din MySQL.
+[12:24:41] Au fost incarcate 135 garaje din baza de date..
+[12:26:46] [connection] 127.0.0.1:56476 requests connection cookie.
+[12:26:47] [connection] incoming connection: 127.0.0.1:56476 id: 0
+[12:26:47] [join] Devin_Cross has joined the server (0:127.0.0.1)
+[12:27:07] [debug] Run time error 4: "Array index out of bounds"
+[12:27:07] [debug]  Accessing element at index 200 past array upper bound 199
+[12:27:07] [debug] AMX backtrace:
+[12:27:07] [debug] #0 0038e5f0 in public cmd_enter (playerid=0, params[]=@0a7e2e18 "") at evo.pwn:22886
+[12:27:07] [debug] #1 native CallLocalFunction () from samp-server.exe
+[12:27:07] [debug] #2 00000900 in public OnPlayerCommandText (playerid=0, cmdtext[]=@0a7e2dfc "/enter") at D:\SAMP\GitHub\RP\pawno\include\izcmd.inc:74
+[12:27:11] [debug] Run time error 4: "Array index out of bounds"
+[12:27:11] [debug]  Accessing element at index 200 past array upper bound 199
+[12:27:11] [debug] AMX backtrace:
+[12:27:11] [debug] #0 00390928 in public cmd_exit (playerid=0, params[]=@0a7e2e14 "") at evo.pwn:23010
+[12:27:11] [debug] #1 native CallLocalFunction () from samp-server.exe
+[12:27:11] [debug] #2 00000900 in public OnPlayerCommandText (playerid=0, cmdtext[]=@0a7e2dfc "/exit") at D:\SAMP\GitHub\RP\pawno\include\izcmd.inc:74
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[12:29:15] password = ""  (string)
+[12:29:15] filterscripts = ""  (string)
+[12:29:15] 
+[12:29:15] Server Plugins
+[12:29:15] --------------
+[12:29:15]  Loading plugin: crashdetect
+[12:29:15]   CrashDetect v4.15.1 is OK.
+[12:29:15]   Loaded.
+[12:29:15]  Loading plugin: mysql
+[12:29:15]  >> plugin.mysql: R39-5 successfully loaded.
+[12:29:15]   Loaded.
+[12:29:15]  Loading plugin: streamer
+[12:29:15] 
+
+*** Streamer Plugin v2.8 by Incognito loaded ***
+
+[12:29:15]   Loaded.
+[12:29:15]  Loading plugin: sscanf
+[12:29:15] 
+
+[12:29:15]  ===============================
+
+[12:29:15]       sscanf plugin loaded.     
+
+[12:29:15]          Version:  2.8.2        
+
+[12:29:15]    (c) 2012 Alex "Y_Less" Cole  
+
+[12:29:15]  ===============================
+
+[12:29:15]   Loaded.
+[12:29:15]  Loading plugin: nativechecker
+[12:29:15]   Loaded.
+[12:29:15]  Loaded 5 plugins.
+
+[12:29:15] 
+[12:29:15] Ban list
+[12:29:15] --------
+[12:29:15]  Loaded: samp.ban
+[12:29:15] 
+[12:29:15] 
+[12:29:15] Filterscripts
+[12:29:15] ---------------
+[12:29:15]   Loaded 0 filterscripts.
+
+[12:29:16]  
+[12:29:16]  
+[12:29:16]  
+[12:29:16]  ======================================= 
+[12:29:16]  |                                     | 
+[12:29:16]  |        YSI version 3.09.0684        | 
+[12:29:16]  |        By Alex "Y_Less" Cole        | 
+[12:29:16]  |                                     | 
+[12:29:16]  ======================================= 
+[12:29:16]  
+[12:29:16] Number of vehicle models: 0
+[12:29:16] Au fost incarcate 35 labels din baza de date MySQL.
+[12:29:16] Loaded 31 doors from MySQL.
+[12:29:16] Loaded 7 faction doors from MySQL.
+[12:29:16] Loaded 2 dynamic gates from MySQL.
+[12:29:16] Loaded 8 ATM's from MySQL.
+[12:29:16] Loaded 41 admin teleports from MySQL.
+[12:29:16] Loaded 0 dynamic objects from MySQL.
+[12:29:16] Loaded 2 dynamic infos from MySQL.
+[12:29:16] Loaded 8 dynamic gas stations from MySQL.
+[12:29:16] Loaded 1 dynamic banks from MySQL.
+[12:29:16] Loaded 117 dynamic vehicles from MySQL.
+[12:29:16] Loaded 600 dynamic houses from MySQL.
+[12:29:16] Loaded 27 dynamic businesses from MySQL.
+[12:29:16] Loaded 0 dynamic food stands from MySQL.
+[12:29:16] Loaded 0 dynamic park meters from MySQL.
+[12:29:16] Loaded 0 APB's from MySQL.
+[12:29:16] Loaded 8 dynamic factions from MySQL.
+[12:29:16] [debug] Run time error 4: "Array index out of bounds"
+[12:29:16] [debug]  Accessing element at index 11 past array upper bound 9
+[12:29:16] [debug] AMX backtrace:
+[12:29:16] [debug] #0 0031b8ec in public LoadDynamicJobs () at evo.pwn:15175
+[12:29:16] Loaded 13 dynamic movable doors from MySQL.
+[12:29:16] Loaded 0 dynamic CCTV's from MySQL.
+[12:29:16] Loaded 1 dynamic dealerships from MySQL.
+[12:29:16] Loaded 4 player radios from MySQL.
+[12:29:16] Loaded 6 plants from MySQL.
+[12:29:16] Au fost incarcate 57 cosuri de gunoi din MySQL.
+[12:29:17] Au fost incarcate 3 locatii GPS din MySQL.
+[12:29:17] Au fost incarcate 135 garaje din baza de date..
+[12:29:36] [connection] 127.0.0.1:52421 requests connection cookie.
+[12:29:37] [connection] incoming connection: 127.0.0.1:52421 id: 0
+[12:29:38] [join] Devin_Cross has joined the server (0:127.0.0.1)
+[12:29:53] [debug] Run time error 4: "Array index out of bounds"
+[12:29:53] [debug]  Accessing element at index 200 past array upper bound 199
+[12:29:53] [debug] AMX backtrace:
+[12:29:53] [debug] #0 00376c1c in public cmd_enter (playerid=0, params[]=@0a7e2c04 "") at evo.pwn:22876
+[12:29:53] [debug] #1 native CallLocalFunction () from samp-server.exe
+[12:29:53] [debug] #2 00000900 in public OnPlayerCommandText (playerid=0, cmdtext[]=@0a7e2be8 "/enter") at D:\SAMP\GitHub\RP\pawno\include\izcmd.inc:74
+[12:31:48] [debug] Run time error 4: "Array index out of bounds"
+[12:31:48] [debug]  Accessing element at index 100 past array upper bound 99
+[12:31:48] [debug] AMX backtrace:
+[12:31:48] [debug] #0 0035b508 in public cmd_gps (playerid=0, params[]=@0a7e2bfc "") at evo.pwn:20815
+[12:31:48] [debug] #1 native CallLocalFunction () from samp-server.exe
+[12:31:48] [debug] #2 00000900 in public OnPlayerCommandText (playerid=0, cmdtext[]=@0a7e2be8 "/gps") at D:\SAMP\GitHub\RP\pawno\include\izcmd.inc:74
+[12:37:12] [debug] Run time error 4: "Array index out of bounds"
+[12:37:12] [debug]  Accessing element at index 200 past array upper bound 199
+[12:37:12] [debug] AMX backtrace:
+[12:37:12] [debug] #0 00376c1c in public cmd_enter (playerid=0, params[]=@0a7e2c04 "") at evo.pwn:22876
+[12:37:12] [debug] #1 native CallLocalFunction () from samp-server.exe
+[12:37:12] [debug] #2 00000900 in public OnPlayerCommandText (playerid=0, cmdtext[]=@0a7e2be8 "/enter") at D:\SAMP\GitHub\RP\pawno\include\izcmd.inc:74
+[12:47:52] [part] Devin_Cross has left the server (0:1)
+[12:49:12] [connection] 127.0.0.1:57052 requests connection cookie.
+[12:49:13] [connection] incoming connection: 127.0.0.1:57052 id: 0
+[12:49:13] [join] Devin_Cross has joined the server (0:127.0.0.1)
+[12:49:44] [debug] Run time error 4: "Array index out of bounds"
+[12:49:44] [debug]  Accessing element at index 100 past array upper bound 99
+[12:49:44] [debug] AMX backtrace:
+[12:49:44] [debug] #0 0035b508 in public cmd_gps (playerid=0, params[]=@0a7e2bfc "") at evo.pwn:20815
+[12:49:44] [debug] #1 native CallLocalFunction () from samp-server.exe
+[12:49:44] [debug] #2 00000900 in public OnPlayerCommandText (playerid=0, cmdtext[]=@0a7e2be8 "/gps") at D:\SAMP\GitHub\RP\pawno\include\izcmd.inc:74
+[12:49:46] [part] Devin_Cross has left the server (0:1)
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[13:39:38] password = ""  (string)
+[13:39:38] filterscripts = ""  (string)
+[13:39:38] 
+[13:39:38] Server Plugins
+[13:39:38] --------------
+[13:39:38]  Loading plugin: crashdetect
+[13:39:38]   CrashDetect v4.15.1 is OK.
+[13:39:38]   Loaded.
+[13:39:38]  Loading plugin: mysql
+[13:39:38]  >> plugin.mysql: R39-5 successfully loaded.
+[13:39:38]   Loaded.
+[13:39:38]  Loading plugin: streamer
+[13:39:38] 
+
+*** Streamer Plugin v2.8 by Incognito loaded ***
+
+[13:39:38]   Loaded.
+[13:39:38]  Loading plugin: sscanf
+[13:39:38] 
+
+[13:39:38]  ===============================
+
+[13:39:38]       sscanf plugin loaded.     
+
+[13:39:38]          Version:  2.8.2        
+
+[13:39:38]    (c) 2012 Alex "Y_Less" Cole  
+
+[13:39:38]  ===============================
+
+[13:39:38]   Loaded.
+[13:39:38]  Loading plugin: nativechecker
+[13:39:38]   Loaded.
+[13:39:38]  Loaded 5 plugins.
+
+[13:39:38] 
+[13:39:38] Ban list
+[13:39:38] --------
+[13:39:38]  Loaded: samp.ban
+[13:39:38] 
+[13:39:38] 
+[13:39:38] Filterscripts
+[13:39:38] ---------------
+[13:39:38]   Loaded 0 filterscripts.
+
+[13:39:39]  
+[13:39:39]  
+[13:39:39]  
+[13:39:39]  ======================================= 
+[13:39:39]  |                                     | 
+[13:39:39]  |        YSI version 3.09.0684        | 
+[13:39:39]  |        By Alex "Y_Less" Cole        | 
+[13:39:39]  |                                     | 
+[13:39:39]  ======================================= 
+[13:39:39]  
+[13:39:39] Number of vehicle models: 0
+[13:39:39] Au fost incarcate 35 labels din baza de date MySQL.
+[13:39:39] Loaded 31 doors from MySQL.
+[13:39:39] Loaded 7 faction doors from MySQL.
+[13:39:39] Loaded 2 dynamic gates from MySQL.
+[13:39:39] Loaded 8 ATM's from MySQL.
+[13:39:39] Loaded 41 admin teleports from MySQL.
+[13:39:39] Loaded 0 dynamic objects from MySQL.
+[13:39:39] Loaded 2 dynamic infos from MySQL.
+[13:39:39] Loaded 8 dynamic gas stations from MySQL.
+[13:39:39] Loaded 1 dynamic banks from MySQL.
+[13:39:39] Loaded 117 dynamic vehicles from MySQL.
+[13:39:39] Loaded 600 dynamic houses from MySQL.
+[13:39:39] Loaded 27 dynamic businesses from MySQL.
+[13:39:39] Loaded 0 dynamic food stands from MySQL.
+[13:39:39] Loaded 0 dynamic park meters from MySQL.
+[13:39:39] Loaded 0 APB's from MySQL.
+[13:39:39] Loaded 8 dynamic factions from MySQL.
+[13:39:39] [debug] Run time error 4: "Array index out of bounds"
+[13:39:39] [debug]  Accessing element at index 11 past array upper bound 9
+[13:39:39] [debug] AMX backtrace:
+[13:39:39] [debug] #0 00324f90 in public LoadDynamicJobs () at evo.pwn:15175
+[13:39:39] Loaded 13 dynamic movable doors from MySQL.
+[13:39:39] Loaded 0 dynamic CCTV's from MySQL.
+[13:39:39] Loaded 1 dynamic dealerships from MySQL.
+[13:39:39] Loaded 4 player radios from MySQL.
+[13:39:39] Loaded 6 plants from MySQL.
+[13:39:39] Au fost incarcate 57 cosuri de gunoi din MySQL.
+[13:39:39] Au fost incarcate 3 locatii GPS din MySQL.
+[13:39:39] Au fost incarcate 135 garaje din baza de date..
+[13:41:02] [connection] 127.0.0.1:60329 requests connection cookie.
+[13:41:03] [connection] incoming connection: 127.0.0.1:60329 id: 0
+[13:41:03] [join] Devin_Cross has joined the server (0:127.0.0.1)
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[13:52:22] password = ""  (string)
+[13:52:22] filterscripts = ""  (string)
+[13:52:22] 
+[13:52:22] Server Plugins
+[13:52:22] --------------
+[13:52:22]  Loading plugin: crashdetect
+[13:52:22]   CrashDetect v4.15.1 is OK.
+[13:52:22]   Loaded.
+[13:52:22]  Loading plugin: mysql
+[13:52:22]  >> plugin.mysql: R39-5 successfully loaded.
+[13:52:22]   Loaded.
+[13:52:22]  Loading plugin: streamer
+[13:52:22] 
+
+*** Streamer Plugin v2.8.2 by Incognito loaded ***
+
+[13:52:22]   Loaded.
+[13:52:22]  Loading plugin: sscanf
+[13:52:22] 
+
+[13:52:22]  ===============================
+
+[13:52:22]       sscanf plugin loaded.     
+
+[13:52:22]          Version:  2.8.2        
+
+[13:52:22]    (c) 2012 Alex "Y_Less" Cole  
+
+[13:52:22]  ===============================
+
+[13:52:22]   Loaded.
+[13:52:22]  Loading plugin: nativechecker
+[13:52:22]   Loaded.
+[13:52:22]  Loaded 5 plugins.
+
+[13:52:22] 
+[13:52:22] Ban list
+[13:52:22] --------
+[13:52:22]  Loaded: samp.ban
+[13:52:22] 
+[13:52:22] 
+[13:52:22] Filterscripts
+[13:52:22] ---------------
+[13:52:22]   Loaded 0 filterscripts.
+
+[13:52:22]  
+[13:52:22]  
+[13:52:22]  
+[13:52:22]  ======================================= 
+[13:52:22]  |                                     | 
+[13:52:22]  |        YSI version 3.09.0684        | 
+[13:52:22]  |        By Alex "Y_Less" Cole        | 
+[13:52:22]  |                                     | 
+[13:52:22]  ======================================= 
+[13:52:22]  
+[13:52:22] Number of vehicle models: 0
+[13:52:22] Au fost incarcate 35 labels din baza de date MySQL.
+[13:52:22] Loaded 31 doors from MySQL.
+[13:52:22] Loaded 7 faction doors from MySQL.
+[13:52:22] Loaded 2 dynamic gates from MySQL.
+[13:52:22] Loaded 8 ATM's from MySQL.
+[13:52:22] Loaded 41 admin teleports from MySQL.
+[13:52:22] Loaded 0 dynamic objects from MySQL.
+[13:52:23] Loaded 2 dynamic infos from MySQL.
+[13:52:23] Loaded 8 dynamic gas stations from MySQL.
+[13:52:23] Loaded 1 dynamic banks from MySQL.
+[13:52:23] Loaded 117 dynamic vehicles from MySQL.
+[13:52:23] Loaded 600 dynamic houses from MySQL.
+[13:52:23] Loaded 27 dynamic businesses from MySQL.
+[13:52:23] Loaded 0 dynamic food stands from MySQL.
+[13:52:23] Loaded 0 dynamic park meters from MySQL.
+[13:52:23] Loaded 0 APB's from MySQL.
+[13:52:23] Loaded 8 dynamic factions from MySQL.
+[13:52:23] [debug] Run time error 4: "Array index out of bounds"
+[13:52:23] [debug]  Accessing element at index 11 past array upper bound 9
+[13:52:23] [debug] AMX backtrace:
+[13:52:23] [debug] #0 00339d0c in public LoadDynamicJobs () at evo.pwn:15184
+[13:52:23] Loaded 13 dynamic movable doors from MySQL.
+[13:52:23] Loaded 0 dynamic CCTV's from MySQL.
+[13:52:23] Loaded 1 dynamic dealerships from MySQL.
+[13:52:23] Loaded 4 player radios from MySQL.
+[13:52:23] Loaded 0 plants from MySQL.
+[13:52:23] Au fost incarcate 57 cosuri de gunoi din MySQL.
+[13:52:23] Au fost incarcate 3 locatii GPS din MySQL.
+[13:52:23] Au fost incarcate 135 garaje din baza de date..
+[13:52:53] [connection] 127.0.0.1:51610 requests connection cookie.
+[13:52:54] [connection] incoming connection: 127.0.0.1:51610 id: 0
+[13:52:54] [join] Devin_Cross has joined the server (0:127.0.0.1)
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[14:16:55] password = ""  (string)
+[14:16:55] filterscripts = ""  (string)
+[14:16:55] 
+[14:16:55] Server Plugins
+[14:16:55] --------------
+[14:16:55]  Loading plugin: crashdetect
+[14:16:55]   CrashDetect v4.15.1 is OK.
+[14:16:55]   Loaded.
+[14:16:55]  Loading plugin: mysql
+[14:16:55]  >> plugin.mysql: R39-5 successfully loaded.
+[14:16:55]   Loaded.
+[14:16:55]  Loading plugin: streamer
+[14:16:55] 
+
+*** Streamer Plugin v2.8.2 by Incognito loaded ***
+
+[14:16:55]   Loaded.
+[14:16:55]  Loading plugin: sscanf
+[14:16:55] 
+
+[14:16:55]  ===============================
+
+[14:16:55]       sscanf plugin loaded.     
+
+[14:16:55]          Version:  2.8.2        
+
+[14:16:55]    (c) 2012 Alex "Y_Less" Cole  
+
+[14:16:55]  ===============================
+
+[14:16:55]   Loaded.
+[14:16:55]  Loading plugin: nativechecker
+[14:16:55]   Loaded.
+[14:16:55]  Loaded 5 plugins.
+
+[14:16:55] 
+[14:16:55] Ban list
+[14:16:55] --------
+[14:16:55]  Loaded: samp.ban
+[14:16:55] 
+[14:16:55] 
+[14:16:55] Filterscripts
+[14:16:55] ---------------
+[14:16:55]   Loaded 0 filterscripts.
+
+[14:16:55]  
+[14:16:55]  
+[14:16:55]  
+[14:16:55]  ======================================= 
+[14:16:55]  |                                     | 
+[14:16:55]  |        YSI version 3.09.0684        | 
+[14:16:55]  |        By Alex "Y_Less" Cole        | 
+[14:16:55]  |                                     | 
+[14:16:55]  ======================================= 
+[14:16:55]  
+[14:16:55] Number of vehicle models: 0
+[14:16:55] Au fost incarcate 35 labels din baza de date MySQL.
+[14:16:55] Loaded 31 doors from MySQL.
+[14:16:55] Loaded 7 faction doors from MySQL.
+[14:16:55] Loaded 2 dynamic gates from MySQL.
+[14:16:56] Loaded 8 ATM's from MySQL.
+[14:16:56] Loaded 41 admin teleports from MySQL.
+[14:16:56] Loaded 0 dynamic objects from MySQL.
+[14:16:56] Loaded 2 dynamic infos from MySQL.
+[14:16:56] Loaded 8 dynamic gas stations from MySQL.
+[14:16:56] Loaded 1 dynamic banks from MySQL.
+[14:16:56] Loaded 117 dynamic vehicles from MySQL.
+[14:16:56] Loaded 600 dynamic houses from MySQL.
+[14:16:56] Loaded 27 dynamic businesses from MySQL.
+[14:16:56] Loaded 0 dynamic food stands from MySQL.
+[14:16:56] Loaded 0 dynamic park meters from MySQL.
+[14:16:56] Loaded 0 APB's from MySQL.
+[14:16:56] Loaded 8 dynamic factions from MySQL.
+[14:16:56] [debug] Run time error 4: "Array index out of bounds"
+[14:16:56] [debug]  Accessing element at index 11 past array upper bound 9
+[14:16:56] [debug] AMX backtrace:
+[14:16:56] [debug] #0 00330d14 in public LoadDynamicJobs () at evo.pwn:15183
+[14:16:56] Loaded 13 dynamic movable doors from MySQL.
+[14:16:56] Loaded 0 dynamic CCTV's from MySQL.
+[14:16:56] Loaded 1 dynamic dealerships from MySQL.
+[14:16:56] Loaded 4 player radios from MySQL.
+[14:16:56] Loaded 0 plants from MySQL.
+[14:16:56] Au fost incarcate 57 cosuri de gunoi din MySQL.
+[14:16:56] Au fost incarcate 3 locatii GPS din MySQL.
+[14:16:56] Au fost incarcate 135 garaje din baza de date..
+[14:17:29] [connection] 127.0.0.1:59235 requests connection cookie.
+[14:17:30] [connection] incoming connection: 127.0.0.1:59235 id: 0
+[14:17:30] [join] Devin_Cross has joined the server (0:127.0.0.1)
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[14:19:40] password = ""  (string)
+[14:19:40] filterscripts = ""  (string)
+[14:19:40] 
+[14:19:40] Server Plugins
+[14:19:40] --------------
+[14:19:40]  Loading plugin: crashdetect
+[14:19:40]   CrashDetect v4.15.1 is OK.
+[14:19:40]   Loaded.
+[14:19:40]  Loading plugin: mysql
+[14:19:40]  >> plugin.mysql: R39-5 successfully loaded.
+[14:19:40]   Loaded.
+[14:19:40]  Loading plugin: streamer
+[14:19:40] 
+
+*** Streamer Plugin v2.8.2 by Incognito loaded ***
+
+[14:19:40]   Loaded.
+[14:19:40]  Loading plugin: sscanf
+[14:19:40] 
+
+[14:19:40]  ===============================
+
+[14:19:40]       sscanf plugin loaded.     
+
+[14:19:40]          Version:  2.8.2        
+
+[14:19:40]    (c) 2012 Alex "Y_Less" Cole  
+
+[14:19:40]  ===============================
+
+[14:19:40]   Loaded.
+[14:19:40]  Loading plugin: nativechecker
+[14:19:40]   Loaded.
+[14:19:40]  Loaded 5 plugins.
+
+[14:19:40] 
+[14:19:40] Ban list
+[14:19:40] --------
+[14:19:40]  Loaded: samp.ban
+[14:19:40] 
+[14:19:40] 
+[14:19:40] Filterscripts
+[14:19:40] ---------------
+[14:19:40]   Loaded 0 filterscripts.
+
+[14:19:40]  
+[14:19:40]  
+[14:19:40]  
+[14:19:40]  ======================================= 
+[14:19:40]  |                                     | 
+[14:19:40]  |        YSI version 3.09.0684        | 
+[14:19:40]  |        By Alex "Y_Less" Cole        | 
+[14:19:40]  |                                     | 
+[14:19:40]  ======================================= 
+[14:19:40]  
+[14:19:40] Number of vehicle models: 0
+[14:19:40] Au fost incarcate 35 labels din baza de date MySQL.
+[14:19:40] Loaded 31 doors from MySQL.
+[14:19:40] Loaded 7 faction doors from MySQL.
+[14:19:40] Loaded 2 dynamic gates from MySQL.
+[14:19:40] Loaded 8 ATM's from MySQL.
+[14:19:40] Loaded 41 admin teleports from MySQL.
+[14:19:40] Loaded 0 dynamic objects from MySQL.
+[14:19:40] Loaded 2 dynamic infos from MySQL.
+[14:19:40] Loaded 8 dynamic gas stations from MySQL.
+[14:19:40] Loaded 1 dynamic banks from MySQL.
+[14:19:41] Loaded 117 dynamic vehicles from MySQL.
+[14:19:41] Loaded 600 dynamic houses from MySQL.
+[14:19:41] Loaded 27 dynamic businesses from MySQL.
+[14:19:41] Loaded 0 dynamic food stands from MySQL.
+[14:19:41] Loaded 0 dynamic park meters from MySQL.
+[14:19:41] Loaded 0 APB's from MySQL.
+[14:19:41] Loaded 8 dynamic factions from MySQL.
+[14:19:41] [debug] Run time error 4: "Array index out of bounds"
+[14:19:41] [debug]  Accessing element at index 11 past array upper bound 9
+[14:19:41] [debug] AMX backtrace:
+[14:19:41] [debug] #0 00330d14 in public LoadDynamicJobs () at evo.pwn:15183
+[14:19:41] Loaded 13 dynamic movable doors from MySQL.
+[14:19:41] Loaded 0 dynamic CCTV's from MySQL.
+[14:19:41] Loaded 1 dynamic dealerships from MySQL.
+[14:19:41] Loaded 4 player radios from MySQL.
+[14:19:41] Loaded 0 plants from MySQL.
+[14:19:41] Au fost incarcate 57 cosuri de gunoi din MySQL.
+[14:19:41] Au fost incarcate 3 locatii GPS din MySQL.
+[14:19:41] Au fost incarcate 135 garaje din baza de date..
+[14:20:00] [connection] 127.0.0.1:64026 requests connection cookie.
+[14:20:02] [connection] incoming connection: 127.0.0.1:64026 id: 0
+[14:20:02] [join] Devin_Cross has joined the server (0:127.0.0.1)
+[14:20:25] [part] Devin_Cross has left the server (0:1)
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[14:43:15] password = ""  (string)
+[14:43:15] filterscripts = ""  (string)
+[14:43:15] 
+[14:43:15] Server Plugins
+[14:43:15] --------------
+[14:43:15]  Loading plugin: crashdetect
+[14:43:15]   CrashDetect v4.15.1 is OK.
+[14:43:15]   Loaded.
+[14:43:15]  Loading plugin: mysql
+[14:43:15]  >> plugin.mysql: R39-5 successfully loaded.
+[14:43:15]   Loaded.
+[14:43:15]  Loading plugin: streamer
+[14:43:15] 
+
+*** Streamer Plugin v2.8.2 by Incognito loaded ***
+
+[14:43:15]   Loaded.
+[14:43:15]  Loading plugin: sscanf
+[14:43:15] 
+
+[14:43:15]  ===============================
+
+[14:43:15]       sscanf plugin loaded.     
+
+[14:43:15]          Version:  2.8.2        
+
+[14:43:15]    (c) 2012 Alex "Y_Less" Cole  
+
+[14:43:15]  ===============================
+
+[14:43:15]   Loaded.
+[14:43:15]  Loading plugin: nativechecker
+[14:43:15]   Loaded.
+[14:43:15]  Loaded 5 plugins.
+
+[14:43:15] 
+[14:43:15] Ban list
+[14:43:15] --------
+[14:43:15]  Loaded: samp.ban
+[14:43:15] 
+[14:43:15] 
+[14:43:15] Filterscripts
+[14:43:15] ---------------
+[14:43:15]   Loaded 0 filterscripts.
+
+[14:43:15]  
+[14:43:15]  
+[14:43:15]  
+[14:43:15]  ======================================= 
+[14:43:15]  |                                     | 
+[14:43:15]  |        YSI version 3.09.0684        | 
+[14:43:15]  |        By Alex "Y_Less" Cole        | 
+[14:43:15]  |                                     | 
+[14:43:15]  ======================================= 
+[14:43:15]  
+[14:43:15] Number of vehicle models: 0
+[14:43:15] Au fost incarcate 35 labels din baza de date MySQL.
+[14:43:15] Loaded 31 doors from MySQL.
+[14:43:15] Loaded 7 faction doors from MySQL.
+[14:43:15] Loaded 2 dynamic gates from MySQL.
+[14:43:15] Loaded 8 ATM's from MySQL.
+[14:43:15] Loaded 41 admin teleports from MySQL.
+[14:43:15] Loaded 0 dynamic objects from MySQL.
+[14:43:15] Loaded 2 dynamic infos from MySQL.
+[14:43:15] Loaded 8 dynamic gas stations from MySQL.
+[14:43:15] Loaded 1 dynamic banks from MySQL.
+[14:43:16] Loaded 117 dynamic vehicles from MySQL.
+[14:43:16] Loaded 600 dynamic houses from MySQL.
+[14:43:16] Loaded 27 dynamic businesses from MySQL.
+[14:43:16] Loaded 0 dynamic food stands from MySQL.
+[14:43:16] Loaded 0 dynamic park meters from MySQL.
+[14:43:16] Loaded 0 APB's from MySQL.
+[14:43:16] Loaded 8 dynamic factions from MySQL.
+[14:43:16] [debug] Run time error 4: "Array index out of bounds"
+[14:43:16] [debug]  Accessing element at index 11 past array upper bound 9
+[14:43:16] [debug] AMX backtrace:
+[14:43:16] [debug] #0 00330d14 in public LoadDynamicJobs () at evo.pwn:15183
+[14:43:16] Loaded 13 dynamic movable doors from MySQL.
+[14:43:16] Loaded 0 dynamic CCTV's from MySQL.
+[14:43:16] Loaded 1 dynamic dealerships from MySQL.
+[14:43:16] Loaded 4 player radios from MySQL.
+[14:43:16] Loaded 0 plants from MySQL.
+[14:43:16] Au fost incarcate 57 cosuri de gunoi din MySQL.
+[14:43:16] Au fost incarcate 3 locatii GPS din MySQL.
+[14:43:16] Au fost incarcate 135 garaje din baza de date..
+[14:43:37] [connection] 127.0.0.1:62756 requests connection cookie.
+[14:43:38] [connection] incoming connection: 127.0.0.1:62756 id: 0
+[14:43:38] [join] Devin_Cross has joined the server (0:127.0.0.1)
+[15:03:40] [part] Devin_Cross has left the server (0:1)
+[15:05:56] [connection] 127.0.0.1:60751 requests connection cookie.
+[15:05:57] [connection] incoming connection: 127.0.0.1:60751 id: 0
+[15:05:57] [join] Devin_Cross has joined the server (0:127.0.0.1)
+[15:07:32] [part] Devin_Cross has left the server (0:1)
+[15:08:21] [connection] 127.0.0.1:65260 requests connection cookie.
+[15:08:22] [connection] incoming connection: 127.0.0.1:65260 id: 0
+[15:08:23] [join] Mark_Carico has joined the server (0:127.0.0.1)
+[15:09:22] [part] Mark_Carico has left the server (0:1)
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[16:57:45] password = ""  (string)
+[16:57:45] filterscripts = ""  (string)
+[16:57:45] 
+[16:57:45] Server Plugins
+[16:57:45] --------------
+[16:57:45]  Loading plugin: streamer
+[16:57:45] 
+
+*** Streamer Plugin v2.8.2 by Incognito loaded ***
+
+[16:57:45]   Loaded.
+[16:57:45]  Loading plugin: crashdetect
+[16:57:45]   CrashDetect must be loaded before 'streamer.DLL'
+[16:57:51]   Failed.
+[16:57:51]  Loading plugin: mysql
+[16:57:51]  >> plugin.mysql: R39-5 successfully loaded.
+[16:57:51]   Loaded.
+[16:57:51]  Loading plugin: sscanf
+[16:57:51] 
+
+[16:57:51]  ===============================
+
+[16:57:51]       sscanf plugin loaded.     
+
+[16:57:51]          Version:  2.8.2        
+
+[16:57:51]    (c) 2012 Alex "Y_Less" Cole  
+
+[16:57:51]  ===============================
+
+[16:57:51]   Loaded.
+[16:57:51]  Loading plugin: nativechecker
+[16:57:51]   Loaded.
+[16:57:51]  Loaded 4 plugins.
+
+[16:57:51] 
+[16:57:51] Ban list
+[16:57:51] --------
+[16:57:51]  Loaded: samp.ban
+[16:57:51] 
+[16:57:51] 
+[16:57:51] Filterscripts
+[16:57:51] ---------------
+[16:57:51]   Loaded 0 filterscripts.
+
+[16:57:51]  
+[16:57:51]  
+[16:57:51]  
+[16:57:51]  ======================================= 
+[16:57:51]  |                                     | 
+[16:57:51]  |        YSI version 3.09.0684        | 
+[16:57:51]  |        By Alex "Y_Less" Cole        | 
+[16:57:51]  |                                     | 
+[16:57:51]  ======================================= 
+[16:57:51]  
+[16:57:52] Number of vehicle models: 0
+[16:57:52] Au fost incarcate 34 labels din baza de date MySQL.
+[16:57:52] Loaded 31 doors from MySQL.
+[16:57:52] Loaded 8 faction doors from MySQL.
+[16:57:52] Loaded 2 dynamic gates from MySQL.
+[16:57:52] Loaded 8 ATM's from MySQL.
+[16:57:52] Loaded 41 admin teleports from MySQL.
+[16:57:53] Loaded 0 dynamic objects from MySQL.
+[16:57:53] Loaded 2 dynamic infos from MySQL.
+[16:57:53] Loaded 8 dynamic gas stations from MySQL.
+[16:57:53] Loaded 1 dynamic banks from MySQL.
+[16:57:53] Loaded 117 dynamic vehicles from MySQL.
+[16:57:53] Loaded 600 dynamic houses from MySQL.
+[16:57:53] Loaded 27 dynamic businesses from MySQL.
+[16:57:53] Loaded 0 dynamic food stands from MySQL.
+[16:57:53] Loaded 0 dynamic park meters from MySQL.
+[16:57:53] Loaded 0 APB's from MySQL.
+[16:57:53] Loaded 8 dynamic factions from MySQL.
+[16:57:53] Loaded 14 dynamic movable doors from MySQL.
+[16:57:53] Loaded 0 dynamic CCTV's from MySQL.
+[16:57:53] Loaded 1 dynamic dealerships from MySQL.
+[16:57:53] Loaded 4 player radios from MySQL.
+[16:57:53] Loaded 0 plants from MySQL.
+[16:57:53] Au fost incarcate 57 cosuri de gunoi din MySQL.
+[16:57:53] Au fost incarcate 3 locatii GPS din MySQL.
+[16:57:53] Au fost incarcate 135 garaje din baza de date..
+[16:57:56] --- Server Shutting Down.
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[16:58:08] password = ""  (string)
+[16:58:08] filterscripts = ""  (string)
+[16:58:08] 
+[16:58:08] Server Plugins
+[16:58:08] --------------
+[16:58:08]  Loading plugin: crashdetect
+[16:58:08]   CrashDetect v4.15.1 is OK.
+[16:58:08]   Loaded.
+[16:58:08]  Loading plugin: mysql
+[16:58:08]  >> plugin.mysql: R39-5 successfully loaded.
+[16:58:08]   Loaded.
+[16:58:08]  Loading plugin: streamer
+[16:58:08] 
+
+*** Streamer Plugin v2.8.2 by Incognito loaded ***
+
+[16:58:08]   Loaded.
+[16:58:08]  Loading plugin: sscanf
+[16:58:08] 
+
+[16:58:08]  ===============================
+
+[16:58:08]       sscanf plugin loaded.     
+
+[16:58:08]          Version:  2.8.2        
+
+[16:58:08]    (c) 2012 Alex "Y_Less" Cole  
+
+[16:58:08]  ===============================
+
+[16:58:08]   Loaded.
+[16:58:08]  Loading plugin: nativechecker
+[16:58:08]   Loaded.
+[16:58:08]  Loaded 5 plugins.
+
+[16:58:08] 
+[16:58:08] Ban list
+[16:58:08] --------
+[16:58:08]  Loaded: samp.ban
+[16:58:08] 
+[16:58:08] 
+[16:58:08] Filterscripts
+[16:58:08] ---------------
+[16:58:08]   Loaded 0 filterscripts.
+
+[16:58:08]  
+[16:58:08]  
+[16:58:08]  
+[16:58:08]  ======================================= 
+[16:58:08]  |                                     | 
+[16:58:08]  |        YSI version 3.09.0684        | 
+[16:58:08]  |        By Alex "Y_Less" Cole        | 
+[16:58:08]  |                                     | 
+[16:58:08]  ======================================= 
+[16:58:08]  
+[16:58:08] Number of vehicle models: 0
+[16:58:08] Au fost incarcate 34 labels din baza de date MySQL.
+[16:58:08] Loaded 31 doors from MySQL.
+[16:58:08] Loaded 8 faction doors from MySQL.
+[16:58:08] Loaded 2 dynamic gates from MySQL.
+[16:58:08] Loaded 8 ATM's from MySQL.
+[16:58:08] Loaded 41 admin teleports from MySQL.
+[16:58:08] Loaded 0 dynamic objects from MySQL.
+[16:58:08] Loaded 2 dynamic infos from MySQL.
+[16:58:08] Loaded 8 dynamic gas stations from MySQL.
+[16:58:08] Loaded 1 dynamic banks from MySQL.
+[16:58:08] Loaded 117 dynamic vehicles from MySQL.
+[16:58:08] Loaded 600 dynamic houses from MySQL.
+[16:58:08] Loaded 27 dynamic businesses from MySQL.
+[16:58:08] Loaded 0 dynamic food stands from MySQL.
+[16:58:08] Loaded 0 dynamic park meters from MySQL.
+[16:58:08] Loaded 0 APB's from MySQL.
+[16:58:08] Loaded 8 dynamic factions from MySQL.
+[16:58:08] [debug] Run time error 4: "Array index out of bounds"
+[16:58:08] [debug]  Accessing element at index 11 past array upper bound 9
+[16:58:08] [debug] AMX backtrace:
+[16:58:08] [debug] #0 0032a39c in public LoadDynamicJobs () at evo.pwn:15183
+[16:58:08] Loaded 14 dynamic movable doors from MySQL.
+[16:58:08] Loaded 0 dynamic CCTV's from MySQL.
+[16:58:08] Loaded 1 dynamic dealerships from MySQL.
+[16:58:08] Loaded 4 player radios from MySQL.
+[16:58:08] Loaded 0 plants from MySQL.
+[16:58:08] Au fost incarcate 57 cosuri de gunoi din MySQL.
+[16:58:08] Au fost incarcate 3 locatii GPS din MySQL.
+[16:58:08] Au fost incarcate 135 garaje din baza de date..
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[16:58:43] password = ""  (string)
+[16:58:43] filterscripts = ""  (string)
+[16:58:43] 
+[16:58:43] Server Plugins
+[16:58:43] --------------
+[16:58:43]  Loading plugin: crashdetect
+[16:58:43]   CrashDetect v4.15.1 is OK.
+[16:58:43]   Loaded.
+[16:58:43]  Loading plugin: mysql
+[16:58:43]  >> plugin.mysql: R39-5 successfully loaded.
+[16:58:43]   Loaded.
+[16:58:43]  Loading plugin: streamer
+[16:58:43] 
+
+*** Streamer Plugin v2.8.2 by Incognito loaded ***
+
+[16:58:43]   Loaded.
+[16:58:43]  Loading plugin: sscanf
+[16:58:43] 
+
+[16:58:43]  ===============================
+
+[16:58:43]       sscanf plugin loaded.     
+
+[16:58:43]          Version:  2.8.2        
+
+[16:58:43]    (c) 2012 Alex "Y_Less" Cole  
+
+[16:58:43]  ===============================
+
+[16:58:43]   Loaded.
+[16:58:43]  Loading plugin: nativechecker
+[16:58:43]   Loaded.
+[16:58:43]  Loaded 5 plugins.
+
+[16:58:43] 
+[16:58:43] Ban list
+[16:58:43] --------
+[16:58:43]  Loaded: samp.ban
+[16:58:43] 
+[16:58:43] 
+[16:58:43] Filterscripts
+[16:58:43] ---------------
+[16:58:43]   Loaded 0 filterscripts.
+
+[16:58:44]  
+[16:58:44]  
+[16:58:44]  
+[16:58:44]  ======================================= 
+[16:58:44]  |                                     | 
+[16:58:44]  |        YSI version 3.09.0684        | 
+[16:58:44]  |        By Alex "Y_Less" Cole        | 
+[16:58:44]  |                                     | 
+[16:58:44]  ======================================= 
+[16:58:44]  
+[16:58:44] Number of vehicle models: 0
+[16:58:44] Au fost incarcate 34 labels din baza de date MySQL.
+[16:58:44] Loaded 31 doors from MySQL.
+[16:58:44] Loaded 8 faction doors from MySQL.
+[16:58:44] Loaded 2 dynamic gates from MySQL.
+[16:58:44] Loaded 8 ATM's from MySQL.
+[16:58:44] Loaded 41 admin teleports from MySQL.
+[16:58:44] Loaded 0 dynamic objects from MySQL.
+[16:58:44] Loaded 2 dynamic infos from MySQL.
+[16:58:44] Loaded 8 dynamic gas stations from MySQL.
+[16:58:44] Loaded 1 dynamic banks from MySQL.
+[16:58:44] Loaded 117 dynamic vehicles from MySQL.
+[16:58:44] Loaded 600 dynamic houses from MySQL.
+[16:58:44] Loaded 27 dynamic businesses from MySQL.
+[16:58:44] Loaded 0 dynamic food stands from MySQL.
+[16:58:44] Loaded 0 dynamic park meters from MySQL.
+[16:58:44] Loaded 0 APB's from MySQL.
+[16:58:44] Loaded 8 dynamic factions from MySQL.
+[16:58:44] [debug] Run time error 4: "Array index out of bounds"
+[16:58:44] [debug]  Accessing element at index 11 past array upper bound 9
+[16:58:44] [debug] AMX backtrace:
+[16:58:44] [debug] #0 0032a39c in public LoadDynamicJobs () at evo.pwn:15183
+[16:58:44] Loaded 14 dynamic movable doors from MySQL.
+[16:58:44] Loaded 0 dynamic CCTV's from MySQL.
+[16:58:44] Loaded 1 dynamic dealerships from MySQL.
+[16:58:44] Loaded 4 player radios from MySQL.
+[16:58:44] Loaded 0 plants from MySQL.
+[16:58:44] Au fost incarcate 57 cosuri de gunoi din MySQL.
+[16:58:44] Au fost incarcate 3 locatii GPS din MySQL.
+[16:58:44] Au fost incarcate 135 garaje din baza de date..
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[16:59:37] password = ""  (string)
+[16:59:37] filterscripts = ""  (string)
+[16:59:37] 
+[16:59:37] Server Plugins
+[16:59:37] --------------
+[16:59:37]  Loading plugin: crashdetect
+[16:59:37]   CrashDetect v4.15.1 is OK.
+[16:59:37]   Loaded.
+[16:59:37]  Loading plugin: mysql
+[16:59:37]  >> plugin.mysql: R39-5 successfully loaded.
+[16:59:37]   Loaded.
+[16:59:37]  Loading plugin: streamer
+[16:59:37] 
+
+*** Streamer Plugin v2.8.2 by Incognito loaded ***
+
+[16:59:37]   Loaded.
+[16:59:37]  Loading plugin: sscanf
+[16:59:37] 
+
+[16:59:37]  ===============================
+
+[16:59:37]       sscanf plugin loaded.     
+
+[16:59:37]          Version:  2.8.2        
+
+[16:59:37]    (c) 2012 Alex "Y_Less" Cole  
+
+[16:59:37]  ===============================
+
+[16:59:37]   Loaded.
+[16:59:37]  Loading plugin: nativechecker
+[16:59:37]   Loaded.
+[16:59:37]  Loaded 5 plugins.
+
+[16:59:37] 
+[16:59:37] Ban list
+[16:59:37] --------
+[16:59:37]  Loaded: samp.ban
+[16:59:37] 
+[16:59:37] 
+[16:59:37] Filterscripts
+[16:59:37] ---------------
+[16:59:37]   Loaded 0 filterscripts.
+
+[16:59:37]  
+[16:59:37]  
+[16:59:37]  
+[16:59:37]  ======================================= 
+[16:59:37]  |                                     | 
+[16:59:37]  |        YSI version 3.09.0684        | 
+[16:59:37]  |        By Alex "Y_Less" Cole        | 
+[16:59:37]  |                                     | 
+[16:59:37]  ======================================= 
+[16:59:37]  
+[16:59:37] Number of vehicle models: 0
+[16:59:37] Au fost incarcate 34 labels din baza de date MySQL.
+[16:59:37] Loaded 31 doors from MySQL.
+[16:59:37] Loaded 8 faction doors from MySQL.
+[16:59:37] Loaded 2 dynamic gates from MySQL.
+[16:59:37] Loaded 8 ATM's from MySQL.
+[16:59:37] Loaded 41 admin teleports from MySQL.
+[16:59:37] Loaded 0 dynamic objects from MySQL.
+[16:59:37] Loaded 2 dynamic infos from MySQL.
+[16:59:37] Loaded 8 dynamic gas stations from MySQL.
+[16:59:37] Loaded 1 dynamic banks from MySQL.
+[16:59:37] Loaded 117 dynamic vehicles from MySQL.
+[16:59:37] Loaded 600 dynamic houses from MySQL.
+[16:59:37] Loaded 27 dynamic businesses from MySQL.
+[16:59:37] Loaded 0 dynamic food stands from MySQL.
+[16:59:37] Loaded 0 dynamic park meters from MySQL.
+[16:59:37] Loaded 0 APB's from MySQL.
+[16:59:37] Loaded 8 dynamic factions from MySQL.
+[16:59:37] Loaded 4 dynamic jobs from MySQL.
+[16:59:37] Loaded 14 dynamic movable doors from MySQL.
+[16:59:37] Loaded 0 dynamic CCTV's from MySQL.
+[16:59:37] Loaded 1 dynamic dealerships from MySQL.
+[16:59:37] Loaded 4 player radios from MySQL.
+[16:59:37] Loaded 0 plants from MySQL.
+[16:59:37] Au fost incarcate 57 cosuri de gunoi din MySQL.
+[16:59:37] Au fost incarcate 3 locatii GPS din MySQL.
+[16:59:37] Au fost incarcate 135 garaje din baza de date..
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[17:06:50] password = ""  (string)
+[17:06:50] filterscripts = ""  (string)
+[17:06:50] 
+[17:06:50] Server Plugins
+[17:06:50] --------------
+[17:06:50]  Loading plugin: crashdetect
+[17:06:50]   CrashDetect v4.15.1 is OK.
+[17:06:50]   Loaded.
+[17:06:50]  Loading plugin: mysql
+[17:06:50]  >> plugin.mysql: R39-5 successfully loaded.
+[17:06:50]   Loaded.
+[17:06:50]  Loading plugin: streamer
+[17:06:50] 
+
+*** Streamer Plugin v2.8.2 by Incognito loaded ***
+
+[17:06:50]   Loaded.
+[17:06:50]  Loading plugin: sscanf
+[17:06:50] 
+
+[17:06:50]  ===============================
+
+[17:06:50]       sscanf plugin loaded.     
+
+[17:06:50]          Version:  2.8.2        
+
+[17:06:50]    (c) 2012 Alex "Y_Less" Cole  
+
+[17:06:50]  ===============================
+
+[17:06:50]   Loaded.
+[17:06:50]  Loading plugin: nativechecker
+[17:06:50]   Loaded.
+[17:06:50]  Loaded 5 plugins.
+
+[17:06:50] 
+[17:06:50] Ban list
+[17:06:50] --------
+[17:06:50]  Loaded: samp.ban
+[17:06:50] 
+[17:06:50] 
+[17:06:50] Filterscripts
+[17:06:50] ---------------
+[17:06:50]   Loaded 0 filterscripts.
+
+[17:06:50]  
+[17:06:50]  
+[17:06:50]  
+[17:06:50]  ======================================= 
+[17:06:50]  |                                     | 
+[17:06:50]  |        YSI version 3.09.0684        | 
+[17:06:50]  |        By Alex "Y_Less" Cole        | 
+[17:06:50]  |                                     | 
+[17:06:50]  ======================================= 
+[17:06:50]  
+[17:06:50] Number of vehicle models: 0
+[17:06:50] [MYSQL] LabelsInfo: 34.
+[17:06:50] [MYSQL] DoorInfo: 31.
+[17:06:50] [MYSQL] FactionDoors: 8.
+[17:06:50] [MYSQL] Gates: 2.
+[17:06:50] [MYSQL] ATMInfo: 8.
+[17:06:50] [MYSQL] HouseInteriors: 41.
+[17:06:50] [MYSQL] ObjectsInfo: 0.
+[17:06:50] [MYSQL] CPTInfo: 2.
+[17:06:50] [MYSQL] FactionDoors: 8.
+[17:06:50] [MYSQL] BankInfo: 1.
+[17:06:50] [MYSQL] CityVehicles: 117.
+[17:06:51] [MYSQL] HouseInfo: 600.
+[17:06:51] [MYSQL] BizInfo: 27.
+[17:06:51] [MYSQL] FoodStand: 0.
+[17:06:51] [MYSQL] ParkMeters: 0.
+[17:06:51] [MYSQL] ApbInfo: 0.
+[17:06:51] [MYSQL] Factions: 8.
+[17:06:51] [MYSQL] JobsInfo: 4.
+[17:06:51] [MYSQL] Doors: 14.
+[17:06:51] [MYSQL] CCTVInfo: 0.
+[17:06:51] [MYSQL] DealersInfo: 1.
+[17:06:51] [MYSQL] RadiosInfo: 4.
+[17:06:51] Loaded 0 plants from MySQL.
+[17:06:51] [MYSQL] BinInfo: 57.
+[17:06:51] [MYSQL] GPSInfo: 3.
+[17:06:51] [MYSQL] GarageInfo: 135.
+[17:07:38] [connection] 127.0.0.1:57749 requests connection cookie.
+[17:07:39] [connection] incoming connection: 127.0.0.1:57749 id: 0
+[17:07:39] [join] Devin_Cross has joined the server (0:127.0.0.1)
+[17:15:03] [part] Devin_Cross has left the server (0:1)
+
+----------
+Loaded log file: "server_log.txt".
+----------
+
+SA-MP Dedicated Server
+----------------------
+v0.3.7-R2, (C)2005-2015 SA-MP Team
+
+[18:01:41] password = ""  (string)
+[18:01:41] filterscripts = ""  (string)
+[18:01:41] 
+[18:01:41] Server Plugins
+[18:01:41] --------------
+[18:01:41]  Loading plugin: crashdetect
+[18:01:41]   CrashDetect v4.15.1 is OK.
+[18:01:41]   Loaded.
+[18:01:41]  Loading plugin: mysql
+[18:01:42]  >> plugin.mysql: R39-5 successfully loaded.
+[18:01:42]   Loaded.
+[18:01:42]  Loading plugin: streamer
+[18:01:42] 
+
+*** Streamer Plugin v2.8.2 by Incognito loaded ***
+
+[18:01:42]   Loaded.
+[18:01:42]  Loading plugin: sscanf
+[18:01:42] 
+
+[18:01:42]  ===============================
+
+[18:01:42]       sscanf plugin loaded.     
+
+[18:01:42]          Version:  2.8.2        
+
+[18:01:42]    (c) 2012 Alex "Y_Less" Cole  
+
+[18:01:42]  ===============================
+
+[18:01:42]   Loaded.
+[18:01:42]  Loading plugin: nativechecker
+[18:01:42]   Loaded.
+[18:01:42]  Loaded 5 plugins.
+
+[18:01:42] 
+[18:01:42] Ban list
+[18:01:42] --------
+[18:01:42]  Loaded: samp.ban
+[18:01:42] 
+[18:01:42] 
+[18:01:42] Filterscripts
+[18:01:42] ---------------
+[18:01:42]   Loaded 0 filterscripts.
+
+[18:01:42]  
+[18:01:42]  
+[18:01:42]  
+[18:01:42]  ======================================= 
+[18:01:42]  |                                     | 
+[18:01:42]  |        YSI version 3.09.0684        | 
+[18:01:42]  |        By Alex "Y_Less" Cole        | 
+[18:01:42]  |                                     | 
+[18:01:42]  ======================================= 
+[18:01:42]  
+[18:01:42] Number of vehicle models: 0
+[18:01:42] [MYSQL] LabelsInfo: 34.
+[18:01:42] [MYSQL] DoorInfo: 31.
+[18:01:42] [MYSQL] FactionDoors: 8.
+[18:01:42] [MYSQL] Gates: 2.
+[18:01:42] [MYSQL] ATMInfo: 8.
+[18:01:42] [MYSQL] HouseInteriors: 41.
+[18:01:42] [MYSQL] ObjectsInfo: 0.
+[18:01:42] [MYSQL] CPTInfo: 2.
+[18:01:42] [MYSQL] FactionDoors: 8.
+[18:01:42] [MYSQL] BankInfo: 1.
+[18:01:42] [MYSQL] CityVehicles: 117.
+[18:01:42] [MYSQL] HouseInfo: 600.
+[18:01:42] [MYSQL] BizInfo: 27.
+[18:01:42] [MYSQL] FoodStand: 0.
+[18:01:42] [MYSQL] ParkMeters: 0.
+[18:01:42] [MYSQL] ApbInfo: 0.
+[18:01:42] [MYSQL] Factions: 8.
+[18:01:42] [MYSQL] JobsInfo: 4.
+[18:01:42] [MYSQL] Doors: 14.
+[18:01:42] [MYSQL] CCTVInfo: 0.
+[18:01:42] [MYSQL] DealersInfo: 1.
+[18:01:42] [MYSQL] RadiosInfo: 4.
+[18:01:42] [MYSQL] CropsInfo: 0.
+[18:01:42] [MYSQL] BinInfo: 57.
+[18:01:42] [MYSQL] GPSInfo: 3.
+[18:01:42] [MYSQL] GarageInfo: 135.
+[18:01:45] [connection] 127.0.0.1:57057 requests connection cookie.
+[18:01:46] [connection] incoming connection: 127.0.0.1:57057 id: 0
+[18:01:51] [join] Devin_Cross has joined the server (0:127.0.0.1)
+[18:06:51] [part] Devin_Cross has left the server (0:1)
+[18:07:15] [connection] 127.0.0.1:59928 requests connection cookie.
+[18:07:16] [connection] incoming connection: 127.0.0.1:59928 id: 0
+[18:07:16] [join] Devin_Cross has joined the server (0:127.0.0.1)
+[18:20:00] [part] Devin_Cross has left the server (0:1)
