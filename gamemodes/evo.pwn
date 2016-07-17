@@ -161,10 +161,10 @@ Time_Updatepaddy is time paddy grow default is 5000ms(5s)
 #define LINERUNNER_COMPS 13000
 #define ROADTRAIN_COMPS 15000
 //=====================
-#define TRUCKER_1_PAYCHECK 500
-#define TRUCKER_2_PAYCHECK 1000
-#define TRUCKER_3_PAYCHECK 1500
-#define TRUCKER_4_PAYCHECK 2000
+#define TRUCKER_1_PAYCHECK 1500
+#define TRUCKER_2_PAYCHECK 2000
+#define TRUCKER_3_PAYCHECK 2500
+#define TRUCKER_4_PAYCHECK 3000
 //=====================
 #define TRUCKER_TORANK_2 15
 #define TRUCKER_TORANK_3 30
@@ -394,6 +394,8 @@ static Float:FloorZOffsets[14] =
 new FJArea;
 // Farmer job
 
+new enteredgarage[MAX_PLAYERS];
+
 new GunActor[4];
 
 new CarJackActor;
@@ -517,7 +519,7 @@ new levelexp = 4; //Adding 4 exp every level.
 // Main configuration
 #define TollCost (50)                   // How much it costs to pass the tolls
 #define TollDelayCop (5)                // The timespace in seconds between each /toll command for all cops (To avoid spam)
-#define TollOpenDistance (1.0)          // The distance in units the player can be from the icon to open the toll
+#define TollOpenDistance (4.0)          // The distance in units the player can be from the icon to open the toll
 
 // Other defines
 #define MAX_TOLLS (5) // Amount of tolls
@@ -2381,13 +2383,15 @@ stock ShowStats(playerid, id)
     if(sidejob == 0) format(sjname,128,"Fara");
     else format(sjname,128,"%s",GetJobName(sidejob));
 
+    new timeleft = 60 - PlayerInfo[id][pPayDayTime];
+
     format(msg, sizeof(msg),"|_______________________%s - data %s__________________________|",GetName(id),GetFullDate());
     SCM(playerid, COLOR_GREEN,msg);
     format(msg, sizeof(msg), "Factiune: %s | Rank: %s | Sex: %s | Origine: %s | Varsta: %d | Telefon: %s ", fname, rname, sexr,PlayerInfo[id][pOrigin],age,nums);
     SCM(playerid, COLOR_GREY,msg);
     format(msg, sizeof(msg), "Melee: %s | Primary: %s | Ammo: %d | Secondary: %s | Ammo: %d ", wstring3, wstring1,ammo1,wstring2,ammo2);
     SCM(playerid, COLOR_GREY,msg);
-    format(msg, sizeof(msg), "Level: %d | Exp:%d/%d Ore: %d | Donator: %s ", level,exp,expamount,hours,drank);
+    format(msg, sizeof(msg), "Level: %d | Exp:%d/%d Ore: %d | Donator: %s | PayDay in: %d minute", level,exp,expamount,hours,drank, timeleft);
     SCM(playerid, COLOR_GREY,msg);
     format(msg, sizeof(msg), "Bani: %d$ | Banca: %d$ | Savings: %d$ | PayCheck: %d$ ", cash, bank, savings, paycheck);
     SCM(playerid, COLOR_GREY,msg);
@@ -6773,7 +6777,7 @@ stock HandlePaintJobText(playerid, vehicle)
 
 stock BackToDealerShip(playerid, vehicle)
 {
-    SetVehiclePos(vehicle, 1705.2166, -1512.1454, 13.1163);
+    SetVehiclePos(vehicle, 1215.6687,-1821.0103,13.5952);
     SetCameraBehindPlayer(playerid);
     SetInterior(playerid, 0);
     SetWorld(playerid, 0);
@@ -10060,7 +10064,7 @@ public OnPlayerDeath(playerid, killerid, reason)
     CheckPlayerCurrentCall(playerid);
     if(PlayerInfo[playerid][pJailed] == 1)
     {
-        format(msg, sizeof(msg), "%s a murit in admin jail.", GetName(playerid));
+        format(msg, sizeof(msg), "%s [ID:%d] a murit in admin jail (Killer: %s - ID: %d)", GetName(playerid), playerid, GetName(killerid), killerid);
         AMSG(COLOR_YELLOWG, msg);
         SetPlayerPos(playerid,  2576.7861,2712.2004,22.9507);
     }
@@ -10378,9 +10382,9 @@ public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
     if(IsBike(vehicleid) || IsABiker(vehicleid)) ToggleVehicleLock(vehicleid, false), ToggleVehicleLockForPlayer(playerid, vehicleid, false);
     if(GetPVarInt(playerid, "CarJacking") == 1)
     {
-        SetTimerEx("SetDropCPCarJack", 10000, false, "ii", playerid, vehicleid);
+        SetTimerEx("SetDropCPCarJack", 2000, false, "ii", playerid, vehicleid);
     }  
-    if(IsBike(vehicleid) && !IsABiker(vehicleid))
+    if(IsBike(vehicleid))
     {
         GetVehicleParamsEx(vehicleid,engine,lights,alarm,doors,bonnet,boot,objective);
         if(engine != VEHICLE_PARAMS_ON) { SetVehicleParamsEx(vehicleid,VEHICLE_PARAMS_ON,lights,alarm,doors,bonnet,boot,objective); }
@@ -16136,7 +16140,7 @@ public TruckerTimer()
                     {
                         TruckComps[vehicle] += 100;
                     }
-                    TruckingMoney[i] += 20;
+                    TruckingMoney[i] += 10;
                     SetTruckerText(i);
                     LoadingTruck{i}--;
                     if(TruckComps[vehicle] >= GetMaxTruckComps(vehicle))
@@ -16666,7 +16670,7 @@ function PayDay(id)
         SaveJobProgress(id);
        
         //Taking a tax from a player
-        new TaxPay = randomEx(4,6) + ((oldbank / 2) / 6000);
+        new TaxPay = randomEx(100,700) + (oldbank / 20000);
         PlayerInfo[id][pBank] -= TaxPay;
         //Taking a tax from a player
 
@@ -16833,7 +16837,7 @@ public OneMinuteTimer()
             CropsInfo[i][pX] = x;
             CropsInfo[i][pY] = y;
             CropsInfo[i][pZ] = z;
-            format(string, sizeof(string), ""EMBED_YELLOW"GENERAT: %d\nGENERAT: %d", CropsInfo[i][pGrowTime], CropsInfo[i][pMade]);
+            format(string, sizeof(string), ""EMBED_YELLOW"TIMP: %d minute\nSeminte: %d", CropsInfo[i][pGrowTime], CropsInfo[i][pMade]);
             UpdateDynamic3DTextLabelText(Text3D:CropsInfo[i][pLabel], -1, string);
             if(CropsInfo[i][pGrowTime] == 180)
             {
@@ -20801,9 +20805,9 @@ CMD:gps(playerid, params[])
     new string[1200];
     for(new i=0;i<=MAX_GPS;i++)
     {
-        format(string, sizeof(string), "%s\n%d. %s" ,string, i+1, GPSInfo[i][gpsName]);
+        if(GPSInfo[i][gpsOn] == 1) format(string, sizeof(string), "%s\n%d. %s" ,string, i+1, GPSInfo[i][gpsName]);
     }
-    ShowDialog(playerid, Show:<DialogGPS>, DIALOG_STYLE_LIST, "GPS - Los Santos/Red County", string, "Ok", "Inchide");
+    ShowDialog(playerid, Show:<DialogGPS>, DIALOG_STYLE_LIST, "GPS", string, "Ok", "Inchide");
     return 1;
 }
 
@@ -20853,7 +20857,7 @@ CMD:removegps(playerid, params[])
 
 stock GetNextGPSID()
 {
-    for(new i=1;i<sizeof(GarageInfo);i++)
+    for(new i=0;i<sizeof(GarageInfo);i++)
     {
         if(GPSInfo[i][gpsOn] == 0) { return i; }
 //      printf("Tested for gpsOn [%d].", i);
@@ -22621,7 +22625,7 @@ CMD:rac(playerid, params[])
 
 CMD:pm(playerid, params[])
 {
-    if(PlayerInfo[playerid][pLevel] == 1 && PlayerInfo[playerid][pExp] == 2 && !CheckAdmin(playerid, 1) && PlayerInfo[playerid][pHelper] > 0) return SCM(playerid, COLOR_GREY, "Trebuie sa ai doua ore jucate!");
+    if(PlayerInfo[playerid][pLevel] == 1 && PlayerInfo[playerid][pExp] < 2) return SCM(playerid, COLOR_GREY, "Trebuie sa ai doua ore jucate!");
     if(GetIntVar(playerid, "Muted") == 1) return SCM(playerid, COLOR_GREY, "Error: Ai primit mute.");
     new PID, text[128], str[300];
     if(sscanf(params, "us[128]", PID, text)) return SyntaxMSG(playerid, "/PM [playerid] [message]");
@@ -22868,8 +22872,9 @@ CMD:enter(playerid, params[])
             {
                 if(IsDriver(playerid))
                 {
+                    enteredgarage[playerid] = i;
                     SetVehiclePos(GetPlayerVehicleID(playerid),GarageInfo[i][gExitX],GarageInfo[i][gExitY],GarageInfo[i][gExitZ]);
-                    SetWorld(playerid,GarageInfo[i][gvw]);
+                    SetPlayerVirtualWorld(playerid, GarageInfo[i][gvw]);
                     SetVehicleZAngle(GetPlayerVehicleID(playerid), GarageInfo[i][gEnterAngle]);
                     SetVehicleVirtualWorld(GetPlayerVehicleID(playerid), GarageInfo[i][gvw]);
                     FreezePlayer(playerid);
@@ -22879,8 +22884,9 @@ CMD:enter(playerid, params[])
                 }
                 else
                 {
+                    enteredgarage[playerid] = i;
                     SetPlayerPos(playerid, GarageInfo[i][gExitX], GarageInfo[i][gExitY], GarageInfo[i][gExitZ]);
-                    SetWorld(playerid,GarageInfo[i][gvw]);
+                    SetPlayerVirtualWorld(playerid, GarageInfo[i][gvw]);
                     FreezePlayer(playerid);
                     GameTextForPlayer(playerid, "~r~INCARC OBIECTELE...", 2000, 4);
                     SetTimerEx("UnFreezePlayer", 2000, 0, "i", playerid);
@@ -22914,7 +22920,7 @@ CMD:exit(playerid, params[])
             {
                 SetVehiclePos(GetPlayerVehicleID(playerid),FactionDoors[i][dEnterX],FactionDoors[i][dEnterY],FactionDoors[i][dEnterZ]);
                 SetInterior(playerid,FactionDoors[i][dEnterInterior]);
-                SetWorld(playerid, 0);
+                SetPlayerVirtualWorld(playerid, 0);
                 SetVehicleZAngle(GetPlayerVehicleID(playerid), FactionDoors[i][dExitAngle]);
                 LinkVehicleToInterior(GetPlayerVehicleID(playerid), FactionDoors[i][dEnterInterior]);
                 SetVehicleVirtualWorld(GetPlayerVehicleID(playerid), 0);
@@ -22984,32 +22990,34 @@ CMD:exit(playerid, params[])
     }
     for(new i = 1; i <= MAX_GARAGES; i ++)
     {
-        if (PlayerToPoint(5, playerid,GarageInfo[i][gExitX], GarageInfo[i][gExitY], GarageInfo[i][gExitZ]) && GetPlayerVirtualWorld(playerid) == i)
+        if (PlayerToPoint(5, playerid,GarageInfo[i][gExitX], GarageInfo[i][gExitY], GarageInfo[i][gExitZ]))
         {
-            if(GarageInfo[i][glock] == 0)
+            if(enteredgarage[playerid] == i)
             {
+                if(GarageInfo[i][glock] == 1) return GameTextForPlayer(playerid, "~r~INCHIS", 5000, 6);
                 if(IsDriver(playerid))
                 {
                     SetVehiclePos(GetPlayerVehicleID(playerid),GarageInfo[i][gEnterX],GarageInfo[i][gEnterY],GarageInfo[i][gEnterZ]);
-                    SetWorld(playerid,0);
+                    SetPlayerVirtualWorld(playerid,0);
                     SetVehicleZAngle(GetPlayerVehicleID(playerid), GarageInfo[i][gExitAngle]);
                     SetVehicleVirtualWorld(GetPlayerVehicleID(playerid), 0);
                     FreezePlayer(playerid);
                     GameTextForPlayer(playerid, "~r~INCARC OBIECTELE...", 2000, 4);
+                    enteredgarage[playerid] = -1;
                     SetTimerEx("UnFreezePlayer", 2000, 0, "i", playerid);
                     return 1;
                 }
                 else
                 {
                     SetPlayerPos(playerid, GarageInfo[i][gEnterX], GarageInfo[i][gEnterY], GarageInfo[i][gEnterZ]);
-                    SetWorld(playerid,0);
+                    SetPlayerVirtualWorld(playerid,0);
                     FreezePlayer(playerid);
                     GameTextForPlayer(playerid, "~r~INCARC OBIECTELE...", 2000, 4);
+                    enteredgarage[playerid] = -1;
                     SetTimerEx("UnFreezePlayer", 2000, 0, "i", playerid);
                     return 1;
                 }
-            }
-            else return GameTextForPlayer(playerid, "~r~INCHIS", 5000, 6);
+            }            
         }
     }
     return 1;
@@ -25479,7 +25487,7 @@ public ColorCar(playerid)
 {
     new vehicle = GetPlayerVehicleID(playerid);
     new dealerid = GetClosestDealerShip(playerid);
-    if(dealerid != -1)
+    if(dealerid != -1 || PlayerToPoint(4, playerid, 1215.6687,-1821.0103,13.5952))
     {
         ChangeVehicleColor(vehicle, VehColor1{playerid}, VehColor2{playerid});
         VehicleInfo[vehicle][carColor1] = VehColor1{playerid};
@@ -25827,7 +25835,7 @@ CMD:vehicle(playerid, params[])
         if(!PlayerInCar(playerid)) return NotInCarMSG(playerid);
         if(!PlayerOwnVehicle(playerid, vehicle)) return SCM(playerid, -1, "Nu detii acest vehicul.");
         new dealerid = GetClosestDealerShip(playerid);
-        if(dealerid == -1) return SCM(playerid, COLOR_FADE2, "Nu esti langa dealership.");
+        if(dealerid == -1 && !PlayerToPoint(4, playerid, 1215.6687,-1821.0103,13.5952)) return SCM(playerid, COLOR_FADE2, "Nu esti langa dealership.");
         ShowDialog(playerid, Show:<ModDialog>, DIALOG_STYLE_LIST, "Vehicle Modification", "Wheels\nSpoilers\nScoops\nRoofs\nNitro\nPaintJobs\nSideskirts\nExhausts\nHydraulics $10,000\nBoomBox $200", "Select", "Anuleaza");
         return 1;
     }
@@ -25879,6 +25887,7 @@ CMD:vehicle(playerid, params[])
         new veh = PlayerInfo[playerid][pCarKey];
         new vehicle = GetPlayerVehicleID(playerid);
         new house = PlayerInfo[playerid][pHouseKey];
+        new garage = PlayerInfo[playerid][pGarage];
         if(!IsVehicleSpawned(veh)) return ErrorMsg(playerid, "Nu ai spawnat un vehicul.");
         if(!PlayerInCar(playerid)) return NotInCarMSG(playerid);
         if(!PlayerOwnVehicle(playerid, vehicle)) return SCM(playerid, -1, "Nu detii acest vehicul.");
@@ -25889,21 +25898,18 @@ CMD:vehicle(playerid, params[])
         VehicleInfo[vehicle][carParkY] = Y;
         VehicleInfo[vehicle][carParkZ] = Z;
         VehicleInfo[vehicle][carParkA] = A;
-        if(house != -1 && PlayerToPoint(30.0, playerid, HouseInfo[house][hEntranceX], HouseInfo[house][hEntranceY], HouseInfo[house][hEntranceZ]))
+        if(house != -1 && PlayerToPoint(30.0, playerid, HouseInfo[house][hEntranceX], HouseInfo[house][hEntranceY], HouseInfo[house][hEntranceZ]) || garage != -1 && PlayerToPoint(30.0, playerid, GarageInfo[garage][gExitX], GarageInfo[garage][gExitY], GarageInfo[garage][gExitZ]))
         {
             SCM(playerid, COLOR_GREEN2, "Locul de parcare a fost schimbat (ZONA CASEI)");
             SCM(playerid, COLOR_GREEN2, "Poti folosi '/v park'.");
         }
-        else if(GetCash(playerid) >= 50)
+        else if(GetCash(playerid) >= 250)
         {
-            SCM(playerid, COLOR_GREEN2, "Locul de parcare a fost schimbat pentru $50.");
+            SCM(playerid, COLOR_GREEN2, "Locul de parcare a fost schimbat pentru $250.");
             SCM(playerid, COLOR_GREEN2, "Poti folosi '/v park'.");
-            GiveCash(playerid, -50);
+            GiveCash(playerid, -250);
         }
-        else
-        {
-            SCM(playerid, COLOR_GREEN2, "Locul de parcare costa $50.");
-        }
+        else SCM(playerid, COLOR_GREEN2, "Locul de parcare costa $50.");
         format(query, sizeof(query), "UPDATE `ownedvehicles` SET `parkx` = %f, `parky` = %f, `parkz` = %f, `parka` = %f WHERE `owner` = '%s' AND `slot` = %d",
         X, Y, Z, A, GetName(playerid), PlayerInfo[playerid][pVehSlot]);
         mysql_function_query(dbHandle, query, false, "", "");
@@ -25917,7 +25923,7 @@ CMD:vehicle(playerid, params[])
         if(!PlayerOwnVehicle(playerid, vehicle)) return SCM(playerid, -1, "Nu detii acest vehicul.");
         new dealerid = GetClosestDealerShip(playerid);
         new level;
-        if(dealerid == -1) return SCM(playerid, COLOR_FADE2, "Nu esti la dealership.");
+        if(dealerid == -1 && !PlayerToPoint(4, playerid, 1215.6687,-1821.0103,13.5952)) return SCM(playerid, COLOR_FADE2, "Nu esti la dealership.");
         if(sscanf(params, "{s[64]}d", level))
         {
             SyntaxMSG(playerid, "/v buylock [level]");
@@ -25965,7 +25971,7 @@ CMD:vehicle(playerid, params[])
         if(!PlayerOwnVehicle(playerid, vehicle)) return SCM(playerid, -1, "Nu detii acest vehicul.");
         new dealerid = GetClosestDealerShip(playerid);
         new level;
-        if(dealerid == -1) return SCM(playerid, COLOR_FADE2, "Nu esti la dealership.");
+        if(dealerid == -1 && !PlayerToPoint(4, playerid, 1215.6687,-1821.0103,13.5952)) return SCM(playerid, COLOR_FADE2, "Nu esti la dealership.");
         if(sscanf(params, "{s[64]}d", level))
         {
             SyntaxMSG(playerid, "/v buyalarm [level]");
@@ -26013,7 +26019,7 @@ CMD:vehicle(playerid, params[])
         if(!PlayerOwnVehicle(playerid, vehicle)) return SCM(playerid, -1, "Nu detii acest vehicul.");
         new dealerid = GetClosestDealerShip(playerid);
         new level;
-        if(dealerid == -1) return SCM(playerid, COLOR_FADE2, "Nu esti la dealership.");
+        if(dealerid == -1 && !PlayerToPoint(4, playerid, 1215.6687,-1821.0103,13.5952)) return SCM(playerid, COLOR_FADE2, "Nu esti la dealership.");
         if(sscanf(params, "{s[64]}d", level))
         {
             SyntaxMSG(playerid, "/v buyimmob [level]");
@@ -26203,7 +26209,7 @@ CMD:vehicle(playerid, params[])
         if(!PlayerInCar(playerid)) return NotInCarMSG(playerid);
         if(!PlayerOwnVehicle(playerid, vehicle)) return SCM(playerid, -1, "Nu detii acest vehicul.");
         new dealerid = GetClosestDealerShip(playerid);
-        if(dealerid == -1) return SCM(playerid, COLOR_FADE2, "Nu esti la dealership.");
+        if(dealerid == -1 && !PlayerToPoint(4, playerid, 1215.6687,-1821.0103,13.5952)) return SCM(playerid, COLOR_FADE2, "Nu esti la dealership.");
         if(VehicleInfo[vehicle][carGps] == 1) return SCM(playerid, COLOR_LIGHTRED, "Your vehicle has a GPS already.");
         if(GetCash(playerid) < 350) return SCM(playerid, COLOR_INFO, "GPS costs $3,500.");
         SCM(playerid, COLOR_INFO, "You have succefully bought a GPS for $350.");
@@ -26221,13 +26227,13 @@ CMD:vehicle(playerid, params[])
         if(!PlayerInCar(playerid)) return NotInCarMSG(playerid);
         if(!PlayerOwnVehicle(playerid, vehicle)) return SCM(playerid, -1, "Nu detii acest vehicul.");
         new dealerid = GetClosestDealerShip(playerid);
-        if(dealerid == -1) return SCM(playerid, COLOR_FADE2, "Nu esti la dealership.");
+        if(dealerid == -1 && !PlayerToPoint(4, playerid, 1215.6687,-1821.0103,13.5952)) return SCM(playerid, COLOR_FADE2, "Nu esti la dealership.");
         if(VehicleInfo[vehicle][carInsurances] >= 5) return SCM(playerid, COLOR_INFO, "You already have 5 insurances on this vehicle.");
         new price = GetInsurancePrice(vehicle);
         if(GetCash(playerid) < price) NoCashMSG(playerid);
         GiveCash(playerid, -price);
         VehicleInfo[vehicle][carInsurances] += 1;
-        format(msg, sizeof(msg), "You have succefully bought an insurance for $%d.", price);
+        format(msg, sizeof(msg), "Ai cumparat o asigurare pentru $%d.", price);
         SCM(playerid, COLOR_GREEN2, msg);
         format(query, sizeof(query), "UPDATE `ownedvehicles` SET `insurances` = %d WHERE `owner` = '%s' AND `slot` = %d", VehicleInfo[vehicle][carInsurances], GetName(playerid), PlayerInfo[playerid][pVehSlot]);
         mysql_function_query(dbHandle, query, false, "", "");
@@ -26242,7 +26248,7 @@ CMD:vehicle(playerid, params[])
         if(!PlayerInCar(playerid)) return NotInCarMSG(playerid);
         if(!PlayerOwnVehicle(playerid, vehicle)) return SCM(playerid, -1, "Nu detii acest vehicul.");
         new dealerid = GetClosestDealerShip(playerid);
-        if(dealerid == -1) return SCM(playerid, COLOR_FADE2, "Nu esti la dealership.");
+        if(dealerid == -1 && !PlayerToPoint(4, playerid, 1215.6687,-1821.0103,13.5952)) return SCM(playerid, COLOR_FADE2, "Nu esti la dealership.");
         if(sscanf(params, "{s[64]}dd", color1, color2)) return SyntaxMSG(playerid, "/v colour [color 1] [color 2]");
         if(color2 < 0 || color2 > 255 || color1 < 0 || color1 > 255) return SCM(playerid, COLOR_LIGHTRED, "Culoare invalida (0-255)!");
         if(GetCash(playerid) < 1000) SCM(playerid, COLOR_INFO, "Schimbarea culorii costa $1000.");
@@ -29839,7 +29845,7 @@ CMD:truckermission(playerid, params[])
     if(!IsDriver(playerid)) return SCM(playerid, COLOR_GREY, "Trebuie sa fii sofer.");
     if(VehicleInfo[vehicle][carOwned] == 0 && !IsATruckJob(vehicle)) return SCM(playerid, COLOR_WHITE, "Trebuie sa fii in vehiculul statului.");
     if(Trucking{playerid}) return SCM(playerid, COLOR_WHITE, "Esti deja intr-o misiune.");
-//    if(PlayerInfo[playerid][pPayCheckMade] >= GetMaxPayCheck(playerid)) return SCM(playerid, COLOR_LIGHTRED, "Asteapta payday-ul pentru a continua.");
+    if(PlayerInfo[playerid][pPayCheckMade] >= GetMaxPayCheck(playerid)) return SCM(playerid, COLOR_LIGHTRED, "Asteapta payday-ul pentru a continua.");
     if(TruckTaken(vehicle)) return SCM(playerid, COLOR_WHITE, "Camionul este luat de altcineva.");
     Trucking{playerid} = true;
     LoadingTruck{playerid} = 0;
@@ -30197,7 +30203,7 @@ CMD:refillcar(playerid, params[])
 CMD:taxi(playerid, params[])
 {
     new option[11], secoption, vehicle = GetPlayerVehicleID(playerid);
-    if(PlayerInfo[playerid][pTaxiLic] == 0) return SCM(playerid, COLOR_GRAY, "Nu ai o licenta de taxi! O poti achizitona de la Primarie.");
+    if(PlayerInfo[playerid][pTaxiLic] == 0) return SCM(playerid, COLOR_GRAY, "Nu ai o licenta de taxi! O poti achizitona de la DMV.");
     if(PlayerInfo[playerid][pSideJob] != TAXI) return SCM(playerid, COLOR_WHITE, "Nu esti taximetrist!");
     if(sscanf(params,"s[11]D(-1)", option, secoption))
     {
@@ -30851,7 +30857,9 @@ public PlantSeeds(playerid)
 {
     new plant = GetClosestPlantID(playerid);
     GivePlayerDrug(playerid, DRUG_MARIJUANA, CropsInfo[plant][pMade]);
-    SCMEx(playerid, COLOR_YELLOWG, "Ai cules cu success planta, ai obtinut: %d grame.", CropsInfo[plant][pMade]);
+    new seeds = RandomEx(1, 6);
+    PlayerInfo[playerid][pSeeds] += seeds;
+    SCMEx(playerid, COLOR_YELLOWG, "Ai cules cu success planta, ai obtinut %d grame și %d seminte.", CropsInfo[plant][pMade], seeds);
     UnFreezePlayer(playerid);
     StopPlayerAnims(playerid);
     DestroyCrop(plant);
@@ -36698,10 +36706,9 @@ CMD:weapondamage(playerid, params[])
 CMD:payday(playerid, params[])
 {
     if(!CheckAdmin(playerid, BIG_ADMIN_LEVEL)) return NotAuthMSG(playerid);
-    foreach(new i : Player)
-    {
-        PayDay(i);
-    }
+    new i;
+    if(sscanf(params, "r", i)) return SyntaxMSG(playerid, "/payday playerid/PoN");
+    PayDay(i);
     return 1;
 }
 /* =================== AdminCommands =================== */
@@ -36943,7 +36950,7 @@ CMD:trash(playerid, params[])
                     SetPVarInt(playerid,"HasTrash",0);
                     RemoveCheckPoint(playerid);
                     trash[playerid] ++;
-                    GiveCash(playerid, 150);
+                    GiveCash(playerid, 10);
                     PlaySound(playerid, 1138);
                 }
                 if(trash[playerid] == 20)
@@ -36968,6 +36975,7 @@ CMD:trash(playerid, params[])
 
 CMD:takeuniform(playerid, params[])
 {
+    if(PlayerInfo[playerid][pGarbage] >= 2) return ErrorMsg(playerid, "Ai lucrat destul, asteapta paydayul!");
     if(!PlayerToPoint(2.0, playerid, 2195.4971,-1972.9010,13.5590)) return SCM(playerid, -1, "Trebuie sa te aflii la locul pentru Uniforma de gunoier!");
     if(PlayerInfo[playerid][pJob] != GARBAGE) return SCM(playerid, -1, "Nu ai jobul de gunoier!");
     if(GetPVarInt(playerid, "TrashUniform") == 0)
@@ -37651,6 +37659,33 @@ CMD:deletegarage(playerid, params[])
     return 1;
 }
 
+CMD:gotogarage(playerid, params[])
+{
+    if(!CheckAdmin(playerid, 9999)) return NotAuthMSG(playerid);
+    new garage;
+    if(sscanf(params, "i", garage)) return SyntaxMSG(playerid, "/gotogarage garage");
+    if(GarageInfo[garage][gOn] == 0) return ErrorMsg(playerid, "Garajul nu exista.");
+    SetPlayerPos(playerid, GarageInfo[garage][gEnterX], GarageInfo[garage][gEnterY], GarageInfo[garage][gEnterZ]);
+    SCMEx(playerid, COLOR_GREEN, "Ai fost teleportat la garajul %d.", garage);
+    SaveGarage(garage);
+    return 1;
+}
+
+CMD:garageenter(playerid, params[])
+{
+    if(!CheckAdmin(playerid, 9999)) return NotAuthMSG(playerid);
+    new garage;
+    if(sscanf(params, "i", garage)) return SyntaxMSG(playerid, "/garageenter garage");
+    if(GarageInfo[garage][gOn] == 0) return ErrorMsg(playerid, "Garajul nu exista.");
+    GarageInfo[garage][gEnterX] = PlayerPosX(playerid);
+    GarageInfo[garage][gEnterY] = PlayerPosY(playerid);
+    GarageInfo[garage][gEnterZ] = PlayerPosZ(playerid);
+    AddGarageLabel(garage);
+    SCMEx(playerid, COLOR_GREEN, "Ai modificat pozitia pentru comanda /enter al garajului %d.", garage);
+    SaveGarage(garage);
+    return 1;
+}
+
 
 CMD:garageenterangle(playerid, params[])
 {
@@ -37684,7 +37719,8 @@ CMD:editgarage(playerid, params[])
 {
     if(!CheckAdmin(playerid, 9999)) return NotAuthMSG(playerid);
     new garage, type, value;
-    if(sscanf(params, "iii", garage, type, value)) return SyntaxMSG(playerid, "/editgarage garageid type(1-price | 2-interior{1/2/3}) value");
+    if(sscanf(params, "iii", garage, type, value)) return SyntaxMSG(playerid, "/editgarage garageid type(1-price | 2-interior{1/2/3} | 3-lock{1 on / 2 off} ) value");
+    if(value < 1 || value > 3 ) return SyntaxMSG(playerid, "/editgarage garageid type(1-price | 2-interior{1/2/3} | 3-lock{1 on / 2 off} ) value");
     if(GarageInfo[garage][gOn] == 0) return ErrorMsg(playerid, "Garajul nu exista.");
     switch(type)
     {
@@ -37698,6 +37734,12 @@ CMD:editgarage(playerid, params[])
             if(value < 1 || value > 3) return ErrorMsg(playerid, "Interiorul trebuie sa fie intre 1 si 3!");
             AssignInteriorToGarage(garage, value);
 
+        }
+        case 3:
+        {
+            GarageInfo[garage][glock] = value;
+            if(value == 1) SCMEx(playerid, COLOR_GREEN2, "Ai inchis garajul %d.", garage);
+            else if(value == 2) SCMEx(playerid, COLOR_GREEN2, "Ai deschis garajul %d.", garage);
         }
     }
     SaveGarage(garage);
@@ -37805,11 +37847,11 @@ function AddGarageLabel(garage)
     DestroyDynamicPickup(GarageInfo[garage][gpickup]);
     DestroyDynamic3DTextLabel(GarageInfo[garage][glabel]);
     DestroyDynamic3DTextLabel(GarageInfo[garage][glabel2]);
-    GarageInfo[garage][gpickup] = CreateDynamicPickup(1272, 1, GarageInfo[garage][gEnterX], GarageInfo[garage][gEnterY], GarageInfo[garage][gEnterZ]+1);
+    GarageInfo[garage][gpickup] = CreateDynamicPickup(1272, 1, GarageInfo[garage][gEnterX], GarageInfo[garage][gEnterY], GarageInfo[garage][gEnterZ]);
     if(GarageInfo[garage][gowned] == 0) format(msg, sizeof(msg), "[GARAJ %d]\nPret: %d$\n /buygarage", garage, GarageInfo[garage][gprice]);
     else if(GarageInfo[garage][gowned] == 1) format(msg, sizeof(msg), "[GARAJ %d]\nProprietar: %s", garage, GarageInfo[garage][gowner]);
-    GarageInfo[garage][glabel] = CreateDynamic3DTextLabel(msg, COLOR_WHITE, GarageInfo[garage][gEnterX], GarageInfo[garage][gEnterY], GarageInfo[garage][gEnterZ]+1, 10.0); 
-    GarageInfo[garage][glabel2] = Create3DTextLabel("/exit", COLOR_GREY, GarageInfo[garage][gExitX], GarageInfo[garage][gExitY], GarageInfo[garage][gExitZ]+1, 10.0, garage);
+    GarageInfo[garage][glabel] = CreateDynamic3DTextLabel(msg, COLOR_WHITE, GarageInfo[garage][gEnterX], GarageInfo[garage][gEnterY], GarageInfo[garage][gEnterZ], 10.0); 
+    GarageInfo[garage][glabel2] = Create3DTextLabel("/exit", COLOR_GREY, GarageInfo[garage][gExitX], GarageInfo[garage][gExitY], GarageInfo[garage][gExitZ], 10.0, garage);
     return 1;
 }
 
@@ -37839,17 +37881,19 @@ function LoadGarages()
         while(total < rows)
         {
             GarageInfo[garage][gid] = cache_get_row_int(total, 0);
-            GarageInfo[garage][gEnterX] = cache_get_row_int(total, 1);
-            GarageInfo[garage][gEnterY] = cache_get_row_int(total, 2);
-            GarageInfo[garage][gEnterZ] = cache_get_row_int(total, 3);
-            GarageInfo[garage][gExitX] = cache_get_row_int(total, 4);
-            GarageInfo[garage][gExitY] = cache_get_row_int(total, 5);
-            GarageInfo[garage][gExitZ] = cache_get_row_int(total, 6);
+            GarageInfo[garage][gEnterX] = cache_get_row_float(total, 1);
+            GarageInfo[garage][gEnterY] = cache_get_row_float(total, 2);
+            GarageInfo[garage][gEnterZ] = cache_get_row_float(total, 3);
+            GarageInfo[garage][gExitX] = cache_get_row_float(total, 4);
+            GarageInfo[garage][gExitY] = cache_get_row_float(total, 5);
+            GarageInfo[garage][gExitZ] = cache_get_row_float(total, 6);
             GarageInfo[garage][gvw] = cache_get_row_int(total, 7);
             GarageInfo[garage][gprice] = cache_get_row_int(total, 8);
             cache_get_row(total, 9, GarageInfo[garage][gowner], dbHandle, 64);
             GarageInfo[garage][gowned] = cache_get_row_int(total, 10);
             GarageInfo[garage][glock] = cache_get_row_int(total, 11);
+            GarageInfo[garage][gEnterAngle] = cache_get_row_float(total, 12);
+            GarageInfo[garage][gExitAngle] = cache_get_row_float(total, 13);
             GarageInfo[garage][gOn] = 1;
             AddGarageLabel(garage);
             garage++;
